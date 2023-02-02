@@ -1,4 +1,4 @@
-package org.emporium;
+package org.emporium.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
