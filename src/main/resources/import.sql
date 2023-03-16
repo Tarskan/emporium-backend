@@ -1,11 +1,4 @@
--- This file allow to write SQL commands that will be emitted in test and dev.
--- The commands are commented as their support depends of the database
--- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-1');
--- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-2');
--- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-3');
-
---INSERT INTO User VALUES (1, 'Tristan');
---INSERT INTO User VALUES ("1", 'Tristan', 'Six', 'test@hotmail.fr', 'Tarskan', 1);
---INSERT INTO User VALUES ("2", 'Thomas', 'Courrier', 'test1@hotmail.fr', 'boubika', 2);
---INSERT INTO User VALUES ("3", 'Tristan', 'Six', 'test2@hotmail.fr', 'Ghost', 3);
---INSERT INTO User VALUES ("4", 'Thomas', 'Handerson', 'test3@hotmail.fr', 'NinjaWarrior', 4);
+INSERT INTO Utilisateur(UWUid, pseudo, grade, equipe, resultat, idCollection) VALUES ('1', 'Tarskan', 'Sous-chef', 'killeur', 'champion', 1);
+--INSERT INTO Utilisateur VALUES ("2", 'Ghost', 'chef', 'killeur', 'champion', 2);
+--INSERT INTO Utilisateur VALUES ("3", 'Lolo', 'Recrue', 'killeur', 'champion', 3);
+--INSERT INTO Utilisateur VALUES ("4", 'Toto', 'Sergent', 'killeur', 'champion', 4);
