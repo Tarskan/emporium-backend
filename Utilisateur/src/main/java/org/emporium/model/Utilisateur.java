@@ -14,6 +14,8 @@ public class Utilisateur {
     public String UWUid;
     @Column(name = "pseudo")
     public String pseudo;
+    @Column(name = "pwd")
+    public String pwd;
     @Column(name = "grade")
     public String grade;
     @Column(name = "equipe")
@@ -27,15 +29,15 @@ public class Utilisateur {
     public Utilisateur() {
     }
 
-    public Utilisateur(String UWUid, String pseudo, String grade, String equipe, String resultat) {
+    public Utilisateur(String UWUid, String pseudo, String pwd, String grade, String equipe, String resultat, List<Bibliotheque> bibliotheques) {
         this.UWUid = UWUid;
         this.pseudo = pseudo;
+        this.pwd = pwd;
         this.grade = grade;
         this.equipe = equipe;
         this.resultat = resultat;
+        this.bibliotheques = bibliotheques;
     }
-
-
 
     public String getUWUid() {
         return UWUid;
@@ -51,6 +53,14 @@ public class Utilisateur {
 
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
     public String getGrade() {
@@ -77,14 +87,11 @@ public class Utilisateur {
         this.resultat = resultat;
     }
 
-    @Override
-    public String toString() {
-        return "Utilisateur{" +
-                "UWUid='" + UWUid + '\'' +
-                ", pseudo='" + pseudo + '\'' +
-                ", grade='" + grade + '\'' +
-                ", equipe='" + equipe + '\'' +
-                ", resultat='" + resultat + '\'' +
-                '}';
+    public List<Bibliotheque> getBibliotheques() {
+        return bibliotheques;
+    }
+
+    public void setBibliotheques(List<Bibliotheque> bibliotheques) {
+        this.bibliotheques = bibliotheques;
     }
 }

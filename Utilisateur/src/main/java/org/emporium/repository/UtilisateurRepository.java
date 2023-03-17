@@ -1,5 +1,6 @@
 package org.emporium.repository;
 
+import org.emporium.model.Bibliotheque;
 import org.emporium.model.Utilisateur;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -9,8 +10,15 @@ import java.util.List;
 
 @Repository
 public interface UtilisateurRepository extends CrudRepository<Utilisateur, String> {
-    List<Utilisateur> findByPseudo(String pseudo);
+    List<Utilisateur> findAll();
+
+    @Query("from Utilisateur where UWUid like ?1")
+    Utilisateur findByUWUid(String uwuid);
+
+    Utilisateur findByPseudo(String pseudo);
 
     @Query("from Utilisateur where pseudo like concat(?1, '%')")
     List<Utilisateur> findByPseudoLike(String pseudo);
+
+
 }
