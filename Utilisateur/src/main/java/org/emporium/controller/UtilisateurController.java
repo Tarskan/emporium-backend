@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/utilisateur")
-public class GreetingResource {
+public class UtilisateurController {
     @Inject
     UtilisateurService utilisateurService;
 
@@ -51,7 +51,7 @@ public class GreetingResource {
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     public String DeleteUser(@PathParam("uwuid") String uwuid) {
-        return utilisateurService.suppUitlisateur(uwuid);
+        return utilisateurService.suppUser(uwuid);
     }
 }
 

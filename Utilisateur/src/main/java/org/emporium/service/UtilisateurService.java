@@ -62,7 +62,7 @@ public class UtilisateurService {
         }
     }
 
-    public String suppUitlisateur(String uwuid) {
+    public String suppUser(String uwuid) {
         if (utilisateurRepository.existsById(uwuid)) {
             Utilisateur userToDelete = utilisateurRepository.findByUWUid(uwuid);
             utilisateurRepository.delete(userToDelete);

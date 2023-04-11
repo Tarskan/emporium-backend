@@ -11,13 +11,13 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/Bibliotheque")
-public class GreetingResource {
+public class BibliothequeController {
     @Inject
     BibliothequeService bibliothequeService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Bibliotheque> hello() {
+    public List<Bibliotheque> GetAllBibliotheque() {
         return bibliothequeService.GetAllBibliotheque();
     }
 

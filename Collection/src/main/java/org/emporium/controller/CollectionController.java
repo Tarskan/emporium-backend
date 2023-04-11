@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/collection")
-public class GreetingResource {
+public class CollectionController {
     @Inject
     CollectionService collectionService;
 
