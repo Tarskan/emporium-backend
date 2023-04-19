@@ -37,4 +37,30 @@ public class OeuvresService {
         return oeuvresRepository.findByIdType(IdAuteur);
     }
 
+    public Oeuvres addOeuvre(Oeuvres oeuvres) {
+        if (oeuvresRepository.existsById(oeuvres.getIdOeuvre())) {
+            throw new IllegalArgumentException("Id " + oeuvres.getIdOeuvre() + " déja utilisé");
+        } else {
+            return oeuvresRepository.save(oeuvres);
+        }
+    }
+
+    public Oeuvres modifyOeuvre(Oeuvres oeuvres) {
+        if (oeuvresRepository.existsById(oeuvres.getIdOeuvre())) {
+            return oeuvresRepository.save(oeuvres);
+        } else {
+            throw new IllegalArgumentException("Id: " + oeuvres.getIdOeuvre() + " Non trouvée dans la bdd");
+        }
+    }
+
+    public String suppOeuvre(String IdOeuvre) {
+        if (oeuvresRepository.existsById(IdOeuvre)) {
+            Oeuvres oeuvreToDelete = oeuvresRepository.findByIdOeuvre(IdOeuvre);
+            oeuvresRepository.delete(oeuvreToDelete);
+            return "L'utilisateur a était supprimer";
+        } else {
+            return "Id " + IdOeuvre + " n'existe pas ou a deja était supprimer";
+        }
+    }
+
 }

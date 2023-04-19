@@ -1,7 +1,10 @@
 package org.emporium.controller;
 
 import org.emporium.model.Oeuvres;
+import org.emporium.model.Utilisateur;
 import org.emporium.service.OeuvresService;
+import org.jboss.resteasy.reactive.PartType;
+import org.jboss.resteasy.reactive.RestForm;
 import org.springframework.stereotype.Controller;
 
 import javax.inject.Inject;
@@ -49,6 +52,23 @@ public class OeuvresController {
         return oeuvresService.getByIdAuteur(IdAuteur);
     }
 
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Oeuvres PutUtilisateur(@RestForm @PartType(MediaType.APPLICATION_JSON) Oeuvres oeuvres) {
+        return oeuvresService.modifyOeuvre(oeuvres);
+    }
 
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Oeuvres AddUtilisateur(@RestForm @PartType(MediaType.APPLICATION_JSON) Oeuvres oeuvres) {
+        return oeuvresService.addOeuvre(oeuvres);
+    }
+
+    @Path("/delete/{idOeuvre}")
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    public String DeleteUser(@PathParam("idOeuvre") String idOeuvre) {
+        return oeuvresService.suppOeuvre(idOeuvre);
+    }
 
 }
