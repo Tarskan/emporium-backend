@@ -16,27 +16,36 @@ public class Oeuvres {
     public String IdType;
     @Column(name = "IdGenre")
     public String IdGenre;
+    @Column(name = "IdAuteur")
+    public String Auteur;
+    @Column(name = "IdEditeur")
+    public String Editeur;
     @Column(name = "Titre")
     public String Titre;
     @Column(name = "SousTitre")
     public String SousTitre;
     @Column(name = "Description")
     public String Description;
+    @Column(name = "Image")
+    public String image;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "collection", joinColumns = {@JoinColumn(name = "Utilisateur")}, inverseJoinColumns = {@JoinColumn(name = "Oeuvres")})
     public List<Utilisateur> listUti;
 
-    public Oeuvres(String idOeuvre, String idType, String idGenre, String titre, String sousTitre, String description, List<Utilisateur> listUti) {
+    public Oeuvres() {
+    }
+
+    public Oeuvres(String idOeuvre, String idType, String idGenre, String auteur, String editeur, String titre, String sousTitre, String description, String image, List<Utilisateur> listUti) {
         IdOeuvre = idOeuvre;
         IdType = idType;
         IdGenre = idGenre;
+        Auteur = auteur;
+        Editeur = editeur;
         Titre = titre;
         SousTitre = sousTitre;
         Description = description;
+        this.image = image;
         this.listUti = listUti;
-    }
-
-    public Oeuvres() {
     }
 
     public String getIdOeuvre() {

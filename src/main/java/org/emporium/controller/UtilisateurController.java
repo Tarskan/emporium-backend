@@ -23,11 +23,11 @@ public class UtilisateurController {
         return utilisateurService.getAllUser();
     }
 
-    @Path("/{pseudo}")
+    @Path("/{UWUid}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Utilisateur GetPseudo(@PathParam("pseudo") String pseudo) {
-            return utilisateurService.GetUserByPseudo(pseudo);
+    public Utilisateur GetPseudo(@PathParam("UWUid") String UWUid) {
+            return utilisateurService.GetUserByUwuid(UWUid);
     }
 
     @Path("/search/{pseudo}")

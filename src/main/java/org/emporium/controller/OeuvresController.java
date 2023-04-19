@@ -21,5 +21,34 @@ public class OeuvresController {
         return oeuvresService.getAllOeuvres();
     }
 
+    @Path("/{IdOeuvre}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Oeuvres getById(@PathParam("IdOeuvre") String IdOeuvre) {
+        return oeuvresService.getByIdOeuvre(IdOeuvre);
+    }
+
+    @Path("/genre/{IdGenre}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Oeuvres> getByGenre(@PathParam("IdGenre") String IdGenre) {
+        return oeuvresService.getByIdGenre(IdGenre);
+    }
+
+    @Path("/editeur/{IdEditeur}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Oeuvres> getByEditor(@PathParam("IdEditeur") String IdEditeur) {
+        return oeuvresService.getByIdEditeur(IdEditeur);
+    }
+
+    @Path("/auteur/{IdAuteur}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Oeuvres> getByAuthor(@PathParam("IdAuteur") String IdAuteur) {
+        return oeuvresService.getByIdAuteur(IdAuteur);
+    }
+
+
 
 }

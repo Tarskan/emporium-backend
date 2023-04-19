@@ -15,17 +15,26 @@ import java.util.List;
 public class OeuvresService {
 
     @Inject
-    private final UtilisateurRepository utilisateurRepository;
+    UtilisateurRepository utilisateurRepository;
     @Inject
-    private final OeuvresRepository oeuvresRepository;
-
-    public OeuvresService(UtilisateurRepository utilisateurRepository, OeuvresRepository oeuvresRepository) {
-        this.utilisateurRepository = utilisateurRepository;
-        this.oeuvresRepository = oeuvresRepository;
-    }
+    OeuvresRepository oeuvresRepository;
 
     public List<Oeuvres> getAllOeuvres() {
         return oeuvresRepository.findAll();
+    }
+
+    public Oeuvres getByIdOeuvre(String IdOeuvre) { return oeuvresRepository.findByIdOeuvre(IdOeuvre); }
+
+    public List<Oeuvres> getByIdGenre(String IdGenre) {
+        return oeuvresRepository.findByIdType(IdGenre);
+    }
+
+    public List<Oeuvres> getByIdEditeur(String IdEditeur) {
+        return oeuvresRepository.findByIdType(IdEditeur);
+    }
+
+    public List<Oeuvres> getByIdAuteur(String IdAuteur) {
+        return oeuvresRepository.findByIdType(IdAuteur);
     }
 
 }

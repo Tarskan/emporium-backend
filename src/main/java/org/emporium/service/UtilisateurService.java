@@ -15,21 +15,13 @@ import java.util.List;
 public class UtilisateurService {
 
     @Inject
-    private final UtilisateurRepository utilisateurRepository;
+    UtilisateurRepository utilisateurRepository;
     @Inject
-    private final OeuvresRepository oeuvresRepository;
+    OeuvresRepository oeuvresRepository;
 
-    public UtilisateurService(UtilisateurRepository utilisateurRepository, OeuvresRepository oeuvresRepository) {
-        this.utilisateurRepository = utilisateurRepository;
-        this.oeuvresRepository = oeuvresRepository;
-    }
 
     public List<Utilisateur> getAllUser() {
         return utilisateurRepository.findAll();
-    }
-
-    public List<Oeuvres> getAllBibliotheque() {
-        return oeuvresRepository.findAll();
     }
 
     public Utilisateur GetUserByUwuid(String uwuid) {
@@ -37,10 +29,10 @@ public class UtilisateurService {
         return User;
     }
 
-    public Utilisateur GetUserByPseudo(String pseudo) {
+    /*public Utilisateur GetUserByPseudo(String pseudo) {
         Utilisateur User = utilisateurRepository.findByPseudo(pseudo);
         return User;
-    }
+    }*/
 
     public List<Utilisateur> SearchByPseudo(String pseudo) {
         List<Utilisateur> ListUser = utilisateurRepository.findByPseudoLike(pseudo);

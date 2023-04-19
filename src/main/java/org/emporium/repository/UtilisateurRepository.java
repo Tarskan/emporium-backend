@@ -11,10 +11,8 @@ import java.util.List;
 public interface UtilisateurRepository extends CrudRepository<Utilisateur, String> {
     List<Utilisateur> findAll();
 
-    @Query("from Utilisateur where UWUid like ?1")
+    @Query("from Utilisateur where UWUid = ?1")
     Utilisateur findByUWUid(String uwuid);
-
-    Utilisateur findByPseudo(String pseudo);
 
     @Query("from Utilisateur where pseudo like concat(?1, '%')")
     List<Utilisateur> findByPseudoLike(String pseudo);

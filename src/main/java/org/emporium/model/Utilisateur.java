@@ -29,8 +29,7 @@ public class Utilisateur {
     public Utilisateur() {
     }
 
-    public Utilisateur(String UWUid, String pseudo, String pwd, String grade, String equipe, String resultat, List<Oeuvres> oeuvres) {
-        this.UWUid = UWUid;
+    public Utilisateur(String pseudo, String pwd, String grade, String equipe, String resultat, List<Oeuvres> oeuvres) {
         this.pseudo = pseudo;
         this.pwd = pwd;
         this.grade = grade;
