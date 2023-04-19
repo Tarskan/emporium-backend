@@ -17,4 +17,27 @@ public class Collection {
     @Column(name = "IdOeuvre")
     public String IdOeuvre;
 
+    public String getIdCollection() {
+        return IdCollection;
+    }
+
+    public void setIdCollection(String idCollection) {
+        IdCollection = idCollection;
+    }
+
+    public String getUWUid() {
+        return UWUid;
+    }
+
+    public void setUWUid(String UWUid) {
+        this.UWUid = UWUid;
+    }
+
+    public String getIdOeuvre() {
+        return IdOeuvre;
+    }
+
+    public void setIdOeuvre(String idOeuvre) {
+        IdOeuvre = idOeuvre;
+    }
 }

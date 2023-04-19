@@ -20,7 +20,7 @@ public class UtilisateurControllerTest {
     @Test
     public void testGetUtilisateurByPseudoEndPoint() {
         given()
-                .when().get("/utilisateur/Tarskan")
+                .when().get("/utilisateur/1")
                 .then()
                 .statusCode(200);
     }
