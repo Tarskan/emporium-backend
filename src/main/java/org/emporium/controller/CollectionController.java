@@ -12,14 +12,14 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Controller
-@Path("/oeuvres")
+@Path("/collection")
 public class CollectionController {
     @Inject
     CollectionService collectionService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Collection> getAll() {
+    public List<Collection> getAllCollection() {
         return collectionService.getAllCollection();
     }
 
@@ -30,14 +30,14 @@ public class CollectionController {
         return collectionService.getByIdCollection(IdColection);
     }
 
-    @Path("/utilisateur/{UWUid}")
+    @Path("/genre/{idGenre}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Collection> getByGenre(@PathParam("UWUid") String UWUid) {
-        return collectionService.getByIdUWUid(UWUid);
+    public List<Collection> getByGenre(@PathParam("idGenre") String idGenre) {
+        return collectionService.getByIdUWUid(idGenre);
     }
 
-    @Path("/Oeuvres/{IdOeuvre}")
+    @Path("/oeuvres/{IdOeuvre}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Collection> getByEditor(@PathParam("IdOeuvre") String IdOeuvre) {
@@ -45,20 +45,20 @@ public class CollectionController {
     }
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection PutUtilisateur(@RestForm @PartType(MediaType.APPLICATION_JSON) Collection collection) {
+    public Collection PutCollection(@RestForm @PartType(MediaType.APPLICATION_JSON) Collection collection) {
         return collectionService.modifyCollection(collection);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection AddUtilisateur(@RestForm @PartType(MediaType.APPLICATION_JSON) Collection collection) {
+    public Collection AddCollection(@RestForm @PartType(MediaType.APPLICATION_JSON) Collection collection) {
         return collectionService.addCollection(collection);
     }
 
     @Path("/delete/{IdColection}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public String DeleteUser(@PathParam("IdColection") String IdColection) {
+    public String DeleteCollection(@PathParam("IdColection") String IdColection) {
         return collectionService.suppCollection(IdColection);
     }
 }

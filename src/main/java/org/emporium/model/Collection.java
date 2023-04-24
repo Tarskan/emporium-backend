@@ -11,7 +11,7 @@ public class Collection {
     @GeneratedValue(generator = "IdCollection")
     @GenericGenerator(name = "IdCollection", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "IdCollection")
-    String IdCollection;
+    public String IdCollection;
     @Column(name = "UWUid")
     public String UWUid;
     @Column(name = "IdOeuvre")

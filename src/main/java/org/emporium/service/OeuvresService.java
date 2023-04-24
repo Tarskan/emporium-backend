@@ -26,15 +26,15 @@ public class OeuvresService {
     public Oeuvres getByIdOeuvre(String IdOeuvre) { return oeuvresRepository.findByIdOeuvre(IdOeuvre); }
 
     public List<Oeuvres> getByIdGenre(String IdGenre) {
-        return oeuvresRepository.findByIdType(IdGenre);
+        return oeuvresRepository.findByIdGenre(IdGenre);
     }
 
     public List<Oeuvres> getByIdEditeur(String IdEditeur) {
-        return oeuvresRepository.findByIdType(IdEditeur);
+        return oeuvresRepository.findByIdEditeur(IdEditeur);
     }
 
     public List<Oeuvres> getByIdAuteur(String IdAuteur) {
-        return oeuvresRepository.findByIdType(IdAuteur);
+        return oeuvresRepository.findByIdAuteur(IdAuteur);
     }
 
     public Oeuvres addOeuvre(Oeuvres oeuvres) {

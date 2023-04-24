@@ -20,7 +20,7 @@ public class OeuvresController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Oeuvres> getAll() {
+    public List<Oeuvres> getAllOeuvre() {
         return oeuvresService.getAllOeuvres();
     }
 
@@ -54,20 +54,20 @@ public class OeuvresController {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Oeuvres PutUtilisateur(@RestForm @PartType(MediaType.APPLICATION_JSON) Oeuvres oeuvres) {
+    public Oeuvres PutOeuvre(@RestForm @PartType(MediaType.APPLICATION_JSON) Oeuvres oeuvres) {
         return oeuvresService.modifyOeuvre(oeuvres);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Oeuvres AddUtilisateur(@RestForm @PartType(MediaType.APPLICATION_JSON) Oeuvres oeuvres) {
+    public Oeuvres AddOeuvre(@RestForm @PartType(MediaType.APPLICATION_JSON) Oeuvres oeuvres) {
         return oeuvresService.addOeuvre(oeuvres);
     }
 
     @Path("/delete/{idOeuvre}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public String DeleteUser(@PathParam("idOeuvre") String idOeuvre) {
+    public String DeleteOeuvre(@PathParam("idOeuvre") String idOeuvre) {
         return oeuvresService.suppOeuvre(idOeuvre);
     }
 

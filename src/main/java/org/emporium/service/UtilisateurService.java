@@ -29,10 +29,10 @@ public class UtilisateurService {
         return User;
     }
 
-    /*public Utilisateur GetUserByPseudo(String pseudo) {
+    public Utilisateur GetUserByPseudo(String pseudo) {
         Utilisateur User = utilisateurRepository.findByPseudo(pseudo);
         return User;
-    }*/
+    }
 
     public List<Utilisateur> SearchByPseudo(String pseudo) {
         List<Utilisateur> ListUser = utilisateurRepository.findByPseudoLike(pseudo);

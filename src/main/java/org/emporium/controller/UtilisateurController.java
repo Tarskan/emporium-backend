@@ -19,7 +19,7 @@ public class UtilisateurController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Utilisateur> getAll() {
+    public List<Utilisateur> getAllUtilisateur() {
         return utilisateurService.getAllUser();
     }
 
@@ -33,7 +33,14 @@ public class UtilisateurController {
     @Path("/search/{pseudo}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Utilisateur> RecherchePseudo(@PathParam("pseudo") String pseudo) {
+    public Utilisateur RechercheUtilisateurByPseudo(@PathParam("pseudo") String pseudo) {
+        return utilisateurService.GetUserByPseudo(pseudo);
+    }
+
+    @Path("/searchLike/{pseudo}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Utilisateur> RechercheParPseudo(@PathParam("pseudo") String pseudo) {
         return utilisateurService.SearchByPseudo(pseudo);
     }
 
