@@ -1,10 +1,12 @@
 package org.emporium.controller;
 
 import org.emporium.model.Utilisateur;
+import org.emporium.model.UtilisateurCreateDTO;
 import org.emporium.service.UtilisateurService;
 import org.jboss.resteasy.reactive.PartType;
 import org.jboss.resteasy.reactive.RestForm;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -46,13 +48,13 @@ public class UtilisateurController {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Utilisateur PutUtilisateur(@RestForm @PartType(MediaType.APPLICATION_JSON) Utilisateur utilisateur) {
+    public Utilisateur PutUtilisateur(@RequestBody Utilisateur utilisateur) {
         return utilisateurService.modifyUser(utilisateur);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Utilisateur AddUtilisateur(@RestForm @PartType(MediaType.APPLICATION_JSON) Utilisateur utilisateur) {
+    public Utilisateur AddUtilisateur(@RequestBody UtilisateurCreateDTO utilisateur) {
         return utilisateurService.addUser(utilisateur);
     }
 

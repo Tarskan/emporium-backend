@@ -1,8 +1,7 @@
 package org.emporium.service;
 
-import org.emporium.model.Oeuvres;
 import org.emporium.model.Utilisateur;
-import org.emporium.repository.OeuvresRepository;
+import org.emporium.model.UtilisateurCreateDTO;
 import org.emporium.repository.UtilisateurRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +15,6 @@ public class UtilisateurService {
 
     @Inject
     UtilisateurRepository utilisateurRepository;
-    @Inject
-    OeuvresRepository oeuvresRepository;
 
 
     public List<Utilisateur> getAllUser() {
@@ -39,12 +36,13 @@ public class UtilisateurService {
         return ListUser;
     }
 
-    public Utilisateur addUser(Utilisateur utilisateur) {
-        if (utilisateurRepository.existsById(utilisateur.getUWUid())) {
-            throw new IllegalArgumentException("Id " + utilisateur.getUWUid() + " déja utilisé");
-        } else {
-            return utilisateurRepository.save(utilisateur);
-        }
+    public Utilisateur addUser(UtilisateurCreateDTO utilisateur) {
+        Utilisateur utilisateurNew =  Utilisateur.builder()
+                .pseudo(utilisateur.pseudo)
+                .pwd(utilisateur.pwd)
+                .build();
+
+        return utilisateurRepository.save(utilisateurNew);
     }
 
     public Utilisateur modifyUser(Utilisateur utilisateur) {

@@ -25,11 +25,6 @@ public class Oeuvres {
     @Column(name = "image")
     public String image;
 
-
-    /*@ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "collection", joinColumns = {@JoinColumn(name = "Utilisateur")}, inverseJoinColumns = {@JoinColumn(name = "Oeuvres")})
-    public List<Utilisateur> listUti;*/
-
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="idType")
     private Type type;

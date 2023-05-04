@@ -5,7 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(indexes = {@Index(columnList = "Oeuvres")})
+//@Table(indexes = {@Index(columnList = "Oeuvres")})
 public class Collection {
     @Id
     @GeneratedValue(generator = "IdCollection")
