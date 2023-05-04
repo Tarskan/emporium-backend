@@ -7,7 +7,7 @@ primary_region = "lhr"
   image = "tarskan/emporiumback:latest"
 
 [http_service]
-  internal_port = 8080
+  internal_port = 9000
   force_https = true
 
 [checks]
