@@ -1,11 +1,11 @@
 package org.emporium.controller;
 
 import org.emporium.model.Oeuvres;
-import org.emporium.model.Utilisateur;
+import org.emporium.model.OeuvresCreateDTO;
+import org.emporium.model.OeuvresModifyDTO;
 import org.emporium.service.OeuvresService;
-import org.jboss.resteasy.reactive.PartType;
-import org.jboss.resteasy.reactive.RestForm;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -54,13 +54,13 @@ public class OeuvresController {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Oeuvres PutOeuvre(@RestForm @PartType(MediaType.APPLICATION_JSON) Oeuvres oeuvres) {
+    public Oeuvres PutOeuvre(@RequestBody OeuvresModifyDTO oeuvres) throws Exception {
         return oeuvresService.modifyOeuvre(oeuvres);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Oeuvres AddOeuvre(@RestForm @PartType(MediaType.APPLICATION_JSON) Oeuvres oeuvres) {
+    public Oeuvres AddOeuvre(@RequestBody OeuvresCreateDTO oeuvres) throws Exception {
         return oeuvresService.addOeuvre(oeuvres);
     }
 

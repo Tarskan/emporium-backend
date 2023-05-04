@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface CollectionRepository extends CrudRepository<Collection, String> {
     List<Collection> findAll();
+
     @Query("from Collection where IdCollection = ?1")
     Collection findByIdCollection(String idCollection);
 

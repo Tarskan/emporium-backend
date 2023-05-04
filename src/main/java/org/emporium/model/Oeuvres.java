@@ -1,106 +1,53 @@
 package org.emporium.model;
 
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Oeuvres {
     @Id
-    @GeneratedValue(generator = "IdOeuvre")
-    @GenericGenerator(name = "IdOeuvre", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "IdOeuvre")
-    public String IdOeuvre;
-    @Column(name = "IdType")
-    public String IdType;
-    @Column(name = "IdGenre")
-    public String IdGenre;
-    @Column(name = "IdAuteur")
-    public String Auteur;
-    @Column(name = "IdEditeur")
-    public String Editeur;
-    @Column(name = "Titre")
-    public String Titre;
-    @Column(name = "SousTitre")
-    public String SousTitre;
-    @Column(name = "Description")
-    public String Description;
-    @Column(name = "Image")
+    @GeneratedValue(generator = "idOeuvre")
+    @GenericGenerator(name = "idOeuvre", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "idOeuvre")
+    private String idOeuvre;
+    @Column(name = "titre")
+    public String titre;
+    @Column(name = "sousTitre")
+    public String sousTitre;
+    @Column(name = "description")
+    public String description;
+    @Column(name = "image")
     public String image;
-    @ManyToMany(fetch = FetchType.LAZY)
+
+
+    /*@ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "collection", joinColumns = {@JoinColumn(name = "Utilisateur")}, inverseJoinColumns = {@JoinColumn(name = "Oeuvres")})
-    public List<Utilisateur> listUti;
+    public List<Utilisateur> listUti;*/
 
-    public Oeuvres() {
-    }
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="idType")
+    private Type type;
 
-    public Oeuvres(String idOeuvre, String idType, String idGenre, String auteur, String editeur, String titre, String sousTitre, String description, String image, List<Utilisateur> listUti) {
-        IdOeuvre = idOeuvre;
-        IdType = idType;
-        IdGenre = idGenre;
-        Auteur = auteur;
-        Editeur = editeur;
-        Titre = titre;
-        SousTitre = sousTitre;
-        Description = description;
-        this.image = image;
-        this.listUti = listUti;
-    }
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="idAuteur")
+    private Auteur auteur;
 
-    public String getIdOeuvre() {
-        return IdOeuvre;
-    }
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="idEditeur")
+    private Editeur editeur;
 
-    public void setIdOeuvre(String idOeuvre) {
-        IdOeuvre = idOeuvre;
-    }
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="idSupport")
+    private Support support;
 
-    public String getIdType() {
-        return IdType;
-    }
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="idGenre")
+    private Genre genre;
 
-    public void setIdType(String idType) {
-        IdType = idType;
-    }
-
-    public String getIdGenre() {
-        return IdGenre;
-    }
-
-    public void setIdGenre(String idGenre) {
-        IdGenre = idGenre;
-    }
-
-    public String getTitre() {
-        return Titre;
-    }
-
-    public void setTitre(String titre) {
-        Titre = titre;
-    }
-
-    public String getSousTitre() {
-        return SousTitre;
-    }
-
-    public void setSousTitre(String sousTitre) {
-        SousTitre = sousTitre;
-    }
-
-    public String getDescription() {
-        return Description;
-    }
-
-    public void setDescription(String description) {
-        Description = description;
-    }
-
-    public List<Utilisateur> getListUti() {
-        return listUti;
-    }
-
-    public void setListUti(List<Utilisateur> listUti) {
-        this.listUti = listUti;
-    }
 }
