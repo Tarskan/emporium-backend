@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -17,7 +18,8 @@ public class Genre {
     @GeneratedValue(generator = "idGenre")
     @GenericGenerator(name = "idGenre", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "idGenre")
-    public String idGenre;
+    private String idGenre;
+    @Column(name = "name")
     public String name;
 
 }
