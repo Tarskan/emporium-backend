@@ -1,9 +1,12 @@
 package org.emporium.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Builder
@@ -44,5 +47,10 @@ public class Oeuvres {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="idGenre")
     private Genre genre;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "collection", joinColumns = {@JoinColumn(name = "idOeuvre")}, inverseJoinColumns = {@JoinColumn(name = "UWUid")})
+    @JsonBackReference
+    public List<Utilisateur> listUti;
 
 }

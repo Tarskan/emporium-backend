@@ -1,10 +1,9 @@
 package org.emporium.controller;
 
-import org.emporium.model.Collection;
+import org.emporium.model.*;
 import org.emporium.service.CollectionService;
-import org.jboss.resteasy.reactive.PartType;
-import org.jboss.resteasy.reactive.RestForm;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -26,7 +25,7 @@ public class CollectionController {
     @Path("/{IdColection}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection getById(@PathParam("IdColection") String IdColection) {
+    public Collection getById(@PathParam("IdColection") String IdColection) throws Exception {
         return collectionService.getByIdCollection(IdColection);
     }
 
@@ -37,28 +36,36 @@ public class CollectionController {
         return collectionService.getByIdUWUid(idGenre);
     }
 
-    @Path("/oeuvres/{IdOeuvre}")
+    @Path("/utilisateur/{idOeuvre}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Collection> getByEditor(@PathParam("IdOeuvre") String IdOeuvre) {
-        return collectionService.getByIdOeuvre(IdOeuvre);
+    public List<Utilisateur> getUserWhoPosses(@PathParam("idOeuvre") String idOeuvre) {
+        return collectionService.getByIdOeuvre(idOeuvre);
     }
+
+    @Path("/oeuvres/{uwuid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Oeuvres> getOeuvresWhoArePossesed(@PathParam("uwuid") String uwuid) {
+        return collectionService.getByUwuid(uwuid);
+    }
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection PutCollection(@RestForm @PartType(MediaType.APPLICATION_JSON) Collection collection) {
+    public Collection PutCollection(@RequestBody CollectionModifyDTO collection) throws Exception {
         return collectionService.modifyCollection(collection);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection AddCollection(@RestForm @PartType(MediaType.APPLICATION_JSON) Collection collection) {
+    public Collection AddCollection(@RequestBody CollectionCreateDTO collection) throws Exception {
         return collectionService.addCollection(collection);
     }
 
     @Path("/delete/{IdColection}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public String DeleteCollection(@PathParam("IdColection") String IdColection) {
+    public String DeleteCollection(@PathParam("IdColection") String IdColection) throws Exception {
         return collectionService.suppCollection(IdColection);
     }
 }

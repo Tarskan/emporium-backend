@@ -67,7 +67,7 @@ public class OeuvresController {
     @Path("/delete/{idOeuvre}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public String DeleteOeuvre(@PathParam("idOeuvre") String idOeuvre) {
+    public String DeleteOeuvre(@PathParam("idOeuvre") String idOeuvre) throws Exception {
         return oeuvresService.suppOeuvre(idOeuvre);
     }
 

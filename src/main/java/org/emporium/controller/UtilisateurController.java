@@ -3,8 +3,6 @@ package org.emporium.controller;
 import org.emporium.model.Utilisateur;
 import org.emporium.model.UtilisateurCreateDTO;
 import org.emporium.service.UtilisateurService;
-import org.jboss.resteasy.reactive.PartType;
-import org.jboss.resteasy.reactive.RestForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 

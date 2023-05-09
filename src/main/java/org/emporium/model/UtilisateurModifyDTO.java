@@ -7,8 +7,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UtilisateurCreateDTO {
+public class UtilisateurModifyDTO {
+    private String UWUid;
     public String pseudo;
     public String pwd;
-
+    public String grade;
+    public String equipe;
+    public String resultat;
 }

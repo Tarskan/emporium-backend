@@ -1,5 +1,8 @@
 package org.emporium.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +26,7 @@ public class Utilisateur {
     @Column(name = "pseudo")
     public String pseudo;
     @Column(name = "pwd")
+    @JsonIgnore
     public String pwd;
     @Column(name = "grade")
     public String grade;
@@ -30,5 +34,10 @@ public class Utilisateur {
     public String equipe;
     @Column(name = "resultat")
     public String resultat;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "collection", joinColumns = {@JoinColumn(name = "UWUid")}, inverseJoinColumns = {@JoinColumn(name = "idOeuvre")})
+    @JsonBackReference
+    public List<Utilisateur> listOeuvres;
 
 }

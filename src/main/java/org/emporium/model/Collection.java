@@ -1,43 +1,34 @@
 package org.emporium.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 @Entity
-//@Table(indexes = {@Index(columnList = "Oeuvres")})
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Collection {
     @Id
-    @GeneratedValue(generator = "IdCollection")
-    @GenericGenerator(name = "IdCollection", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "IdCollection")
-    public String IdCollection;
-    @Column(name = "UWUid")
-    public String UWUid;
-    @Column(name = "IdOeuvre")
-    public String IdOeuvre;
+    @GeneratedValue(generator = "idCollection")
+    @GenericGenerator(name = "idCollection", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "idCollection")
+    private String idCollection;
 
-    public String getIdCollection() {
-        return IdCollection;
-    }
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+    @JoinColumn(name="UWUid")
+    @JsonManagedReference
+    public Utilisateur utilisateur;
 
-    public void setIdCollection(String idCollection) {
-        IdCollection = idCollection;
-    }
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+    @JoinColumn(name="idOeuvre")
+    @JsonManagedReference
+    public Oeuvres oeuvre;
 
-    public String getUWUid() {
-        return UWUid;
-    }
-
-    public void setUWUid(String UWUid) {
-        this.UWUid = UWUid;
-    }
-
-    public String getIdOeuvre() {
-        return IdOeuvre;
-    }
-
-    public void setIdOeuvre(String idOeuvre) {
-        IdOeuvre = idOeuvre;
-    }
 }

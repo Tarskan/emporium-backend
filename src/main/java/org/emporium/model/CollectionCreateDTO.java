@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UtilisateurCreateDTO {
-    public String pseudo;
-    public String pwd;
-
+public class CollectionCreateDTO {
+    public String UWUid;
+    public String idOeuvre;
 }

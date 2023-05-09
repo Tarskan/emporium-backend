@@ -90,14 +90,10 @@ public class OeuvresService {
         }
     }
 
-    public String suppOeuvre(String IdOeuvre) {
-        if (oeuvresRepository.existsById(IdOeuvre)) {
-            Oeuvres oeuvreToDelete = oeuvresRepository.findByIdOeuvre(IdOeuvre);
-            oeuvresRepository.delete(oeuvreToDelete);
-            return "L'oeuvre a était supprimer";
-        } else {
-            return "Id " + IdOeuvre + " n'existe pas ou a deja était supprimer";
-        }
+    public String suppOeuvre(String IdOeuvre) throws Exception {
+        Oeuvres oeuvreToDelete = oeuvresRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Id " + IdOeuvre + " n'existe pas ou a deja était supprimer"));
+        oeuvresRepository.delete(oeuvreToDelete);
+        return "L'oeuvre a était supprimer";
     }
 
 }

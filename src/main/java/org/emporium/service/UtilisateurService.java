@@ -47,7 +47,16 @@ public class UtilisateurService {
 
     public Utilisateur modifyUser(Utilisateur utilisateur) {
         if (utilisateurRepository.existsById(utilisateur.getUWUid())) {
-            return utilisateurRepository.save(utilisateur);
+            Utilisateur utilisateurModify =  Utilisateur.builder()
+                    .UWUid(utilisateur.getUWUid())
+                    .pseudo(utilisateur.getPseudo())
+                    .pwd(utilisateur.getPwd())
+                    .equipe(utilisateur.getEquipe())
+                    .grade(utilisateur.getGrade())
+                    .resultat(utilisateur.getResultat())
+                    .build();
+
+            return utilisateurRepository.save(utilisateurModify);
         } else {
             throw new IllegalArgumentException("Id: " + utilisateur.getUWUid() + " Non trouvée dans la bdd");
         }
