@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -17,7 +18,8 @@ public class Editeur {
     @GeneratedValue(generator = "idEditeur")
     @GenericGenerator(name = "idEditeur", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "idEditeur")
-    public String idEditeur;
+    private String idEditeur;
+    @Column(name = "name")
     public String name;
 
 }
