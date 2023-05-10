@@ -11,4 +11,5 @@ public class CollectionModifyDTO {
     public String idCollection;
     public String UWUid;
     public String idOeuvre;
+    public Boolean favorite;
 }

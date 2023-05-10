@@ -50,6 +50,13 @@ public class CollectionController {
         return collectionService.getByUwuid(uwuid);
     }
 
+    @Path("/oeuvres/favorite/{uwuid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Oeuvres> getUserFavorite(@RequestBody CollectionCreateDTO collectionDTO) {
+        return collectionService.getByFavoriteForUwuid(collectionDTO);
+    }
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Collection PutCollection(@RequestBody CollectionModifyDTO collection) throws Exception {

@@ -15,4 +15,7 @@ public interface CollectionRepository extends CrudRepository<Collection, String>
     @Query("from Collection where idOeuvre = ?1")
     List<Collection> findByIdOeuvre(String idOeuvre);
 
+    @Query("from Collection where UWUid = ?1 and favorite=?2")
+    List<Collection> findByFavorisUser(String uwuid, Boolean favorite);
+
 }

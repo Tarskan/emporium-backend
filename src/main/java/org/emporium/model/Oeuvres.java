@@ -1,7 +1,6 @@
 package org.emporium.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -27,6 +26,8 @@ public class Oeuvres {
     public String description;
     @Column(name = "image")
     public String image;
+    @Column(name = "countFav")
+    public Integer countFav;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="idType")

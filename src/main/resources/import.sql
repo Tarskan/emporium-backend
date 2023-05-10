@@ -16,13 +16,13 @@ INSERT INTO Type(idType, name) VALUES ('2', 'Jeux vidéo');
 INSERT INTO Support(idSupport, name) VALUES ('1', 'DVD');
 INSERT INTO Support(idSupport, name) VALUES ('2', 'CD');
 
-INSERT INTO Oeuvres(IdOeuvre, Titre, SousTitre, Description, Image, idType, idAuteur, idEditeur, idSupport, idGenre) VALUES ('1', 'Twilight of the thunder god', 'Twilight of the thunder god', 'Musique de metal', 'https://m.media-amazon.com/images/I/51DLn0GEJpL.jpg', '1', '1', '1', '2', '1');
-INSERT INTO Oeuvres(IdOeuvre, Titre, SousTitre, Description, Image, idType, idAuteur, idEditeur, idSupport, idGenre) VALUES ('2', 'Holly Roler', 'null', 'Musique de metal', 'https://www.popnmusic.fr/wp-content/uploads/2020/08/cwe0ssz9ylc.jpg', '1', '2', '2', '2', '1');
-INSERT INTO Oeuvres(IdOeuvre, Titre, SousTitre, Description, Image, idType, idAuteur, idEditeur, idSupport, idGenre) VALUES ('3', 'Sonne', 'null', 'Musique de metal', 'https://www.lacoccinelle.net/587118-1.jpg?20191117', '1', '3', '3', '2', '1');
+INSERT INTO Oeuvres(IdOeuvre, Titre, SousTitre, Description, Image, idType, idAuteur, idEditeur, idSupport, idGenre, countFav) VALUES ('1', 'Twilight of the thunder god', 'Twilight of the thunder god', 'Musique de metal', 'https://m.media-amazon.com/images/I/51DLn0GEJpL.jpg', '1', '1', '1', '2', '1', 3);
+INSERT INTO Oeuvres(IdOeuvre, Titre, SousTitre, Description, Image, idType, idAuteur, idEditeur, idSupport, idGenre, countFav) VALUES ('2', 'Holly Roler', 'null', 'Musique de metal', 'https://www.popnmusic.fr/wp-content/uploads/2020/08/cwe0ssz9ylc.jpg', '1', '2', '2', '2', '1', 2);
+INSERT INTO Oeuvres(IdOeuvre, Titre, SousTitre, Description, Image, idType, idAuteur, idEditeur, idSupport, idGenre, countFav) VALUES ('3', 'Sonne', 'null', 'Musique de metal', 'https://www.lacoccinelle.net/587118-1.jpg?20191117', '1', '3', '3', '2', '1', 0);
 
-INSERT INTO Collection(idCollection, UWUid, idOeuvre) VALUES ('1', '1', '1');
-INSERT INTO Collection(idCollection, UWUid, idOeuvre) VALUES ('6', '1', '2');
-INSERT INTO Collection(idCollection, UWUid, idOeuvre) VALUES ('5', '2', '1');
-INSERT INTO Collection(idCollection, UWUid, idOeuvre) VALUES ('2', '2', '2');
-INSERT INTO Collection(idCollection, UWUid, idOeuvre) VALUES ('3', '3', '1');
-INSERT INTO Collection(idCollection, UWUid, idOeuvre) VALUES ('4', '4', '1');
+INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('1', '1', '1', true);
+INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('6', '1', '2', true);
+INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('5', '2', '1', true);
+INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('2', '2', '2', false);
+INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('3', '3', '1', true);
+INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('4', '2', '1', false);

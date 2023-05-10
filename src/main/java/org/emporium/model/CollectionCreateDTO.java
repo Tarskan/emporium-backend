@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class CollectionCreateDTO {
     public String UWUid;
     public String idOeuvre;
+    private Boolean favorite;
 }

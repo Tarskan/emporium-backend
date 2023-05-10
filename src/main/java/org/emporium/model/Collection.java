@@ -20,6 +20,8 @@ public class Collection {
     @GenericGenerator(name = "idCollection", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "idCollection")
     private String idCollection;
+    @Column(name = "favorite")
+    public Boolean favorite;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(name="UWUid")
