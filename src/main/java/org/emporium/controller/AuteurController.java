@@ -40,8 +40,8 @@ public class AuteurController {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public GenericCreateDTO AddAuteur(@RequestBody GenericCreateDTO auteur) {
-        return auteur;
+    public Auteur AddAuteur(@RequestBody GenericCreateDTO auteur) {
+        return auteurService.addAuteur(auteur);
     }
 
     @Path("/delete/{idAuteur}")
