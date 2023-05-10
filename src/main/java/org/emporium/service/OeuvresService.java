@@ -57,6 +57,10 @@ public class OeuvresService {
         return oeuvresRepository.findByIdType(idType);
     }
 
+    public List<Oeuvres> getByIdSupport(String idSupport) {
+        return oeuvresRepository.findByIdSupport(idSupport);
+    }
+
     public List<Oeuvres> getByTitreAutocomplete(String titre) {
         return oeuvresRepository.findByTitreAutoComplete(titre);
     }

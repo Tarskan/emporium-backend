@@ -24,6 +24,9 @@ public interface OeuvresRepository extends CrudRepository<Oeuvres, String> {
     @Query("from Oeuvres where idAuteur = ?1")
     List<Oeuvres> findByIdAuteur(String idauteur);
 
+    @Query("from Oeuvres where idSupport = ?1")
+    List<Oeuvres> findByIdSupport(String idsupport);
+
     @Query("from Oeuvres where titre like concat(?1, '%')")
     List<Oeuvres> findByTitreAutoComplete(String titre);
 

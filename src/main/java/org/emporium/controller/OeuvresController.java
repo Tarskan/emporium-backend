@@ -62,8 +62,15 @@ public class OeuvresController {
     @Path("/type/{idType}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Oeuvres> getByType(@PathParam("idType") String idType) {
+    public List<Oeuvres> getByIdType(@PathParam("idType") String idType) {
         return oeuvresService.getByIdType(idType);
+    }
+
+    @Path("/support/{idSupport}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Oeuvres> getByIdSupport(@PathParam("idSupport") String idSupport) {
+        return oeuvresService.getByIdSupport(idSupport);
     }
 
     @PUT
