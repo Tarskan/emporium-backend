@@ -37,20 +37,28 @@ public class OeuvresService {
         return oeuvresRepository.findAll();
     }
 
-    public Oeuvres getByIdOeuvre(String IdOeuvre) {
-        return oeuvresRepository.findByIdOeuvre(IdOeuvre);
+    public Oeuvres getByIdOeuvre(String idOeuvre) {
+        return oeuvresRepository.findByIdOeuvre(idOeuvre);
     }
 
-    public List<Oeuvres> getByIdGenre(String IdGenre) {
-        return oeuvresRepository.findByIdGenre(IdGenre);
+    public List<Oeuvres> getByIdGenre(String idGenre) {
+        return oeuvresRepository.findByIdGenre(idGenre);
     }
 
-    public List<Oeuvres> getByIdEditeur(String IdEditeur) {
-        return oeuvresRepository.findByIdEditeur(IdEditeur);
+    public List<Oeuvres> getByIdEditeur(String idEditeur) {
+        return oeuvresRepository.findByIdEditeur(idEditeur);
     }
 
-    public List<Oeuvres> getByIdAuteur(String IdAuteur) {
-        return oeuvresRepository.findByIdAuteur(IdAuteur);
+    public List<Oeuvres> getByIdAuteur(String idAuteur) {
+        return oeuvresRepository.findByIdAuteur(idAuteur);
+    }
+
+    public List<Oeuvres> getByIdType(String idType) {
+        return oeuvresRepository.findByIdType(idType);
+    }
+
+    public List<Oeuvres> getByTitreAutocomplete(String titre) {
+        return oeuvresRepository.findByTitreAutoComplete(titre);
     }
 
     public Oeuvres addOeuvre(OeuvresCreateDTO oeuvres) throws Exception {

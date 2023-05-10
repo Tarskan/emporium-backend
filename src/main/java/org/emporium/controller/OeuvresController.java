@@ -24,32 +24,46 @@ public class OeuvresController {
         return oeuvresService.getAllOeuvres();
     }
 
-    @Path("/{IdOeuvre}")
+    @Path("/{idOeuvre}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Oeuvres getById(@PathParam("IdOeuvre") String IdOeuvre) {
-        return oeuvresService.getByIdOeuvre(IdOeuvre);
+    public Oeuvres getById(@PathParam("idOeuvre") String idOeuvre) {
+        return oeuvresService.getByIdOeuvre(idOeuvre);
     }
 
-    @Path("/genre/{IdGenre}")
+    @Path("/search/{oeuvreName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Oeuvres> getByGenre(@PathParam("IdGenre") String IdGenre) {
-        return oeuvresService.getByIdGenre(IdGenre);
+    public List<Oeuvres> getByTitreAutoComplete(@PathParam("oeuvreName") String oeuvreName) {
+        return oeuvresService.getByTitreAutocomplete(oeuvreName);
     }
 
-    @Path("/editeur/{IdEditeur}")
+    @Path("/genre/{idGenre}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Oeuvres> getByEditor(@PathParam("IdEditeur") String IdEditeur) {
-        return oeuvresService.getByIdEditeur(IdEditeur);
+    public List<Oeuvres> getByGenre(@PathParam("idGenre") String idGenre) {
+        return oeuvresService.getByIdGenre(idGenre);
     }
 
-    @Path("/auteur/{IdAuteur}")
+    @Path("/editeur/{idEditeur}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Oeuvres> getByAuthor(@PathParam("IdAuteur") String IdAuteur) {
-        return oeuvresService.getByIdAuteur(IdAuteur);
+    public List<Oeuvres> getByEditor(@PathParam("idEditeur") String idEditeur) {
+        return oeuvresService.getByIdEditeur(idEditeur);
+    }
+
+    @Path("/auteur/{idAuteur}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Oeuvres> getByAuthor(@PathParam("idAuteur") String idAuteur) {
+        return oeuvresService.getByIdAuteur(idAuteur);
+    }
+
+    @Path("/type/{idType}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Oeuvres> getByType(@PathParam("idType") String idType) {
+        return oeuvresService.getByIdType(idType);
     }
 
     @PUT
