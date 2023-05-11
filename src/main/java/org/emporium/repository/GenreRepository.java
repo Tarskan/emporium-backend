@@ -1,6 +1,7 @@
 package org.emporium.repository;
 
 import org.emporium.model.Genre;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -8,4 +9,6 @@ import java.util.List;
 public interface GenreRepository extends CrudRepository<Genre, String> {
     List<Genre> findAll();
 
+    @Query("from Genre where name like concat(?1, '%')")
+    List<Genre> findGenreAutocomplete(String name);
 }

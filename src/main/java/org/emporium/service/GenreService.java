@@ -24,6 +24,10 @@ public class GenreService {
         return genreRepository.findById(idGenre).orElseThrow(() -> new Exception("Genre not found."));
     }
 
+    public List<Genre> getGenreAutocomplete(String name) {
+        return genreRepository.findGenreAutocomplete(name);
+    }
+
     public Genre addGenre(GenericCreateDTO type) {
         Genre genreNew = Genre.builder()
                 .name(type.name)
