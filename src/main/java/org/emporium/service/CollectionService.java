@@ -1,6 +1,7 @@
 package org.emporium.service;
 
 import org.emporium.model.*;
+import org.emporium.model.Collection;
 import org.emporium.repository.CollectionRepository;
 import org.emporium.repository.OeuvresRepository;
 import org.emporium.repository.UtilisateurRepository;
@@ -8,10 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -77,6 +75,7 @@ public class CollectionService {
 
     public Collection modifyCollection(CollectionModifyDTO collection) throws Exception {
         if (collectionRepository.existsById(collection.getIdCollection())) {
+            Collection collectionOld = collectionRepository.findById(collection.getIdCollection()).orElseThrow(() -> new Exception("Un problème est survenu"));
             Collection collectionModify =  Collection.builder()
                     .idCollection(collection.getIdCollection())
                     .favorite(collection.getFavorite())
@@ -85,9 +84,13 @@ public class CollectionService {
                     .build();
 
             if(collectionModify.getFavorite()) {
-                collectionModify.getOeuvre().setCountFav(collectionModify.getOeuvre().getCountFav()+1);
+                if (collectionModify.getFavorite() != collectionOld.getFavorite()) {
+                    collectionModify.getOeuvre().setCountFav(collectionModify.getOeuvre().getCountFav()+1);
+                }
             } else {
-                collectionModify.getOeuvre().setCountFav(collectionModify.getOeuvre().getCountFav()-1);
+                if (collectionModify.getFavorite() != collectionOld.getFavorite()) {
+                    collectionModify.getOeuvre().setCountFav(collectionModify.getOeuvre().getCountFav()-1);
+                }
             }
             oeuvresRepository.save(collectionModify.getOeuvre());
 
@@ -99,6 +102,10 @@ public class CollectionService {
 
     public String suppCollection(String idCollection) throws Exception {
         Collection collectionToDelete = collectionRepository.findById(idCollection).orElseThrow(() -> new Exception("Id " + idCollection + " n'existe pas ou a deja était supprimer"));
+        if (collectionToDelete.getFavorite()) {
+            collectionToDelete.getOeuvre().setCountFav(collectionToDelete.getOeuvre().getCountFav()-1);
+            oeuvresRepository.save(collectionToDelete.getOeuvre());
+        }
         collectionRepository.delete(collectionToDelete);
         return "La collection a était supprimer";
     }

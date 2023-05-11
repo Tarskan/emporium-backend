@@ -38,6 +38,10 @@ public class Utilisateur {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "collection", joinColumns = {@JoinColumn(name = "UWUid")}, inverseJoinColumns = {@JoinColumn(name = "idOeuvre")})
     @JsonBackReference
-    public List<Utilisateur> listOeuvres;
+    public List<Oeuvres> listOeuvres;
+
+    @OneToMany(mappedBy ="utilisateur", fetch = FetchType.LAZY)
+    @JsonBackReference
+    public List<Commentaire> listCommentaire;
 
 }

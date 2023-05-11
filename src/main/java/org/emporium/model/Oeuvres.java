@@ -54,4 +54,8 @@ public class Oeuvres {
     @JsonBackReference
     public List<Utilisateur> listUti;
 
+    @OneToMany(mappedBy ="oeuvre", fetch = FetchType.LAZY)
+    @JsonBackReference
+    public List<Commentaire> listCommentaire;
+
 }
