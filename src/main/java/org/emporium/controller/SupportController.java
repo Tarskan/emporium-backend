@@ -29,6 +29,13 @@ public class SupportController {
         return supportService.getByIdSupport(idSupport);
     }
 
+    @Path("/search/{support}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Support> RechercheUtilisateurByPseudo(@PathParam("support") String support) {
+        return supportService.getSupportAutocomplete(support);
+    }
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Support PutOeuvre(@RequestBody GenericModifyDTO support) {

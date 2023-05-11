@@ -24,6 +24,10 @@ public class SupportService {
         return supportRepository.findById(idSupport).orElseThrow(() -> new Exception("Type not found."));
     }
 
+    public List<Support> getSupportAutocomplete(String name) {
+        return supportRepository.findSupportTypeAutocomplete(name);
+    }
+
     public Support addSupport(GenericCreateDTO support) throws Exception {
         Support supportNew = Support.builder()
                 .name(support.name)
