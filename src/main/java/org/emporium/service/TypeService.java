@@ -24,6 +24,10 @@ public class TypeService {
         return typeRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Type not found."));
     }
 
+    public List<Type> getTypeAutocomplete(String name) {
+        return typeRepository.findTypeAutocomplete(name);
+    }
+
     public Type addType(GenericCreateDTO type) throws Exception {
         Type typeNew =  Type.builder()
                 .name(type.name)

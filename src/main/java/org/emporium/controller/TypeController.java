@@ -31,6 +31,13 @@ public class TypeController {
         return typeService.getByIdType(idType);
     }
 
+    @Path("/search/{type}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Type> RechercheUtilisateurByPseudo(@PathParam("type") String type) {
+        return typeService.getTypeAutocomplete(type);
+    }
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Type PutType(@RequestBody GenericModifyDTO type) throws Exception {
