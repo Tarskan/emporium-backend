@@ -24,6 +24,10 @@ public class AuteurService {
         return auteurRepository.findById(idAuteur).orElseThrow(() -> new Exception("Type not found."));
     }
 
+    public List<Auteur> getAuteurAutocomplete(String name) {
+        return auteurRepository.findAuteurAutocomplete(name);
+    }
+
     public Auteur addAuteur(GenericCreateDTO auteur) {
         Auteur auteurNew = Auteur.builder()
                 .name(auteur.name)

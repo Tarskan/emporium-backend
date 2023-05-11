@@ -32,6 +32,13 @@ public class AuteurController {
         return auteurService.getByIdAuteur(idAuteur);
     }
 
+    @Path("/search/{auteur}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Auteur> RechercheUtilisateurByPseudo(@PathParam("auteur") String auteur) {
+        return auteurService.getAuteurAutocomplete(auteur);
+    }
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Auteur PutAuteur(@RequestBody GenericModifyDTO auteur) {
