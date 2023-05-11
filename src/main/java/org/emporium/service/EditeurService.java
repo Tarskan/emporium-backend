@@ -26,6 +26,10 @@ public class EditeurService {
         return editeurRepository.findById(idEditeur).orElseThrow(() -> new Exception("Genre not found."));
     }
 
+    public List<Editeur> getEditeurAutocomplete(String name) {
+        return editeurRepository.findEditeurAutocomplete(name);
+    }
+
     public Editeur addEditeur(GenericCreateDTO editeur) throws Exception {
         Editeur genreNew = Editeur.builder()
                 .name(editeur.name)

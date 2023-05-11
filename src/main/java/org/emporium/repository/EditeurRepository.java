@@ -9,4 +9,6 @@ import java.util.List;
 public interface EditeurRepository extends CrudRepository<Editeur, String> {
     List<Editeur> findAll();
 
+    @Query("from Editeur where name like concat(?1, '%')")
+    List<Editeur> findEditeurAutocomplete(String name);
 }

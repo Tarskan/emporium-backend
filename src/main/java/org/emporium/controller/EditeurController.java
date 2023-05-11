@@ -31,6 +31,13 @@ public class EditeurController {
         return editeurService.getByIdEditeur(idEditeur);
     }
 
+    @Path("/search/{editeur}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Editeur> RechercheUtilisateurByPseudo(@PathParam("editeur") String editeur) {
+        return editeurService.getEditeurAutocomplete(editeur);
+    }
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Editeur PutEditeur(@RequestBody GenericModifyDTO editeur) throws Exception {
