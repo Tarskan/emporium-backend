@@ -31,6 +31,13 @@ public class GenreController {
         return genreService.getByIdGenre(idGenre);
     }
 
+    @Path("/search/{genre}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Genre> RechercheUtilisateurByPseudo(@PathParam("genre") String genre) {
+        return genreService.getGenreAutocomplete(genre);
+    }
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Genre PutGenre(@RequestBody GenericModifyDTO support) {
