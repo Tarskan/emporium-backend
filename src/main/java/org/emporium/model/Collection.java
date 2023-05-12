@@ -1,5 +1,6 @@
 package org.emporium.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,12 +26,12 @@ public class Collection {
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(name="UWUid")
-    @JsonManagedReference
+    @JsonBackReference("utilisateur")
     public Utilisateur utilisateur;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(name="idOeuvre")
-    @JsonManagedReference
+    @JsonBackReference("oeuvre")
     public Oeuvres oeuvre;
 
 }

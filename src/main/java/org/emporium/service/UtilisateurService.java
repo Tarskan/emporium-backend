@@ -1,7 +1,9 @@
 package org.emporium.service;
 
+import org.emporium.model.Commentaire;
 import org.emporium.model.Utilisateur;
 import org.emporium.model.UtilisateurCreateDTO;
+import org.emporium.repository.CommentaireRepository;
 import org.emporium.repository.UtilisateurRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,9 @@ public class UtilisateurService {
 
     @Inject
     UtilisateurRepository utilisateurRepository;
+
+    @Inject
+    CommentaireRepository commentaireRepository;
 
 
     public List<Utilisateur> getAllUser() {
@@ -65,8 +70,10 @@ public class UtilisateurService {
     public String suppUser(String uwuid) {
         if (utilisateurRepository.existsById(uwuid)) {
             Utilisateur userToDelete = utilisateurRepository.findByUWUid(uwuid);
+            List<Commentaire> comUser = commentaireRepository.findByUWUid(uwuid);
+            commentaireRepository.deleteAll(comUser);
             utilisateurRepository.delete(userToDelete);
-            return "L'utilisateur a était supprimer";
+            return "L'utilisateur est supprimer";
         } else {
             return "Id " + uwuid + " n'existe pas ou a deja était supprimer";
         }

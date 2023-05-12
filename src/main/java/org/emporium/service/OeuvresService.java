@@ -1,5 +1,6 @@
 package org.emporium.service;
 
+import org.emporium.model.Commentaire;
 import org.emporium.model.Oeuvres;
 import org.emporium.model.OeuvresCreateDTO;
 import org.emporium.model.OeuvresModifyDTO;
@@ -17,6 +18,9 @@ public class OeuvresService {
 
     @Inject
     OeuvresRepository oeuvresRepository;
+
+    @Inject
+    CommentaireRepository commentaireRepository;
 
     @Inject
     TypeRepository typeRepository;
@@ -104,6 +108,8 @@ public class OeuvresService {
 
     public String suppOeuvre(String IdOeuvre) throws Exception {
         Oeuvres oeuvreToDelete = oeuvresRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Id " + IdOeuvre + " n'existe pas ou a deja était supprimer"));
+        List<Commentaire> comUser = commentaireRepository.findByIdOeuvre(IdOeuvre);
+        commentaireRepository.deleteAll(comUser);
         oeuvresRepository.delete(oeuvreToDelete);
         return "L'oeuvre a était supprimer";
     }

@@ -53,7 +53,7 @@ public class CommentaireService {
             if (commentaire.getLike()) {
                 commentaireModified = Commentaire.builder()
                         .idCommentaire(commentaire.idCommentaire)
-                        .utilisateur(utilisateurRepository.findById(commentaire.getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
+                        .utilisateur(utilisateurRepository.findById(commentaireOld.getUtilisateur().getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
                         .oeuvre(oeuvresRepository.findById(commentaire.getIdOeuvre()).orElseThrow(() -> new Exception("Oeuvres not found.")))
                         .text(commentaireOld.getText())
                         .nbLike(commentaireOld.getNbLike())
@@ -62,7 +62,7 @@ public class CommentaireService {
                 commentaireModified.setNbLike(commentaireModified.getNbLike() + 1);
             } else {
                 commentaireModified = Commentaire.builder()
-                        .utilisateur(utilisateurRepository.findById(commentaire.getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
+                        .utilisateur(utilisateurRepository.findById(commentaireOld.getUtilisateur().getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
                         .oeuvre(oeuvresRepository.findById(commentaire.getIdOeuvre()).orElseThrow(() -> new Exception("Oeuvres not found.")))
                         .text(commentaireOld.getText())
                         .nbLike(commentaireOld.getNbLike())

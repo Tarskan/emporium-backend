@@ -9,10 +9,10 @@ import java.util.List;
 public interface CommentaireRepository extends CrudRepository<Commentaire, String> {
     List<Commentaire> findAll();
 
-    @Query("from Collection where UWUid = ?1")
+    @Query("from Commentaire where UWUid = ?1")
     List<Commentaire> findByUWUid(String uwuid);
 
-    @Query("from Collection where idOeuvre = ?1")
+    @Query("from Commentaire where idOeuvre = ?1")
     List<Commentaire> findByIdOeuvre(String idOeuvre);
 
 }

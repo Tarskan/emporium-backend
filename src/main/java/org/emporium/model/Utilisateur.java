@@ -37,11 +37,11 @@ public class Utilisateur {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "collection", joinColumns = {@JoinColumn(name = "UWUid")}, inverseJoinColumns = {@JoinColumn(name = "idOeuvre")})
-    @JsonBackReference
+    @JsonBackReference("collection")
     public List<Oeuvres> listOeuvres;
 
     @OneToMany(mappedBy ="utilisateur", fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference("commentaireUti")
     public List<Commentaire> listCommentaire;
 
 }

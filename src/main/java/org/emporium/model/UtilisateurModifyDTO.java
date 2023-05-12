@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class UtilisateurModifyDTO {
-    private String UWUid;
+    public String UWUid;
     public String pseudo;
     public String pwd;
     public String grade;

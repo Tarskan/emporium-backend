@@ -1,6 +1,7 @@
 package org.emporium.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -51,11 +52,11 @@ public class Oeuvres {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "collection", joinColumns = {@JoinColumn(name = "idOeuvre")}, inverseJoinColumns = {@JoinColumn(name = "UWUid")})
-    @JsonBackReference
+    @JsonBackReference("collection")
     public List<Utilisateur> listUti;
 
     @OneToMany(mappedBy ="oeuvre", fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference("oeuvresCom")
     public List<Commentaire> listCommentaire;
 
 }

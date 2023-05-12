@@ -11,7 +11,7 @@ INSERT INTO Editeur(idEditeur, name) VALUES ('1', 'Napalm Record');
 INSERT INTO Editeur(idEditeur, name) VALUES ('2', 'Tourbillon');
 INSERT INTO Editeur(idEditeur, name) VALUES ('3', 'Test');
 INSERT INTO Genre(idGenre, name) VALUES ('1', 'Death metal');
-INSERT INTO Type(idType, name) VALUES ('1', 'Groupe de metal');
+INSERT INTO Type(idType, name) VALUES ('1', 'Musique');
 INSERT INTO Type(idType, name) VALUES ('2', 'Jeux vidéo');
 INSERT INTO Support(idSupport, name) VALUES ('1', 'DVD');
 INSERT INTO Support(idSupport, name) VALUES ('2', 'CD');
