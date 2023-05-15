@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Singleton
 @Service
@@ -28,50 +29,55 @@ public class UtilisateurService {
     }
 
     public Utilisateur GetUserByUwuid(String uwuid) {
-        Utilisateur User = utilisateurRepository.findByUWUid(uwuid);
-        return User;
+        return utilisateurRepository.findByUWUid(uwuid);
     }
 
     public Utilisateur GetUserByPseudo(String pseudo) {
-        Utilisateur User = utilisateurRepository.findByPseudo(pseudo);
-        return User;
+        return utilisateurRepository.findByPseudo(pseudo);
     }
 
     public List<Utilisateur> SearchByPseudo(String pseudo) {
-        List<Utilisateur> ListUser = utilisateurRepository.findByPseudoLike(pseudo);
-        return ListUser;
+        return utilisateurRepository.findByPseudoLike(pseudo);
     }
 
     public Utilisateur addUser(UtilisateurCreateDTO utilisateur) {
-        Date myDate = new Date();
+        if(!Objects.equals(utilisateurRepository.findByPseudo(utilisateur.getPseudo()).getPseudo(), utilisateur.getPseudo())) {
+            Date myDate = new Date();
 
-        Utilisateur utilisateurNew =  Utilisateur.builder()
-                .pseudo(utilisateur.pseudo)
-                .pwd(utilisateur.pwd)
-                .creationDate(myDate)
-                .modificationDate(null)
-                .build();
+            Utilisateur utilisateurNew =  Utilisateur.builder()
+                    .pseudo(utilisateur.pseudo)
+                    .pwd(utilisateur.pwd)
+                    .creationDate(myDate)
+                    .modificationDate(null)
+                    .build();
 
-        return utilisateurRepository.save(utilisateurNew);
+            return utilisateurRepository.save(utilisateurNew);
+        } else {
+            throw new IllegalArgumentException("Pseudo: " + utilisateur.getPseudo() + " en doublon dans la bdd");
+        }
     }
 
     public Utilisateur modifyUser(Utilisateur utilisateur) {
         if (utilisateurRepository.existsById(utilisateur.getUWUid())) {
-            Date myDate = new Date();
+            if(!Objects.equals(utilisateurRepository.findByPseudo(utilisateur.getPseudo()).getPseudo(), utilisateur.getPseudo())) {
+                Date myDate = new Date();
 
-            Utilisateur utilisateurOld = utilisateurRepository.findByUWUid(utilisateur.getUWUid());
-            Utilisateur utilisateurModify =  Utilisateur.builder()
-                    .UWUid(utilisateur.getUWUid())
-                    .pseudo(utilisateur.getPseudo())
-                    .pwd(utilisateur.getPwd())
-                    .equipe(utilisateur.getEquipe())
-                    .grade(utilisateur.getGrade())
-                    .resultat(utilisateur.getResultat())
-                    .creationDate(utilisateurOld.getCreationDate())
-                    .modificationDate(myDate)
-                    .build();
+                Utilisateur utilisateurOld = utilisateurRepository.findByUWUid(utilisateur.getUWUid());
+                Utilisateur utilisateurModify =  Utilisateur.builder()
+                        .UWUid(utilisateur.getUWUid())
+                        .pseudo(utilisateur.getPseudo())
+                        .pwd(utilisateur.getPwd())
+                        .equipe(utilisateur.getEquipe())
+                        .grade(utilisateur.getGrade())
+                        .resultat(utilisateur.getResultat())
+                        .creationDate(utilisateurOld.getCreationDate())
+                        .modificationDate(myDate)
+                        .build();
 
-            return utilisateurRepository.save(utilisateurModify);
+                return utilisateurRepository.save(utilisateurModify);
+            } else {
+                throw new IllegalArgumentException("Pseudo: " + utilisateur.getPseudo() + " en doublon dans la bdd");
+            }
         } else {
             throw new IllegalArgumentException("Id: " + utilisateur.getUWUid() + " Non trouvée dans la bdd");
         }

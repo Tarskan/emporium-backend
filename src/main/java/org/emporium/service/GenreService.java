@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Objects;
 
 @Singleton
 @Service
@@ -32,22 +33,30 @@ public class GenreService {
         return genreRepository.findGenreAutocomplete(name);
     }
 
-    public Genre addGenre(GenericCreateDTO type) {
-        Genre genreNew = Genre.builder()
-                .name(type.name)
-                .build();
+    public Genre addGenre(GenericCreateDTO genre) {
+        if(!Objects.equals(genreRepository.findByName(genre.getName()).getName(), genre.getName())) {
+            Genre genreNew = Genre.builder()
+                    .name(genre.name)
+                    .build();
 
-        return genreRepository.save(genreNew);
+            return genreRepository.save(genreNew);
+        } else {
+            throw new IllegalArgumentException("Name: " + genre.getName() + " en doublon dans la bdd");
+        }
     }
 
     public Genre modifyGenre(GenericModifyDTO genre) {
         if (genreRepository.existsById(genre.getId())) {
-            Genre genreModified = Genre.builder()
-                    .idGenre(genre.getId())
-                    .name(genre.getName())
-                    .build();
+            if(!Objects.equals(genreRepository.findByName(genre.getName()).getName(), genre.getName())) {
+                Genre genreModified = Genre.builder()
+                        .idGenre(genre.getId())
+                        .name(genre.getName())
+                        .build();
 
-            return genreRepository.save(genreModified);
+                return genreRepository.save(genreModified);
+            } else {
+                throw new IllegalArgumentException("Name: " + genre.getName() + " en doublon dans la bdd");
+            }
         } else {
             throw new IllegalArgumentException("Id: " + genre.getId() + " Non trouvée dans la bdd");
         }

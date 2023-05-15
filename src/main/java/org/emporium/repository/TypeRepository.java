@@ -11,4 +11,7 @@ public interface TypeRepository extends CrudRepository<Type, String> {
 
     @Query("from Type where name like concat(?1, '%')")
     List<Type> findTypeAutocomplete(String name);
+
+    @Query("from Type where name = ?1")
+    Type findByName(String name);
 }

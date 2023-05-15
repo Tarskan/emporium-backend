@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 @Singleton
@@ -95,45 +96,53 @@ public class OeuvresService {
     }
 
     public Oeuvres addOeuvre(OeuvresCreateDTO oeuvres) throws Exception {
-        Date myDate = new Date();
-        Oeuvres oeuvresNew =  Oeuvres.builder()
-                .titre(oeuvres.titre)
-                .sousTitre(oeuvres.sousTitre)
-                .description(oeuvres.description)
-                .image(oeuvres.image)
-                .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
-                .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
-                .genre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
-                .editeur(editeurRepository.findById(oeuvres.getIdEditeur()).orElseThrow(() -> new Exception("Editeur not found.")))
-                .support(supportRepository.findById(oeuvres.getIdSupport()).orElseThrow(() -> new Exception("Support not found.")))
-                .creationDate(myDate)
-                .modificationDate(null)
-                .build();
-
-        return oeuvresRepository.save(oeuvresNew);
-    }
-
-    public Oeuvres modifyOeuvre(OeuvresModifyDTO oeuvres) throws Exception {
-        if (oeuvresRepository.existsById(oeuvres.getIdOeuvre())) {
+        if(!Objects.equals(oeuvresRepository.findByTitre(oeuvres.getTitre()).getTitre(), oeuvres.getTitre())) {
             Date myDate = new Date();
-            Oeuvres oeuvresOld = oeuvresRepository.findByIdOeuvre(oeuvres.getIdOeuvre());
-
-            Oeuvres oeuvresModified =  Oeuvres.builder()
-                    .idOeuvre(oeuvres.getIdOeuvre())
-                    .titre(oeuvres.getTitre())
-                    .sousTitre(oeuvres.getSousTitre())
-                    .description(oeuvres.getDescription())
-                    .image(oeuvres.getImage())
+            Oeuvres oeuvresNew = Oeuvres.builder()
+                    .titre(oeuvres.titre)
+                    .sousTitre(oeuvres.sousTitre)
+                    .description(oeuvres.description)
+                    .image(oeuvres.image)
                     .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
                     .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
                     .genre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
                     .editeur(editeurRepository.findById(oeuvres.getIdEditeur()).orElseThrow(() -> new Exception("Editeur not found.")))
                     .support(supportRepository.findById(oeuvres.getIdSupport()).orElseThrow(() -> new Exception("Support not found.")))
-                    .creationDate(oeuvresOld.getCreationDate())
-                    .modificationDate(myDate)
+                    .creationDate(myDate)
+                    .modificationDate(null)
                     .build();
 
-            return oeuvresRepository.save(oeuvresModified);
+            return oeuvresRepository.save(oeuvresNew);
+        } else {
+            throw new IllegalArgumentException("Name: " + oeuvres.getTitre() + " en doublon dans la bdd");
+        }
+    }
+
+    public Oeuvres modifyOeuvre(OeuvresModifyDTO oeuvres) throws Exception {
+        if (oeuvresRepository.existsById(oeuvres.getIdOeuvre())) {
+            if(!Objects.equals(oeuvresRepository.findByTitre(oeuvres.getTitre()).getTitre(), oeuvres.getTitre())) {
+                Date myDate = new Date();
+                Oeuvres oeuvresOld = oeuvresRepository.findByIdOeuvre(oeuvres.getIdOeuvre());
+
+                Oeuvres oeuvresModified =  Oeuvres.builder()
+                        .idOeuvre(oeuvres.getIdOeuvre())
+                        .titre(oeuvres.getTitre())
+                        .sousTitre(oeuvres.getSousTitre())
+                        .description(oeuvres.getDescription())
+                        .image(oeuvres.getImage())
+                        .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
+                        .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
+                        .genre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
+                        .editeur(editeurRepository.findById(oeuvres.getIdEditeur()).orElseThrow(() -> new Exception("Editeur not found.")))
+                        .support(supportRepository.findById(oeuvres.getIdSupport()).orElseThrow(() -> new Exception("Support not found.")))
+                        .creationDate(oeuvresOld.getCreationDate())
+                        .modificationDate(myDate)
+                        .build();
+
+                return oeuvresRepository.save(oeuvresModified);
+            } else {
+                throw new IllegalArgumentException("Name: " + oeuvres.getTitre() + " en doublon dans la bdd");
+            }
         } else {
             throw new IllegalArgumentException("Id: " + oeuvres.getIdOeuvre() + " Non trouvée dans la bdd");
         }

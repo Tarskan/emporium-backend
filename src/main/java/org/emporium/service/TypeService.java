@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Objects;
 
 @Singleton
 @Service
@@ -29,21 +30,29 @@ public class TypeService {
     }
 
     public Type addType(GenericCreateDTO type) throws Exception {
-        Type typeNew =  Type.builder()
-                .name(type.name)
-                .build();
+        if(!Objects.equals(typeRepository.findByName(type.getName()).getName(), type.getName())) {
+            Type typeNew =  Type.builder()
+                    .name(type.name)
+                    .build();
 
-        return typeRepository.save(typeNew);
+            return typeRepository.save(typeNew);
+        } else {
+            throw new IllegalArgumentException("Name: " + type.getName() + " en doublon dans la bdd");
+        }
     }
 
     public Type modifyType(GenericModifyDTO type) {
         if (typeRepository.existsById(type.getId())) {
-            Type typeModified = Type.builder()
-                    .idType(type.getId())
-                    .name(type.name)
-                    .build();
+            if(!Objects.equals(typeRepository.findByName(type.getName()).getName(), type.getName())) {
+                Type typeModified = Type.builder()
+                        .idType(type.getId())
+                        .name(type.name)
+                        .build();
 
-            return typeRepository.save(typeModified);
+                return typeRepository.save(typeModified);
+            } else {
+                throw new IllegalArgumentException("Name: " + type.getName() + " en doublon dans la bdd");
+            }
         } else {
             throw new IllegalArgumentException("Id: " + type.getId() + " Non trouvée dans la bdd");
         }

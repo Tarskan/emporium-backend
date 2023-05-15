@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Objects;
 
 @Singleton
 @Service
@@ -29,21 +30,30 @@ public class AuteurService {
     }
 
     public Auteur addAuteur(GenericCreateDTO auteur) {
-        Auteur auteurNew = Auteur.builder()
-                .name(auteur.name)
-                .build();
+        if(!Objects.equals(auteurRepository.findByName(auteur.getName()).getName(), auteur.getName())) {
+            Auteur auteurNew = Auteur.builder()
+                    .name(auteur.name)
+                    .build();
 
-        return auteurRepository.save(auteurNew);
+            return auteurRepository.save(auteurNew);
+        } else {
+            throw new IllegalArgumentException("Name: " + auteur.getName() + " en doublon dans la bdd");
+        }
+
     }
 
     public Auteur modifyAuteur(GenericModifyDTO auteur) {
         if (auteurRepository.existsById(auteur.getId())) {
-            Auteur auteurModified = Auteur.builder()
-                    .idAuteur(auteur.getId())
-                    .name(auteur.getName())
-                    .build();
+            if(!Objects.equals(auteurRepository.findByName(auteur.getName()).getName(), auteur.getName())) {
+                Auteur auteurModified = Auteur.builder()
+                        .idAuteur(auteur.getId())
+                        .name(auteur.getName())
+                        .build();
 
-            return auteurRepository.save(auteurModified);
+                return auteurRepository.save(auteurModified);
+            } else {
+                throw new IllegalArgumentException("Name: " + auteur.getName() + " en doublon dans la bdd");
+            }
         } else {
             throw new IllegalArgumentException("Id: " + auteur.getId() + " Non trouvée dans la bdd");
         }

@@ -3,14 +3,13 @@ package org.emporium.service;
 import org.emporium.model.Editeur;
 import org.emporium.model.GenericCreateDTO;
 import org.emporium.model.GenericModifyDTO;
-import org.emporium.model.Genre;
 import org.emporium.repository.EditeurRepository;
-import org.emporium.repository.GenreRepository;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Objects;
 
 @Singleton
 @Service
@@ -31,21 +30,29 @@ public class EditeurService {
     }
 
     public Editeur addEditeur(GenericCreateDTO editeur) throws Exception {
-        Editeur genreNew = Editeur.builder()
-                .name(editeur.name)
-                .build();
+        if(!Objects.equals(editeurRepository.findByName(editeur.getName()).getName(), editeur.getName())) {
+            Editeur genreNew = Editeur.builder()
+                    .name(editeur.name)
+                    .build();
 
-        return editeurRepository.save(genreNew);
+            return editeurRepository.save(genreNew);
+        } else {
+            throw new IllegalArgumentException("Name: " + editeur.getName() + " en doublon dans la bdd");
+        }
     }
 
     public Editeur modifyEditeur(GenericModifyDTO editeur) {
         if (editeurRepository.existsById(editeur.getId())) {
-            Editeur editeurModified = Editeur.builder()
-                    .idEditeur(editeur.getId())
-                    .name(editeur.getName())
-                    .build();
+            if(!Objects.equals(editeurRepository.findByName(editeur.getName()).getName(), editeur.getName())) {
+                Editeur editeurModified = Editeur.builder()
+                        .idEditeur(editeur.getId())
+                        .name(editeur.getName())
+                        .build();
 
-            return editeurRepository.save(editeurModified);
+                return editeurRepository.save(editeurModified);
+            } else {
+                throw new IllegalArgumentException("Name: " + editeur.getName() + " en doublon dans la bdd");
+            }
         } else {
             throw new IllegalArgumentException("Id: " + editeur.getId() + " Non trouvée dans la bdd");
         }

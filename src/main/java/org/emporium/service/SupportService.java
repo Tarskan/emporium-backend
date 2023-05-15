@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
+import java.util.Objects;
 
 @Singleton
 @Service
@@ -34,21 +35,29 @@ public class SupportService {
     }
 
     public Support addSupport(GenericCreateDTO support) throws Exception {
-        Support supportNew = Support.builder()
-                .name(support.name)
-                .build();
+        if(!Objects.equals(supportRepository.findByName(support.getName()).getName(), support.getName())) {
+            Support supportNew = Support.builder()
+                    .name(support.name)
+                    .build();
 
-        return supportRepository.save(supportNew);
+            return supportRepository.save(supportNew);
+        } else {
+            throw new IllegalArgumentException("Name: " + support.getName() + " en doublon dans la bdd");
+        }
     }
 
     public Support modifySupport(GenericModifyDTO support) {
         if (supportRepository.existsById(support.getId())) {
-            Support supportModified = Support.builder()
-                    .idSupport(support.getId())
-                    .name(support.getName())
-                    .build();
+            if(!Objects.equals(supportRepository.findByName(support.getName()).getName(), support.getName())) {
+                Support supportModified = Support.builder()
+                        .idSupport(support.getId())
+                        .name(support.getName())
+                        .build();
 
-            return supportRepository.save(supportModified);
+                return supportRepository.save(supportModified);
+            } else {
+                throw new IllegalArgumentException("Name: " + support.getName() + " en doublon dans la bdd");
+            }
         } else {
             throw new IllegalArgumentException("Id: " + support.getId() + " Non trouvée dans la bdd");
         }

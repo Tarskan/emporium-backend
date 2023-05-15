@@ -11,4 +11,7 @@ public interface SupportRepository extends CrudRepository<Support, String> {
 
     @Query("from Support where name like concat(?1, '%')")
     List<Support> findSupportTypeAutocomplete(String name);
+
+    @Query("from Support where name = ?1")
+    Support findByName(String name);
 }

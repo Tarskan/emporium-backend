@@ -1,5 +1,6 @@
 package org.emporium.repository;
 
+import org.emporium.model.Auteur;
 import org.emporium.model.Oeuvres;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -11,6 +12,9 @@ public interface OeuvresRepository extends CrudRepository<Oeuvres, String> {
 
     @Query("from Oeuvres where idOeuvre = ?1")
     Oeuvres findByIdOeuvre(String idoeuvre);
+
+    @Query("from Oeuvres where titre = ?1")
+    Oeuvres findByTitre(String name);
 
     @Query("from Oeuvres where idType = ?1")
     List<Oeuvres> findByIdType(String idtype);
