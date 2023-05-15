@@ -30,7 +30,6 @@ public class Commentaire {
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(name="UWUid")
-    @JsonBackReference("commentaireUti")
     public Utilisateur utilisateur;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)

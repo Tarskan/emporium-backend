@@ -56,7 +56,7 @@ public class Oeuvres {
     public List<Utilisateur> listUti;
 
     @OneToMany(mappedBy ="oeuvre", fetch = FetchType.LAZY)
-    @JsonBackReference("oeuvresCom")
+    @JsonManagedReference("oeuvresCom")
     public List<Commentaire> listCommentaire;
 
 }
