@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.Date;
 import java.util.List;
 
 @Singleton
@@ -42,9 +43,13 @@ public class UtilisateurService {
     }
 
     public Utilisateur addUser(UtilisateurCreateDTO utilisateur) {
+        Date myDate = new Date();
+
         Utilisateur utilisateurNew =  Utilisateur.builder()
                 .pseudo(utilisateur.pseudo)
                 .pwd(utilisateur.pwd)
+                .creationDate(myDate)
+                .modificationDate(null)
                 .build();
 
         return utilisateurRepository.save(utilisateurNew);
@@ -52,6 +57,9 @@ public class UtilisateurService {
 
     public Utilisateur modifyUser(Utilisateur utilisateur) {
         if (utilisateurRepository.existsById(utilisateur.getUWUid())) {
+            Date myDate = new Date();
+
+            Utilisateur utilisateurOld = utilisateurRepository.findByUWUid(utilisateur.getUWUid());
             Utilisateur utilisateurModify =  Utilisateur.builder()
                     .UWUid(utilisateur.getUWUid())
                     .pseudo(utilisateur.getPseudo())
@@ -59,6 +67,8 @@ public class UtilisateurService {
                     .equipe(utilisateur.getEquipe())
                     .grade(utilisateur.getGrade())
                     .resultat(utilisateur.getResultat())
+                    .creationDate(utilisateurOld.getCreationDate())
+                    .modificationDate(myDate)
                     .build();
 
             return utilisateurRepository.save(utilisateurModify);

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Builder
@@ -27,6 +28,10 @@ public class Commentaire {
     public Integer nbDislike;
     @Column(name = "text")
     public String text;
+    @Column(name = "creationDate")
+    public Date creationDate;
+    @Column(name = "modificationDate")
+    public Date modificationDate;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinColumn(name="UWUid")

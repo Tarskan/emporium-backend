@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.Date;
 import java.util.List;
 
 @Singleton
@@ -54,12 +55,16 @@ public class CommentaireService {
     }
 
     public Commentaire addCommentaire(CommentaireCreateDTO commentaire) throws Exception {
+        Date myDate = new Date();
+
         Commentaire commentaireNew = Commentaire.builder()
                 .utilisateur(utilisateurRepository.findById(commentaire.getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
                 .oeuvre(oeuvresRepository.findById(commentaire.getIdOeuvre()).orElseThrow(() -> new Exception("Oeuvres not found.")))
                 .text(commentaire.getText())
                 .nbLike(0)
                 .nbDislike(0)
+                .creationDate(myDate)
+                .modificationDate(null)
                 .build();
 
         return commentaireRepository.save(commentaireNew);
@@ -78,6 +83,8 @@ public class CommentaireService {
                         .text(commentaireOld.getText())
                         .nbLike(commentaireOld.getNbLike())
                         .nbDislike(commentaireOld.getNbDislike())
+                        .creationDate(commentaireOld.getCreationDate())
+                        .modificationDate(commentaireOld.getModificationDate())
                         .build();
                 commentaireModified.setNbLike(commentaireModified.getNbLike() + 1);
             } else {
@@ -87,6 +94,8 @@ public class CommentaireService {
                         .text(commentaireOld.getText())
                         .nbLike(commentaireOld.getNbLike())
                         .nbDislike(commentaireOld.getNbDislike())
+                        .creationDate(commentaireOld.getCreationDate())
+                        .modificationDate(commentaireOld.getModificationDate())
                         .build();
                 commentaireModified.setNbDislike(commentaireModified.getNbDislike() + 1);
             }
@@ -97,6 +106,8 @@ public class CommentaireService {
     }
 
     public Commentaire modifyCommentaire(CommentaireModifyDTO commentaire) throws Exception {
+        Date myDate = new Date();
+
         if (commentaireRepository.existsById(commentaire.getIdCommentaire())) {
             Commentaire commentaireOld = commentaireRepository.findById(commentaire.getIdCommentaire()).orElseThrow(() -> new Exception("Commentaire not found."));
             Commentaire commentaireModified = Commentaire.builder()
@@ -106,6 +117,8 @@ public class CommentaireService {
                     .text(commentaire.getText())
                     .nbLike(commentaireOld.getNbLike())
                     .nbDislike(commentaireOld.getNbDislike())
+                    .creationDate(commentaireOld.getCreationDate())
+                    .modificationDate(myDate)
                     .build();
 
             return commentaireRepository.save(commentaireModified);

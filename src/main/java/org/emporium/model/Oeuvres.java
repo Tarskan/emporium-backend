@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -29,6 +30,10 @@ public class Oeuvres {
     public String image;
     @Column(name = "countFav")
     public Integer countFav;
+    @Column(name = "creationDate")
+    public Date creationDate;
+    @Column(name = "modificationDate")
+    public Date modificationDate;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="idType")
