@@ -34,3 +34,4 @@ INSERT INTO Commentaire(idCommentaire, UWUid, idOeuvre, text, nbLike, nbDislike)
 INSERT INTO Commentaire(idCommentaire, UWUid, idOeuvre, text, nbLike, nbDislike) VALUES ('3', '3', '1', 'texte de test', 10, 18);
 INSERT INTO Commentaire(idCommentaire, UWUid, idOeuvre, text, nbLike, nbDislike) VALUES ('4', '1', '2', 'texte de test', 70, 14);
 INSERT INTO Commentaire(idCommentaire, UWUid, idOeuvre, text, nbLike, nbDislike) VALUES ('5', '2', '3', 'texte de test', 20, 1);
+INSERT INTO Commentaire(idCommentaire, UWUid, idOeuvre, text, nbLike, nbDislike) VALUES ('6', '3', '3', 'texte de test', 20, 1);
