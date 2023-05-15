@@ -29,6 +29,13 @@ public class CommentaireController {
         return commentaireService.getByIdCommentaire(idCommentaire);
     }
 
+    @Path("/utilisateur/{uwuid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Commentaire> getByCommentaireByUwuid(@PathParam("uwuid") String uwuid) throws Exception {
+        return commentaireService.getCommentaireByUwuid(uwuid);
+    }
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public Commentaire PutCommentaire(@RequestBody CommentaireModifyDTO commentaire) throws Exception {
