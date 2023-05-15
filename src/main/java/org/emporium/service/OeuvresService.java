@@ -42,27 +42,51 @@ public class OeuvresService {
     }
 
     public Oeuvres getByIdOeuvre(String idOeuvre) {
-        return oeuvresRepository.findByIdOeuvre(idOeuvre);
+        if (oeuvresRepository.existsById(idOeuvre)) {
+            return oeuvresRepository.findByIdOeuvre(idOeuvre);
+        } else {
+            throw new IllegalArgumentException("Id: " + idOeuvre + " Non trouvée dans la bdd");
+        }
     }
 
     public List<Oeuvres> getByIdGenre(String idGenre) {
-        return oeuvresRepository.findByIdGenre(idGenre);
+        if (genreRepository.existsById(idGenre)) {
+            return oeuvresRepository.findByIdGenre(idGenre);
+        } else {
+            throw new IllegalArgumentException("Id: " + idGenre + " Non trouvée dans la bdd");
+        }
     }
 
     public List<Oeuvres> getByIdEditeur(String idEditeur) {
-        return oeuvresRepository.findByIdEditeur(idEditeur);
+        if (editeurRepository.existsById(idEditeur)) {
+            return oeuvresRepository.findByIdEditeur(idEditeur);
+        } else {
+            throw new IllegalArgumentException("Id: " + idEditeur + " Non trouvée dans la bdd");
+        }
     }
 
     public List<Oeuvres> getByIdAuteur(String idAuteur) {
-        return oeuvresRepository.findByIdAuteur(idAuteur);
+        if (auteurRepository.existsById(idAuteur)) {
+            return oeuvresRepository.findByIdAuteur(idAuteur);
+        } else {
+            throw new IllegalArgumentException("Id: " + idAuteur + " Non trouvée dans la bdd");
+        }
     }
 
     public List<Oeuvres> getByIdType(String idType) {
-        return oeuvresRepository.findByIdType(idType);
+        if (typeRepository.existsById(idType)) {
+            return oeuvresRepository.findByIdType(idType);
+        } else {
+            throw new IllegalArgumentException("Id: " + idType + " Non trouvée dans la bdd");
+        }
     }
 
     public List<Oeuvres> getByIdSupport(String idSupport) {
-        return oeuvresRepository.findByIdSupport(idSupport);
+        if (supportRepository.existsById(idSupport)) {
+            return oeuvresRepository.findByIdSupport(idSupport);
+        } else {
+            throw new IllegalArgumentException("Id: " + idSupport + " Non trouvée dans la bdd");
+        }
     }
 
     public List<Oeuvres> getByTitreAutocomplete(String titre) {
@@ -107,11 +131,15 @@ public class OeuvresService {
     }
 
     public String suppOeuvre(String IdOeuvre) throws Exception {
-        Oeuvres oeuvreToDelete = oeuvresRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Id " + IdOeuvre + " n'existe pas ou a deja était supprimer"));
-        List<Commentaire> comUser = commentaireRepository.findByIdOeuvre(IdOeuvre);
-        commentaireRepository.deleteAll(comUser);
-        oeuvresRepository.delete(oeuvreToDelete);
-        return "L'oeuvre a était supprimer";
+        if (oeuvresRepository.existsById(IdOeuvre)) {
+            Oeuvres oeuvreToDelete = oeuvresRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Id " + IdOeuvre + " n'existe pas ou a deja était supprimer"));
+            List<Commentaire> comUser = commentaireRepository.findByIdOeuvre(IdOeuvre);
+            commentaireRepository.deleteAll(comUser);
+            oeuvresRepository.delete(oeuvreToDelete);
+            return "L'oeuvre a était supprimer";
+        } else {
+            throw new IllegalArgumentException("Id: " + IdOeuvre + " Non trouvée dans la bdd");
+        }
     }
 
 }

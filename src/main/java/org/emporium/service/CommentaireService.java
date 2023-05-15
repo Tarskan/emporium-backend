@@ -30,7 +30,19 @@ public class CommentaireService {
     }
 
     public Commentaire getByIdCommentaire(String idCommentaire) throws Exception {
-        return commentaireRepository.findById(idCommentaire).orElseThrow(() -> new Exception("Commentaire not found."));
+        if (commentaireRepository.existsById(idCommentaire)) {
+            return commentaireRepository.findById(idCommentaire).orElseThrow(() -> new Exception("Commentaire not found."));
+        } else {
+            throw new IllegalArgumentException("Id: " + idCommentaire + " Non trouvée dans la bdd");
+        }
+    }
+
+    public List<Commentaire> getCommentaireByUwuid(String uwuid) throws Exception {
+        if (utilisateurRepository.existsById(uwuid)) {
+            return commentaireRepository.findByUWUid(uwuid);
+        } else {
+            throw new IllegalArgumentException("Id: " + uwuid + " Non trouvée dans la bdd");
+        }
     }
 
     public Commentaire addCommentaire(CommentaireCreateDTO commentaire) throws Exception {
@@ -95,8 +107,12 @@ public class CommentaireService {
     }
 
     public String suppCommentaire(String idCommentaire) throws Exception {
-        Commentaire commentaireToDelete = commentaireRepository.findById(idCommentaire).orElseThrow(() -> new Exception("Id " + idCommentaire + " n'existe pas ou a deja était supprimer"));
-        commentaireRepository.delete(commentaireToDelete);
-        return "Le commentaire a était supprimer";
+        if (commentaireRepository.existsById(idCommentaire)) {
+            Commentaire commentaireToDelete = commentaireRepository.findById(idCommentaire).orElseThrow(() -> new Exception("Id " + idCommentaire + " n'existe pas ou a deja était supprimer"));
+            commentaireRepository.delete(commentaireToDelete);
+            return "Le commentaire a était supprimer";
+        } else {
+            throw new IllegalArgumentException("Id: " + idCommentaire + " Non trouvée dans la bdd");
+        }
     }
 }

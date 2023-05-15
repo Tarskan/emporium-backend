@@ -50,8 +50,12 @@ public class TypeService {
     }
 
     public String suppType(String idType) throws Exception {
-        Type typeToDelete = typeRepository.findById(idType).orElseThrow(() -> new Exception("Id " + idType + " n'existe pas ou a deja était supprimer"));
-        typeRepository.delete(typeToDelete);
-        return "Le type a était supprimer";
+        if (typeRepository.existsById(idType)) {
+            Type typeToDelete = typeRepository.findById(idType).orElseThrow(() -> new Exception("Id " + idType + " n'existe pas ou a deja était supprimer"));
+            typeRepository.delete(typeToDelete);
+            return "Le type a était supprimer";
+        } else {
+            return "Id " + idType + " n'existe pas ou a deja était supprimer";
+        }
     }
 }

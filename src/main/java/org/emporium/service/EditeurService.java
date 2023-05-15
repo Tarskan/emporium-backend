@@ -52,8 +52,12 @@ public class EditeurService {
     }
 
     public String suppEditeur(String idEditeur) throws Exception {
-        Editeur editeurToDelete = editeurRepository.findById(idEditeur).orElseThrow(() -> new Exception("Id " + idEditeur + " n'existe pas ou a deja était supprimer"));
-        editeurRepository.delete(editeurToDelete);
-        return "L'editeur a était supprimer";
+        if (editeurRepository.existsById(idEditeur)) {
+            Editeur editeurToDelete = editeurRepository.findById(idEditeur).orElseThrow(() -> new Exception("Id " + idEditeur + " n'existe pas ou a deja était supprimer"));
+            editeurRepository.delete(editeurToDelete);
+            return "L'editeur a était supprimer";
+        } else {
+            throw new IllegalArgumentException("Id: " + idEditeur + " Non trouvée dans la bdd");
+        }
     }
 }

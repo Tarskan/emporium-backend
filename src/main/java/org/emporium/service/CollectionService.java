@@ -30,32 +30,52 @@ public class CollectionService {
     }
 
     public Collection getByIdCollection(String idCollection) throws Exception {
-        return collectionRepository.findById(idCollection).orElseThrow(() -> new Exception("Collection not found."));
+        if (collectionRepository.existsById(idCollection)) {
+            return collectionRepository.findById(idCollection).orElseThrow(() -> new Exception("Collection not found."));
+        } else {
+            throw new IllegalArgumentException("Id: " + idCollection + " Non trouvée dans la bdd");
+        }
     }
 
-    public List<Collection> getByIdUWUid(String UWUid) {
-        return collectionRepository.findByUWUid(UWUid);
+    public List<Collection> getByIdUWUid(String uwuid) {
+        if (utilisateurRepository.existsById(uwuid)) {
+            return collectionRepository.findByUWUid(uwuid);
+        } else {
+            throw new IllegalArgumentException("Id: " + uwuid + " Non trouvée dans la bdd");
+        }
     }
 
     public List<Utilisateur> getByIdOeuvre(String idOeuvre) {
-        List<Utilisateur> listUtilisateur = new ArrayList<Utilisateur>();
-        List<Collection> ListCollect = collectionRepository.findByIdOeuvre(idOeuvre);
-        listUtilisateur.addAll(ListCollect.stream().map(Collection::getUtilisateur).collect(Collectors.toList()));
-        return listUtilisateur;
+        if (oeuvresRepository.existsById(idOeuvre)) {
+            List<Utilisateur> listUtilisateur = new ArrayList<Utilisateur>();
+            List<Collection> ListCollect = collectionRepository.findByIdOeuvre(idOeuvre);
+            listUtilisateur.addAll(ListCollect.stream().map(Collection::getUtilisateur).collect(Collectors.toList()));
+            return listUtilisateur;
+        } else {
+            throw new IllegalArgumentException("Id: " + idOeuvre + " Non trouvée dans la bdd");
+        }
     }
 
     public List<Oeuvres> getByUwuid(String uwuid) {
-        List<Oeuvres> listOeuvres = new ArrayList<Oeuvres>();
-        List<Collection> ListCollect = collectionRepository.findByUWUid(uwuid);
-        listOeuvres.addAll(ListCollect.stream().map(Collection::getOeuvre).collect(Collectors.toList()));
-        return listOeuvres;
+        if (utilisateurRepository.existsById(uwuid)) {
+            List<Oeuvres> listOeuvres = new ArrayList<Oeuvres>();
+            List<Collection> ListCollect = collectionRepository.findByUWUid(uwuid);
+            listOeuvres.addAll(ListCollect.stream().map(Collection::getOeuvre).collect(Collectors.toList()));
+            return listOeuvres;
+        } else {
+            throw new IllegalArgumentException("Id: " + uwuid + " Non trouvée dans la bdd");
+        }
     }
 
     public List<Oeuvres> getByFavoriteForUwuid(CollectionCreateDTO collection) {
-        List<Oeuvres> listOeuvres = new ArrayList<Oeuvres>();
-        List<Collection> ListCollect = collectionRepository.findByFavorisUser(collection.getUWUid(), collection.getFavorite());
-        listOeuvres.addAll(ListCollect.stream().map(Collection::getOeuvre).collect(Collectors.toList()));
-        return listOeuvres;
+        if (utilisateurRepository.existsById(collection.getUWUid())) {
+            List<Oeuvres> listOeuvres = new ArrayList<Oeuvres>();
+            List<Collection> ListCollect = collectionRepository.findByFavorisUser(collection.getUWUid(), collection.getFavorite());
+            listOeuvres.addAll(ListCollect.stream().map(Collection::getOeuvre).collect(Collectors.toList()));
+            return listOeuvres;
+        } else {
+            throw new IllegalArgumentException("Id: " + collection.getUWUid() + " Non trouvée dans la bdd");
+        }
     }
 
     public Collection addCollection(CollectionCreateDTO collection) throws Exception {
@@ -101,13 +121,17 @@ public class CollectionService {
     }
 
     public String suppCollection(String idCollection) throws Exception {
-        Collection collectionToDelete = collectionRepository.findById(idCollection).orElseThrow(() -> new Exception("Id " + idCollection + " n'existe pas ou a deja était supprimer"));
-        if (collectionToDelete.getFavorite()) {
-            collectionToDelete.getOeuvre().setCountFav(collectionToDelete.getOeuvre().getCountFav()-1);
-            oeuvresRepository.save(collectionToDelete.getOeuvre());
+        if (collectionRepository.existsById(idCollection)) {
+            Collection collectionToDelete = collectionRepository.findById(idCollection).orElseThrow(() -> new Exception("Id " + idCollection + " n'existe pas ou a deja était supprimer"));
+            if (collectionToDelete.getFavorite()) {
+                collectionToDelete.getOeuvre().setCountFav(collectionToDelete.getOeuvre().getCountFav()-1);
+                oeuvresRepository.save(collectionToDelete.getOeuvre());
+            }
+            collectionRepository.delete(collectionToDelete);
+            return "La collection a était supprimer";
+        } else {
+            throw new IllegalArgumentException("Id: " + idCollection + " Non trouvée dans la bdd");
         }
-        collectionRepository.delete(collectionToDelete);
-        return "La collection a était supprimer";
     }
 
 }

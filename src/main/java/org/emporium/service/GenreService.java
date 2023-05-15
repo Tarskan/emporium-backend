@@ -21,7 +21,11 @@ public class GenreService {
     }
 
     public Genre getByIdGenre(String idGenre) throws Exception {
-        return genreRepository.findById(idGenre).orElseThrow(() -> new Exception("Genre not found."));
+        if (genreRepository.existsById(idGenre)) {
+            return genreRepository.findById(idGenre).orElseThrow(() -> new Exception("Genre not found."));
+        } else {
+            throw new IllegalArgumentException("Id: " + idGenre + " Non trouvée dans la bdd");
+        }
     }
 
     public List<Genre> getGenreAutocomplete(String name) {
@@ -50,8 +54,12 @@ public class GenreService {
     }
 
     public String suppGenre(String idGenre) throws Exception {
-        Genre genreToDelete = genreRepository.findById(idGenre).orElseThrow(() -> new Exception("Id " + idGenre + " n'existe pas ou a deja était supprimer"));
-        genreRepository.delete(genreToDelete);
-        return "Le genre a était supprimer";
+        if (genreRepository.existsById(idGenre)) {
+            Genre genreToDelete = genreRepository.findById(idGenre).orElseThrow(() -> new Exception("Id " + idGenre + " n'existe pas ou a deja était supprimer"));
+            genreRepository.delete(genreToDelete);
+            return "Le genre a était supprimer";
+        } else {
+            throw new IllegalArgumentException("Id: " + idGenre + " Non trouvée dans la bdd");
+        }
     }
 }

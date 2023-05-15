@@ -21,7 +21,12 @@ public class SupportService {
     }
 
     public Support getByIdSupport(String idSupport) throws Exception {
-        return supportRepository.findById(idSupport).orElseThrow(() -> new Exception("Type not found."));
+        if (supportRepository.existsById(idSupport)) {
+            return supportRepository.findById(idSupport).orElseThrow(() -> new Exception("Type not found."));
+        } else {
+            throw new IllegalArgumentException("Id: " + idSupport + " Non trouvée dans la bdd");
+        }
+
     }
 
     public List<Support> getSupportAutocomplete(String name) {
@@ -50,8 +55,12 @@ public class SupportService {
     }
 
     public String suppSupport(String idSupport) throws Exception {
-        Support supportToDelete = supportRepository.findById(idSupport).orElseThrow(() -> new Exception("Id " + idSupport + " n'existe pas ou a deja était supprimer"));
-        supportRepository.delete(supportToDelete);
-        return "Le support a était supprimer";
+        if (supportRepository.existsById(idSupport)) {
+            Support supportToDelete = supportRepository.findById(idSupport).orElseThrow(() -> new Exception("Id " + idSupport + " n'existe pas ou a deja était supprimer"));
+            supportRepository.delete(supportToDelete);
+            return "Le support a était supprimer";
+        } else {
+            throw new IllegalArgumentException("Id: " + idSupport + " Non trouvée dans la bdd");
+        }
     }
 }
