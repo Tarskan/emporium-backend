@@ -45,6 +45,14 @@ public class CommentaireService {
         }
     }
 
+    public List<Commentaire> getCommentaireByIdoeuvres(String idOeuvre) throws Exception {
+        if (utilisateurRepository.existsById(idOeuvre)) {
+            return commentaireRepository.findByIdOeuvre(idOeuvre);
+        } else {
+            throw new IllegalArgumentException("Id: " + idOeuvre + " Non trouvée dans la bdd");
+        }
+    }
+
     public Commentaire addCommentaire(CommentaireCreateDTO commentaire) throws Exception {
         Commentaire commentaireNew = Commentaire.builder()
                 .utilisateur(utilisateurRepository.findById(commentaire.getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
