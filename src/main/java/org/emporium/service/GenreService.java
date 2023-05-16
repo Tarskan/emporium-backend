@@ -34,27 +34,27 @@ public class GenreService {
     }
 
     public Genre addGenre(GenericCreateDTO genre) {
-        if(!Objects.equals(genreRepository.findByName(genre.getName()).getName(), genre.getName())) {
-            Genre genreNew = Genre.builder()
-                    .name(genre.name)
-                    .build();
+        Genre genreNew = Genre.builder()
+                .name(genre.name)
+                .build();
 
+        try {
             return genreRepository.save(genreNew);
-        } else {
+        } catch(Exception e) {
             throw new IllegalArgumentException("Name: " + genre.getName() + " en doublon dans la bdd");
         }
     }
 
     public Genre modifyGenre(GenericModifyDTO genre) {
         if (genreRepository.existsById(genre.getId())) {
-            if(!Objects.equals(genreRepository.findByName(genre.getName()).getName(), genre.getName())) {
-                Genre genreModified = Genre.builder()
-                        .idGenre(genre.getId())
-                        .name(genre.getName())
-                        .build();
+            Genre genreModified = Genre.builder()
+                    .idGenre(genre.getId())
+                    .name(genre.getName())
+                    .build();
 
+            try {
                 return genreRepository.save(genreModified);
-            } else {
+            } catch(Exception e) {
                 throw new IllegalArgumentException("Name: " + genre.getName() + " en doublon dans la bdd");
             }
         } else {

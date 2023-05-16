@@ -30,27 +30,28 @@ public class TypeService {
     }
 
     public Type addType(GenericCreateDTO type) throws Exception {
-        if(!Objects.equals(typeRepository.findByName(type.getName()).getName(), type.getName())) {
-            Type typeNew =  Type.builder()
-                    .name(type.name)
-                    .build();
+        Type typeNew =  Type.builder()
+                .name(type.name)
+                .build();
 
+        try {
             return typeRepository.save(typeNew);
-        } else {
+        } catch(Exception e) {
             throw new IllegalArgumentException("Name: " + type.getName() + " en doublon dans la bdd");
         }
+
     }
 
     public Type modifyType(GenericModifyDTO type) {
         if (typeRepository.existsById(type.getId())) {
-            if(!Objects.equals(typeRepository.findByName(type.getName()).getName(), type.getName())) {
                 Type typeModified = Type.builder()
                         .idType(type.getId())
                         .name(type.name)
                         .build();
 
+            try {
                 return typeRepository.save(typeModified);
-            } else {
+            } catch(Exception e) {
                 throw new IllegalArgumentException("Name: " + type.getName() + " en doublon dans la bdd");
             }
         } else {

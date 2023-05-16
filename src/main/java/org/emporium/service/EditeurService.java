@@ -30,27 +30,27 @@ public class EditeurService {
     }
 
     public Editeur addEditeur(GenericCreateDTO editeur) throws Exception {
-        if(!Objects.equals(editeurRepository.findByName(editeur.getName()).getName(), editeur.getName())) {
-            Editeur genreNew = Editeur.builder()
-                    .name(editeur.name)
-                    .build();
+        Editeur genreNew = Editeur.builder()
+                .name(editeur.name)
+                .build();
 
+        try {
             return editeurRepository.save(genreNew);
-        } else {
+        } catch(Exception e) {
             throw new IllegalArgumentException("Name: " + editeur.getName() + " en doublon dans la bdd");
         }
     }
 
     public Editeur modifyEditeur(GenericModifyDTO editeur) {
         if (editeurRepository.existsById(editeur.getId())) {
-            if(!Objects.equals(editeurRepository.findByName(editeur.getName()).getName(), editeur.getName())) {
-                Editeur editeurModified = Editeur.builder()
-                        .idEditeur(editeur.getId())
-                        .name(editeur.getName())
-                        .build();
+            Editeur editeurModified = Editeur.builder()
+                    .idEditeur(editeur.getId())
+                    .name(editeur.getName())
+                    .build();
 
+            try {
                 return editeurRepository.save(editeurModified);
-            } else {
+            } catch(Exception e) {
                 throw new IllegalArgumentException("Name: " + editeur.getName() + " en doublon dans la bdd");
             }
         } else {

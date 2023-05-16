@@ -42,18 +42,19 @@ public class UtilisateurService {
     }
 
     public Utilisateur addUser(UtilisateurCreateDTO utilisateur) {
-        if(!Objects.equals(utilisateurRepository.findByPseudo(utilisateur.getPseudo()).getPseudo(), utilisateur.getPseudo())) {
-            Date myDate = new Date();
+        Date myDate = new Date();
 
-            Utilisateur utilisateurNew =  Utilisateur.builder()
-                    .pseudo(utilisateur.pseudo)
-                    .pwd(utilisateur.pwd)
-                    .creationDate(myDate)
-                    .modificationDate(myDate)
-                    .build();
+        Utilisateur utilisateurNew =  Utilisateur.builder()
+                .pseudo(utilisateur.pseudo)
+                .pwd(utilisateur.pwd)
+                .creationDate(myDate)
+                .modificationDate(myDate)
+                .build();
 
+
+        try {
             return utilisateurRepository.save(utilisateurNew);
-        } else {
+        } catch(Exception e) {
             throw new IllegalArgumentException("Pseudo: " + utilisateur.getPseudo() + " en doublon dans la bdd");
         }
     }

@@ -30,28 +30,27 @@ public class AuteurService {
     }
 
     public Auteur addAuteur(GenericCreateDTO auteur) {
-        if(!Objects.equals(auteurRepository.findByName(auteur.getName()).getName(), auteur.getName())) {
-            Auteur auteurNew = Auteur.builder()
-                    .name(auteur.name)
-                    .build();
+        Auteur auteurNew = Auteur.builder()
+                .name(auteur.name)
+                .build();
 
+        try {
             return auteurRepository.save(auteurNew);
-        } else {
+        } catch(Exception e) {
             throw new IllegalArgumentException("Name: " + auteur.getName() + " en doublon dans la bdd");
         }
-
     }
 
     public Auteur modifyAuteur(GenericModifyDTO auteur) {
         if (auteurRepository.existsById(auteur.getId())) {
-            if(!Objects.equals(auteurRepository.findByName(auteur.getName()).getName(), auteur.getName())) {
                 Auteur auteurModified = Auteur.builder()
                         .idAuteur(auteur.getId())
                         .name(auteur.getName())
                         .build();
 
+            try {
                 return auteurRepository.save(auteurModified);
-            } else {
+            } catch(Exception e) {
                 throw new IllegalArgumentException("Name: " + auteur.getName() + " en doublon dans la bdd");
             }
         } else {

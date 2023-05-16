@@ -35,27 +35,27 @@ public class SupportService {
     }
 
     public Support addSupport(GenericCreateDTO support) throws Exception {
-        if(!Objects.equals(supportRepository.findByName(support.getName()).getName(), support.getName())) {
-            Support supportNew = Support.builder()
-                    .name(support.name)
-                    .build();
+        Support supportNew = Support.builder()
+                .name(support.name)
+                .build();
 
+        try {
             return supportRepository.save(supportNew);
-        } else {
+        } catch(Exception e) {
             throw new IllegalArgumentException("Name: " + support.getName() + " en doublon dans la bdd");
         }
     }
 
     public Support modifySupport(GenericModifyDTO support) {
         if (supportRepository.existsById(support.getId())) {
-            if(!Objects.equals(supportRepository.findByName(support.getName()).getName(), support.getName())) {
-                Support supportModified = Support.builder()
-                        .idSupport(support.getId())
-                        .name(support.getName())
-                        .build();
+            Support supportModified = Support.builder()
+                    .idSupport(support.getId())
+                    .name(support.getName())
+                    .build();
 
+            try {
                 return supportRepository.save(supportModified);
-            } else {
+            } catch(Exception e) {
                 throw new IllegalArgumentException("Name: " + support.getName() + " en doublon dans la bdd");
             }
         } else {
