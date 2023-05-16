@@ -19,7 +19,7 @@ public class Genre {
     @GenericGenerator(name = "idGenre", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "idGenre")
     private String idGenre;
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     public String name;
 
 }

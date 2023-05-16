@@ -19,7 +19,7 @@ public class Type {
     @GenericGenerator(name = "idType", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "idType")
     private String idType;
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     public String name;
 
 }

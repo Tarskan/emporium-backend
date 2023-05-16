@@ -19,7 +19,7 @@ public class Support {
     @GenericGenerator(name = "idSupport", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "idSupport")
     private String idSupport;
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     public String name;
 
 }
