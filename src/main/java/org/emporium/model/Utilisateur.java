@@ -23,7 +23,7 @@ public class Utilisateur {
     @GenericGenerator(name = "UWUid", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "UWUid", unique = true)
     private String UWUid;
-    @Column(name = "pseudo")
+    @Column(name = "pseudo", unique = true)
     public String pseudo;
     @Column(name = "pwd")
     @JsonIgnore

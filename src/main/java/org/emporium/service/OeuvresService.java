@@ -96,7 +96,6 @@ public class OeuvresService {
     }
 
     public Oeuvres addOeuvre(OeuvresCreateDTO oeuvres) throws Exception {
-        if(!Objects.equals(oeuvresRepository.findByTitre(oeuvres.getTitre()).getTitre(), oeuvres.getTitre())) {
             Date myDate = new Date();
             Oeuvres oeuvresNew = Oeuvres.builder()
                     .titre(oeuvres.titre)
@@ -113,14 +112,10 @@ public class OeuvresService {
                     .build();
 
             return oeuvresRepository.save(oeuvresNew);
-        } else {
-            throw new IllegalArgumentException("Name: " + oeuvres.getTitre() + " en doublon dans la bdd");
-        }
     }
 
     public Oeuvres modifyOeuvre(OeuvresModifyDTO oeuvres) throws Exception {
         if (oeuvresRepository.existsById(oeuvres.getIdOeuvre())) {
-            if(!Objects.equals(oeuvresRepository.findByTitre(oeuvres.getTitre()).getTitre(), oeuvres.getTitre())) {
                 Date myDate = new Date();
                 Oeuvres oeuvresOld = oeuvresRepository.findByIdOeuvre(oeuvres.getIdOeuvre());
 
@@ -140,9 +135,6 @@ public class OeuvresService {
                         .build();
 
                 return oeuvresRepository.save(oeuvresModified);
-            } else {
-                throw new IllegalArgumentException("Name: " + oeuvres.getTitre() + " en doublon dans la bdd");
-            }
         } else {
             throw new IllegalArgumentException("Id: " + oeuvres.getIdOeuvre() + " Non trouvée dans la bdd");
         }

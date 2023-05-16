@@ -2,6 +2,7 @@ package org.emporium.controller;
 
 import org.emporium.model.Utilisateur;
 import org.emporium.model.UtilisateurCreateDTO;
+import org.emporium.model.UtilisateurModifyDTO;
 import org.emporium.service.UtilisateurService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,7 +47,7 @@ public class UtilisateurController {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Utilisateur PutUtilisateur(@RequestBody Utilisateur utilisateur) {
+    public Utilisateur PutUtilisateur(@RequestBody UtilisateurModifyDTO utilisateur) {
         return utilisateurService.modifyUser(utilisateur);
     }
 

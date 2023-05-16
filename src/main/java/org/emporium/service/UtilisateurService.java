@@ -3,6 +3,7 @@ package org.emporium.service;
 import org.emporium.model.Commentaire;
 import org.emporium.model.Utilisateur;
 import org.emporium.model.UtilisateurCreateDTO;
+import org.emporium.model.UtilisateurModifyDTO;
 import org.emporium.repository.CommentaireRepository;
 import org.emporium.repository.UtilisateurRepository;
 import org.springframework.stereotype.Service;
@@ -57,9 +58,8 @@ public class UtilisateurService {
         }
     }
 
-    public Utilisateur modifyUser(Utilisateur utilisateur) {
+    public Utilisateur modifyUser(UtilisateurModifyDTO utilisateur) {
         if (utilisateurRepository.existsById(utilisateur.getUWUid())) {
-            if(!Objects.equals(utilisateurRepository.findByPseudo(utilisateur.getPseudo()).getPseudo(), utilisateur.getPseudo())) {
                 Date myDate = new Date();
 
                 Utilisateur utilisateurOld = utilisateurRepository.findByUWUid(utilisateur.getUWUid());
@@ -73,11 +73,12 @@ public class UtilisateurService {
                         .creationDate(utilisateurOld.getCreationDate())
                         .modificationDate(myDate)
                         .build();
-
-                return utilisateurRepository.save(utilisateurModify);
-            } else {
-                throw new IllegalArgumentException("Pseudo: " + utilisateur.getPseudo() + " en doublon dans la bdd");
-            }
+                try {
+                    return utilisateurRepository.save(utilisateurModify);
+                }
+                catch(Exception e) {
+                    throw new IllegalArgumentException("Pseudo: " + utilisateur.getPseudo() + " en doublon dans la bdd");
+                }
         } else {
             throw new IllegalArgumentException("Id: " + utilisateur.getUWUid() + " Non trouvée dans la bdd");
         }
