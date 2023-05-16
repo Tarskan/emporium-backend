@@ -9,7 +9,8 @@ import java.util.List;
 
 @Repository
 public interface UtilisateurRepository extends CrudRepository<Utilisateur, String> {
-    List<Utilisateur> findAll();
+    @Query("from Utilisateur order by modificationdate ASC")
+    List<Utilisateur> findAllSorted();
 
     @Query("from Utilisateur where UWUid = ?1")
     Utilisateur findByUWUid(String uwuid);

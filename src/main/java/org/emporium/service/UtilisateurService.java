@@ -26,7 +26,7 @@ public class UtilisateurService {
 
 
     public List<Utilisateur> getAllUser() {
-        return utilisateurRepository.findAll();
+        return utilisateurRepository.findAllSorted();
     }
 
     public Utilisateur GetUserByUwuid(String uwuid) {
@@ -49,7 +49,7 @@ public class UtilisateurService {
                     .pseudo(utilisateur.pseudo)
                     .pwd(utilisateur.pwd)
                     .creationDate(myDate)
-                    .modificationDate(null)
+                    .modificationDate(myDate)
                     .build();
 
             return utilisateurRepository.save(utilisateurNew);

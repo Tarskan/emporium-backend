@@ -27,7 +27,7 @@ public class CommentaireService {
     UtilisateurRepository utilisateurRepository;
 
     public List<Commentaire> getAllCommentaire() {
-        return commentaireRepository.findAll();
+        return commentaireRepository.findAllSorted();
     }
 
     public Commentaire getByIdCommentaire(String idCommentaire) throws Exception {
@@ -64,7 +64,7 @@ public class CommentaireService {
                 .nbLike(0)
                 .nbDislike(0)
                 .creationDate(myDate)
-                .modificationDate(null)
+                .modificationDate(myDate)
                 .build();
 
         return commentaireRepository.save(commentaireNew);

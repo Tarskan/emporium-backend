@@ -40,7 +40,7 @@ public class OeuvresService {
     SupportRepository supportRepository;
 
     public List<Oeuvres> getAllOeuvres() {
-        return oeuvresRepository.findAll();
+        return oeuvresRepository.findAllSorted();
     }
 
     public Oeuvres getByIdOeuvre(String idOeuvre) {
@@ -108,7 +108,7 @@ public class OeuvresService {
                     .editeur(editeurRepository.findById(oeuvres.getIdEditeur()).orElseThrow(() -> new Exception("Editeur not found.")))
                     .support(supportRepository.findById(oeuvres.getIdSupport()).orElseThrow(() -> new Exception("Support not found.")))
                     .creationDate(myDate)
-                    .modificationDate(null)
+                    .modificationDate(myDate)
                     .build();
 
             return oeuvresRepository.save(oeuvresNew);

@@ -1,7 +1,6 @@
 package org.emporium.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -61,7 +60,7 @@ public class Oeuvres {
     public List<Utilisateur> listUti;
 
     @OneToMany(mappedBy ="oeuvre", fetch = FetchType.LAZY)
-    @JsonManagedReference("oeuvresCom")
+    @JsonBackReference("oeuvresCom")
     public List<Commentaire> listCommentaire;
 
 }
