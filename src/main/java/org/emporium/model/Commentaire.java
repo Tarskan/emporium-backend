@@ -26,7 +26,7 @@ public class Commentaire {
     public Integer nbLike;
     @Column(name = "nbDislike")
     public Integer nbDislike;
-    @Column(name = "text")
+    @Column(name = "text", length = 2000)
     public String text;
     @Column(name = "creationDate")
     public Date creationDate;

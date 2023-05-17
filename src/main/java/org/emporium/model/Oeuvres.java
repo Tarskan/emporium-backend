@@ -23,7 +23,7 @@ public class Oeuvres {
     public String titre;
     @Column(name = "sousTitre")
     public String sousTitre;
-    @Column(name = "description")
+    @Column(name = "description", length = 2000)
     public String description;
     @Column(name = "image")
     public String image;
