@@ -7,7 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="EmporiumBack" />
+        <module name="Utilisateur" />
+        <module name="EmporiumBackend" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -16,7 +17,8 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="EmporiumBack" options="-parameters" />
+      <module name="Collection" options="-parameters" />
+      <module name="Utilisateur" options="-parameters" />
     </option>
   </component>
 </project>
