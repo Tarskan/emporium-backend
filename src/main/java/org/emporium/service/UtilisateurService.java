@@ -24,6 +24,9 @@ public class UtilisateurService {
     @Inject
     CommentaireRepository commentaireRepository;
 
+    @Inject
+    ImageService imageService;
+
 
     public List<Utilisateur> getAllUser() {
         return utilisateurRepository.findAllSorted();
@@ -49,6 +52,7 @@ public class UtilisateurService {
                 .pwd(utilisateur.pwd)
                 .creationDate(myDate)
                 .modificationDate(myDate)
+                .profilPicture(utilisateur.getProfilPicture())
                 .build();
 
 
@@ -73,6 +77,7 @@ public class UtilisateurService {
                         .resultat(utilisateur.getResultat())
                         .creationDate(utilisateurOld.getCreationDate())
                         .modificationDate(myDate)
+                        .profilPicture(utilisateur.getProfilPicture())
                         .build();
                 try {
                     return utilisateurRepository.save(utilisateurModify);
@@ -89,6 +94,9 @@ public class UtilisateurService {
         if (utilisateurRepository.existsById(uwuid)) {
             Utilisateur userToDelete = utilisateurRepository.findByUWUid(uwuid);
             List<Commentaire> comUser = commentaireRepository.findByUWUid(uwuid);
+            if (userToDelete.profilPicture != null) {
+                imageService.deleteImage(userToDelete.profilPicture);
+            }
             commentaireRepository.deleteAll(comUser);
             utilisateurRepository.delete(userToDelete);
             return "L'utilisateur est supprimer";

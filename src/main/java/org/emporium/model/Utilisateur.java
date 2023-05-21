@@ -38,7 +38,8 @@ public class Utilisateur {
     public Date creationDate;
     @Column(name = "modificationDate")
     public Date modificationDate;
-
+    @Column(name = "profilPicture")
+    public String profilPicture;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "collection", joinColumns = {@JoinColumn(name = "UWUid")}, inverseJoinColumns = {@JoinColumn(name = "idOeuvre")})
     @JsonBackReference("collection")

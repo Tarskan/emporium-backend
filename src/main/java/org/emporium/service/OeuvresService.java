@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 
 @Singleton
@@ -38,6 +37,9 @@ public class OeuvresService {
 
     @Inject
     SupportRepository supportRepository;
+
+    @Inject
+    ImageService imageService;
 
     public List<Oeuvres> getAllOeuvres() {
         return oeuvresRepository.findAllSorted();
@@ -145,6 +147,9 @@ public class OeuvresService {
             Oeuvres oeuvreToDelete = oeuvresRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Id " + IdOeuvre + " n'existe pas ou a deja était supprimer"));
             List<Commentaire> comUser = commentaireRepository.findByIdOeuvre(IdOeuvre);
             commentaireRepository.deleteAll(comUser);
+            if (oeuvreToDelete.image != null) {
+                imageService.deleteImage(oeuvreToDelete.image);
+            }
             oeuvresRepository.delete(oeuvreToDelete);
             return "L'oeuvre a était supprimer";
         } else {
