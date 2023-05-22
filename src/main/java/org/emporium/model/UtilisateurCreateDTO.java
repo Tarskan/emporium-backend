@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class UtilisateurCreateDTO {
     public String pseudo;
     public String pwd;
-    String profilPicture;
+    public ImageUpload profilPicture;
 
 }

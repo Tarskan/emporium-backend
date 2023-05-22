@@ -14,6 +14,6 @@ public class UtilisateurModifyDTO {
     public String grade;
     public String equipe;
     public String resultat;
-    public String profilPicture;
+    public ImageUpload profilPicture;
 
 }

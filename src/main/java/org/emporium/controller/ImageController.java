@@ -1,5 +1,8 @@
 package org.emporium.controller;
 
+import com.google.cloud.storage.BlobId;
+import org.emporium.model.ImageItem;
+import org.emporium.model.ImageRequest;
 import org.emporium.model.ImageUpload;
 import org.emporium.service.ImageService;
 import org.springframework.stereotype.Controller;
@@ -10,35 +13,34 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
 
 @Controller
-@Path("/upload")
+@Path("/image")
 public class ImageController {
 
     @Inject
     ImageService imageService;
 
     @GET
-    @Path("/image/{path}")
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getImage(@PathParam("path") String path) {
-        return imageService.getImage(path);
+    public String Image(@RequestBody ImageRequest imageRequest) throws IOException {
+        return imageService.getImage(imageRequest);
     }
-
     @POST
-    @Path("/image")
+    @Path("/upload")
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
-    public String postImage(@RequestBody ImageUpload imageUpload) {
+    public ImageItem postImage(@RequestBody ImageUpload imageUpload) throws IOException {
         return imageService.uploadImage(imageUpload);
     }
 
     @DELETE
-    @Path("/image/{path}")
+    @Path("/delete")
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteImage(@PathParam("path") String path) {
-        return imageService.deleteImage(path);
+    public Response deleteImage(@RequestBody ImageRequest imageRequest) {
+        return imageService.deleteImage(imageRequest);
     }
 }

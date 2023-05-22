@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "deft-province-387511",
+  "private_key_id": "152879b2638238b509fb857ea47bb327979a5513",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDS2dVvhcy45+EU\nCRoo370liKs5kzi7T9CvG7ngdpKC75psecoE+Fr/B/WjViBqXPQF30w9zcxqsGuN\n5mFxQ0eQSIHEO8zKWT4UcHEpePlmjhnKoC0ZPRMdRbD2aSC/xsQqjty//UITpI9q\nJvcaz4cKKJ7d5zl2DqZ9tceA63gWqKbCb1FoCbeChmtqO/BkYyUEtUj99mL/epIe\nEGTA1lZ0yUBFM/LwqHPMGU0ZnJzZNlQlUscTzfJbyu5lohZbB5aclsxrNSiBusRx\nKR+z983iPnEPfGaxltDisMpOHVtGGnM3RSETQkdFjkrfHjRLPwSjT8/svyP9c8Id\nIQtTkXD9AgMBAAECggEAAZQxgbYICCtuV0rRKBSy0yTgmVwFnPt2RdVokSp6IuJd\n7umDjoF4lvfNilVTBVDgX+nh5YWUvgjHqWab/K/jCYzNcfV7rVk5Ooh0BHo8Ld0r\nCsYjyFBZhArZTiMP5He90M7Ejuh71e9Rxpr3lzsOGRCgTeuVFdH6w664iXnZ6puB\ntXY6ITs9HPUacJmW93VVCLJwOIMaj4m8FQ5sDna/mfyWzUKS856Gx7ltzxtgpJKU\nLViXeXaP58+42Pc2AtC8c7hu9+COXHOsLdYuR+fKQ+yVVhNTN9fo0B1QRvycKtUj\ngb/pNwg8XHwxSbx24MqqdD+gPD3ohtMNEfwzj7jgsQKBgQD4PI6ptzCyY8cAZjo1\nDzu3Wf92N6P/6uNTlrMj2hVb1zauVAE2o52oz+qG8W/rBImJCnYKOYgfRB6amg0n\nVPpHXGgRv/k5c7AbNTpTfcQmRTYLLjdD2J/mPWzmGUoL14U3lFV/OhBG3zkHt9V/\nVaCi9672dlHc62VUAAXqh1l4DQKBgQDZcfU2YkcJ+TTXzd6/Fuv22H/gGkTJP/6Z\nRkk91LpsmpqitrUrDQVeOHRlogNanFn7RDF4GLin/epSIeJpNN8iaVJ+hFvCtd14\nUxbF6C2REheFOf82Uk/oJ74DnApk+uCx+p3AZQX6SReyCpeMAblhECJ88EmqUtS2\nV+kn4T8wsQKBgByX9SLtfAmAXsLYA6pq98j17+wxGo33A3p0aGwfycgLcTwBZyZh\nEF8KnAwxMWAT5LfJYbFp0Rkw4omSZyN5sV6Y8U/iGhYZElb/+Zj2aqqx3DjLeQgy\norCFsM6MaTAWAj1Vs8d0670OJ2aRMWF6fodnGls/Y8ybvM9BNW0/a/ndAoGBAMU+\n61n20kwIxFeSRyF+MHQNtgnaqlUIePIe4Od2pdlIcUdyh2rS9/CdM3DSA0rZk4Ir\nPNidTDwPR9RTKmeW72XutkdP11EL2ieA76J814DGMZHHp2tmRVfpXSM3E/K/5L1u\nAlV5DnAYh6cYlpoJIlka4r4E1j3rv0rc+gIUAFcxAoGBAJFp48GcajtEh3FKJa6O\nYX2VSDvz+rWN4kvb6pOALw+/bT3p4ODeRJotZVGmf9llbLwGHKoVYsX2db8LL6oV\nKIWb/vmTxOmg+q5EKzUreoI46x2dNTquinm2qG7Rj5n7ajATw8g1b8gVyvc9Tfru\nyzyGSJ+KYRUneU7wbTLNjLHI\n-----END PRIVATE KEY-----\n",
+  "client_email": "back-emporium@deft-province-387511.iam.gserviceaccount.com",
+  "client_id": "106054268917848473634",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/back-emporium%40deft-province-387511.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

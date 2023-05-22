@@ -12,7 +12,7 @@ public class OeuvresModifyDTO {
     public String titre;
     public String sousTitre;
     public String description;
-    public String image;
+    public ImageUpload image;
     public String idType;
     public String idAuteur;
     public String idEditeur;

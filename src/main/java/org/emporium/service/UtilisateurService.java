@@ -1,9 +1,6 @@
 package org.emporium.service;
 
-import org.emporium.model.Commentaire;
-import org.emporium.model.Utilisateur;
-import org.emporium.model.UtilisateurCreateDTO;
-import org.emporium.model.UtilisateurModifyDTO;
+import org.emporium.model.*;
 import org.emporium.repository.CommentaireRepository;
 import org.emporium.repository.UtilisateurRepository;
 import org.springframework.stereotype.Service;
@@ -47,12 +44,15 @@ public class UtilisateurService {
     public Utilisateur addUser(UtilisateurCreateDTO utilisateur) {
         Date myDate = new Date();
 
+        ImageItem image = imageService.uploadImage(utilisateur.getProfilPicture());
+
         Utilisateur utilisateurNew =  Utilisateur.builder()
                 .pseudo(utilisateur.pseudo)
                 .pwd(utilisateur.pwd)
                 .creationDate(myDate)
                 .modificationDate(myDate)
-                .profilPicture(utilisateur.getProfilPicture())
+                .profilPicture(image.getImageName())
+                .profilPicturePath(image.getImagePath())
                 .build();
 
 
@@ -65,26 +65,37 @@ public class UtilisateurService {
 
     public Utilisateur modifyUser(UtilisateurModifyDTO utilisateur) {
         if (utilisateurRepository.existsById(utilisateur.getUWUid())) {
-                Date myDate = new Date();
+            Date myDate = new Date();
 
-                Utilisateur utilisateurOld = utilisateurRepository.findByUWUid(utilisateur.getUWUid());
-                Utilisateur utilisateurModify =  Utilisateur.builder()
-                        .UWUid(utilisateur.getUWUid())
-                        .pseudo(utilisateur.getPseudo())
-                        .pwd(utilisateur.getPwd())
-                        .equipe(utilisateur.getEquipe())
-                        .grade(utilisateur.getGrade())
-                        .resultat(utilisateur.getResultat())
-                        .creationDate(utilisateurOld.getCreationDate())
-                        .modificationDate(myDate)
-                        .profilPicture(utilisateur.getProfilPicture())
-                        .build();
-                try {
-                    return utilisateurRepository.save(utilisateurModify);
-                }
-                catch(Exception e) {
-                    throw new IllegalArgumentException("Pseudo: " + utilisateur.getPseudo() + " en doublon dans la bdd");
-                }
+            Utilisateur utilisateurOld = utilisateurRepository.findByUWUid(utilisateur.getUWUid());
+            ImageItem image = new ImageItem();
+            if (utilisateur.getProfilPicture() != null) {
+                image = imageService.uploadImage(utilisateur.getProfilPicture());
+                ImageRequest imageRequest = new ImageRequest();
+                imageRequest.setImageName(utilisateurOld.getProfilPicture());
+                imageService.deleteImage(imageRequest);
+            } else {
+                image.setImagePath(utilisateurOld.getProfilPicturePath());
+                image.setImageName(utilisateurOld.getProfilPicture());
+            }
+            Utilisateur utilisateurModify =  Utilisateur.builder()
+                    .UWUid(utilisateur.getUWUid())
+                    .pseudo(utilisateur.getPseudo())
+                    .pwd(utilisateur.getPwd())
+                    .equipe(utilisateur.getEquipe())
+                    .grade(utilisateur.getGrade())
+                    .resultat(utilisateur.getResultat())
+                    .creationDate(utilisateurOld.getCreationDate())
+                    .modificationDate(myDate)
+                    .profilPicture(image.getImageName())
+                    .profilPicturePath(image.getImagePath())
+                    .build();
+            try {
+                return utilisateurRepository.save(utilisateurModify);
+            }
+            catch(Exception e) {
+                throw new IllegalArgumentException("Pseudo: " + utilisateur.getPseudo() + " en doublon dans la bdd");
+            }
         } else {
             throw new IllegalArgumentException("Id: " + utilisateur.getUWUid() + " Non trouvée dans la bdd");
         }
@@ -95,7 +106,9 @@ public class UtilisateurService {
             Utilisateur userToDelete = utilisateurRepository.findByUWUid(uwuid);
             List<Commentaire> comUser = commentaireRepository.findByUWUid(uwuid);
             if (userToDelete.profilPicture != null) {
-                imageService.deleteImage(userToDelete.profilPicture);
+                ImageRequest imageRequest =new ImageRequest();
+                imageRequest.setImageName(userToDelete.getProfilPicture());
+                imageService.deleteImage(imageRequest);
             }
             commentaireRepository.deleteAll(comUser);
             utilisateurRepository.delete(userToDelete);
