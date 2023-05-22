@@ -1,13 +1,16 @@
 package org.emporium.repository;
 
-import org.emporium.model.Auteur;
 import org.emporium.model.Oeuvres;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 
+@Repository
 public interface OeuvresRepository extends CrudRepository<Oeuvres, String> {
+
     @Query("from Oeuvres order by modificationdate ASC")
     List<Oeuvres> findAllSorted();
 
@@ -34,5 +37,6 @@ public interface OeuvresRepository extends CrudRepository<Oeuvres, String> {
 
     @Query("from Oeuvres where titre like concat(?1, '%')")
     List<Oeuvres> findByTitreAutoComplete(String titre);
+
 
 }

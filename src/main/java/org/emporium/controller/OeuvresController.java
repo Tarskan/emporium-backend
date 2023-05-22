@@ -31,6 +31,13 @@ public class OeuvresController {
         return oeuvresService.getByIdOeuvre(idOeuvre);
     }
 
+    @Path("/lastAdd")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Oeuvres> getByIdSupport() {
+        return oeuvresService.getLastAdd();
+    }
+
     @Path("/search/{oeuvreName}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

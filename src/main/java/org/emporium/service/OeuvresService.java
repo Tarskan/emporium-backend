@@ -94,6 +94,14 @@ public class OeuvresService {
         return oeuvresRepository.findByTitreAutoComplete(titre);
     }
 
+    public List<Oeuvres> getLastAdd() {
+        if (oeuvresRepository.findAllSorted().size() > 4) {
+            return oeuvresRepository.findAllSorted().subList(0,5);
+        } else {
+            return oeuvresRepository.findAllSorted();
+        }
+    }
+
     public Oeuvres addOeuvre(OeuvresCreateDTO oeuvres) throws Exception {
             Date myDate = new Date();
 
