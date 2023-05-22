@@ -2,7 +2,6 @@ package org.emporium.service;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.*;
-import io.github.cdimascio.dotenv.Dotenv;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import org.emporium.model.ImageItem;
 import org.emporium.model.ImageRequest;
@@ -20,8 +19,6 @@ import java.util.UUID;
 @RegisterForReflection
 public class ImageService {
 
-    Dotenv dotenv = Dotenv.load();
-
     private Storage storage;
 
     @Inject
@@ -31,7 +28,7 @@ public class ImageService {
     }
 
     public ImageItem uploadImage(ImageUpload imageUpload) {
-        BlobId blobId = BlobId.of(dotenv.get("GOOGLE_BUCKET_NAME"), (dotenv.get("GOOGLE_BUCKET_NAME")+ "/") + imageUpload.getImageName().hashCode() + UUID.randomUUID() + "." + imageUpload.getImageExtension());
+        BlobId blobId = BlobId.of("emporium_bucket_image", ("emporium_bucket_image/") + imageUpload.getImageName().hashCode() + UUID.randomUUID() + "." + imageUpload.getImageExtension());
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
 
         storage.create(blobInfo, imageUpload.getImage());
@@ -42,14 +39,14 @@ public class ImageService {
     }
 
     public String getImage(ImageRequest image) {
-        BlobId blobId = BlobId.of(dotenv.get("GOOGLE_BUCKET_NAME"), image.getImageName());
+        BlobId blobId = BlobId.of(("emporium_bucket_image/"), image.getImageName());
         Blob blobInfo = storage.get(blobId);
         return blobInfo.getMediaLink();
     }
 
     public Response deleteImage(ImageRequest image) {
         try {
-            BlobId blobId = BlobId.of(dotenv.get("GOOGLE_BUCKET_NAME"), image.getImageName());
+            BlobId blobId = BlobId.of(("emporium_bucket_image/"), image.getImageName());
             storage.delete(blobId);
 
             return Response.ok("Image supprimée avec succès !").build();
