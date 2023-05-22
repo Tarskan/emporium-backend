@@ -50,7 +50,7 @@ public class CollectionController {
         return collectionService.getByUwuid(uwuid);
     }
 
-    @Path("/oeuvres/favorite/{uwuid}")
+    @Path("/oeuvres/favorite")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Oeuvres> getUserFavorite(@RequestBody CollectionCreateDTO collectionDTO) {

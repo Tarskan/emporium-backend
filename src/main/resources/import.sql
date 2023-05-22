@@ -28,6 +28,7 @@ INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('5', '2'
 INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('2', '2', '2', false);
 INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('3', '3', '1', true);
 INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('4', '2', '1', false);
+INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('7', '4', '3', false);
 
 INSERT INTO Commentaire(idCommentaire, UWUid, idOeuvre, text, nbLike, nbDislike, creationDate, modificationDate) VALUES ('1', '1', '1', 'texte de test', 2, 1, '2023-05-02', '2023-05-02');
 INSERT INTO Commentaire(idCommentaire, UWUid, idOeuvre, text, nbLike, nbDislike, creationDate, modificationDate) VALUES ('2', '2', '1', 'texte de test', 1, 8, '2023-05-03', '2023-05-03');
