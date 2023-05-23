@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TypeRepository extends CrudRepository<Type, String> {
     List<Type> findAll();
@@ -13,5 +14,5 @@ public interface TypeRepository extends CrudRepository<Type, String> {
     List<Type> findTypeAutocomplete(String name);
 
     @Query("from Type where name = ?1")
-    Type findByName(String name);
+    Optional<Type> findByName(String name);
 }

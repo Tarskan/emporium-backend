@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EditeurRepository extends CrudRepository<Editeur, String> {
     List<Editeur> findAll();
@@ -13,5 +14,5 @@ public interface EditeurRepository extends CrudRepository<Editeur, String> {
     List<Editeur> findEditeurAutocomplete(String name);
 
     @Query("from Editeur where name = ?1")
-    Editeur findByName(String name);
+    Optional<Editeur> findByName(String name);
 }

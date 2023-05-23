@@ -24,16 +24,31 @@ public class OeuvresService {
     TypeRepository typeRepository;
 
     @Inject
+    TypeService typeService;
+
+    @Inject
     AuteurRepository auteurRepository;
+
+    @Inject
+    AuteurService auteurService;
 
     @Inject
     EditeurRepository editeurRepository;
 
     @Inject
+    EditeurService editeurService;
+
+    @Inject
     GenreRepository genreRepository;
 
     @Inject
+    GenreService genreService;
+
+    @Inject
     SupportRepository supportRepository;
+
+    @Inject
+    SupportService supportService;
 
     @Inject
     ImageService imageService;
@@ -113,11 +128,11 @@ public class OeuvresService {
                     .description(oeuvres.description)
                     .image(image.getImageName())
                     .imagePath(image.getImagePath())
-                    .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
-                    .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
-                    .genre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
-                    .editeur(editeurRepository.findById(oeuvres.getIdEditeur()).orElseThrow(() -> new Exception("Editeur not found.")))
-                    .support(supportRepository.findById(oeuvres.getIdSupport()).orElseThrow(() -> new Exception("Support not found.")))
+                    .type(typeRepository.findByName(oeuvres.getType()).orElse(typeService.addType(new GenericCreateDTO((oeuvres.getType())))))
+                    .auteur(auteurRepository.findByName(oeuvres.getAuteur()).orElse(auteurService.addAuteur(new GenericCreateDTO((oeuvres.getAuteur())))))
+                    .genre(genreRepository.findByName(oeuvres.getGenre()).orElse(genreService.addGenre(new GenericCreateDTO((oeuvres.getGenre())))))
+                    .editeur(editeurRepository.findByName(oeuvres.getEditeur()).orElse(editeurService.addEditeur(new GenericCreateDTO((oeuvres.getEditeur())))))
+                    .support(supportRepository.findByName(oeuvres.getSupport()).orElse(supportService.addSupport(new GenericCreateDTO((oeuvres.getSupport())))))
                     .creationDate(myDate)
                     .modificationDate(myDate)
                     .build();
@@ -147,11 +162,11 @@ public class OeuvresService {
                         .description(oeuvres.getDescription())
                         .image(image.getImageName())
                         .imagePath(image.getImagePath())
-                        .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
-                        .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
-                        .genre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
-                        .editeur(editeurRepository.findById(oeuvres.getIdEditeur()).orElseThrow(() -> new Exception("Editeur not found.")))
-                        .support(supportRepository.findById(oeuvres.getIdSupport()).orElseThrow(() -> new Exception("Support not found.")))
+                        .type(typeRepository.findByName(oeuvres.getType()).orElse(typeService.addType(new GenericCreateDTO((oeuvres.getType())))))
+                        .auteur(auteurRepository.findByName(oeuvres.getAuteur()).orElse(auteurService.addAuteur(new GenericCreateDTO((oeuvres.getAuteur())))))
+                        .genre(genreRepository.findByName(oeuvres.getGenre()).orElse(genreService.addGenre(new GenericCreateDTO((oeuvres.getGenre())))))
+                        .editeur(editeurRepository.findByName(oeuvres.getEditeur()).orElse(editeurService.addEditeur(new GenericCreateDTO((oeuvres.getEditeur())))))
+                        .support(supportRepository.findByName(oeuvres.getSupport()).orElse(supportService.addSupport(new GenericCreateDTO((oeuvres.getSupport())))))
                         .creationDate(oeuvresOld.getCreationDate())
                         .modificationDate(myDate)
                         .build();

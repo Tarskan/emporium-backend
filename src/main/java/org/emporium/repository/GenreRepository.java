@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GenreRepository extends CrudRepository<Genre, String> {
     List<Genre> findAll();
@@ -14,5 +15,5 @@ public interface GenreRepository extends CrudRepository<Genre, String> {
     List<Genre> findGenreAutocomplete(String name);
 
     @Query("from Genre where name = ?1")
-    Genre findByName(String name);
+    Optional<Genre> findByName(String name);
 }
