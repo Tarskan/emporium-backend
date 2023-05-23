@@ -14,5 +14,5 @@ public interface EditeurRepository extends CrudRepository<Editeur, String> {
     List<Editeur> findEditeurAutocomplete(String name);
 
     @Query("from Editeur where name = ?1")
-    Optional<Editeur> findByName(String name);
+    Editeur findByName(String name);
 }

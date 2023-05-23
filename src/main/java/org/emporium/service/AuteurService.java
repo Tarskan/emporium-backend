@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
-import java.util.Objects;
 
 @Singleton
 @Service
@@ -22,7 +21,7 @@ public class AuteurService {
     }
 
     public Auteur getByIdAuteur(String idAuteur) throws Exception {
-        return auteurRepository.findById(idAuteur).orElseThrow(() -> new Exception("Type not found."));
+        return auteurRepository.findById(idAuteur).orElseThrow(() -> new Exception("Auteur not found."));
     }
 
     public List<Auteur> getAuteurAutocomplete(String name) {
@@ -37,7 +36,7 @@ public class AuteurService {
         try {
             return auteurRepository.save(auteurNew);
         } catch(Exception e) {
-            throw new IllegalArgumentException("Name: " + auteur.getName() + " en doublon dans la bdd");
+            throw new IllegalArgumentException("Name Auteur: " + auteur.getName() + " en doublon dans la bdd");
         }
     }
 
@@ -51,10 +50,10 @@ public class AuteurService {
             try {
                 return auteurRepository.save(auteurModified);
             } catch(Exception e) {
-                throw new IllegalArgumentException("Name: " + auteur.getName() + " en doublon dans la bdd");
+                throw new IllegalArgumentException("Name Auteur: " + auteur.getName() + " en doublon dans la bdd");
             }
         } else {
-            throw new IllegalArgumentException("Id: " + auteur.getId() + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Auteur: " + auteur.getId() + " Non trouvée dans la bdd");
         }
     }
 

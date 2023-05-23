@@ -23,9 +23,9 @@ public class SupportService {
 
     public Support getByIdSupport(String idSupport) throws Exception {
         if (supportRepository.existsById(idSupport)) {
-            return supportRepository.findById(idSupport).orElseThrow(() -> new Exception("Type not found."));
+            return supportRepository.findById(idSupport).orElseThrow(() -> new Exception("Support not found."));
         } else {
-            throw new IllegalArgumentException("Id: " + idSupport + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Support: " + idSupport + " Non trouvée dans la bdd");
         }
 
     }
@@ -42,7 +42,7 @@ public class SupportService {
         try {
             return supportRepository.save(supportNew);
         } catch(Exception e) {
-            throw new IllegalArgumentException("Name: " + support.getName() + " en doublon dans la bdd");
+            throw new IllegalArgumentException("Name Support: " + support.getName() + " en doublon dans la bdd");
         }
     }
 
@@ -56,10 +56,10 @@ public class SupportService {
             try {
                 return supportRepository.save(supportModified);
             } catch(Exception e) {
-                throw new IllegalArgumentException("Name: " + support.getName() + " en doublon dans la bdd");
+                throw new IllegalArgumentException("Name Support: " + support.getName() + " en doublon dans la bdd");
             }
         } else {
-            throw new IllegalArgumentException("Id: " + support.getId() + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Support: " + support.getId() + " Non trouvée dans la bdd");
         }
     }
 

@@ -25,7 +25,7 @@ public class GenreService {
         if (genreRepository.existsById(idGenre)) {
             return genreRepository.findById(idGenre).orElseThrow(() -> new Exception("Genre not found."));
         } else {
-            throw new IllegalArgumentException("Id: " + idGenre + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Genre: " + idGenre + " Non trouvée dans la bdd");
         }
     }
 
@@ -41,7 +41,7 @@ public class GenreService {
         try {
             return genreRepository.save(genreNew);
         } catch(Exception e) {
-            throw new IllegalArgumentException("Name: " + genre.getName() + " en doublon dans la bdd");
+            throw new IllegalArgumentException("Name Genre: " + genre.getName() + " en doublon dans la bdd");
         }
     }
 
@@ -55,10 +55,10 @@ public class GenreService {
             try {
                 return genreRepository.save(genreModified);
             } catch(Exception e) {
-                throw new IllegalArgumentException("Name: " + genre.getName() + " en doublon dans la bdd");
+                throw new IllegalArgumentException("Name Genre: " + genre.getName() + " en doublon dans la bdd");
             }
         } else {
-            throw new IllegalArgumentException("Id: " + genre.getId() + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Genre: " + genre.getId() + " Non trouvée dans la bdd");
         }
     }
 
@@ -68,7 +68,7 @@ public class GenreService {
             genreRepository.delete(genreToDelete);
             return "Le genre a était supprimer";
         } else {
-            throw new IllegalArgumentException("Id: " + idGenre + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Genre: " + idGenre + " Non trouvée dans la bdd");
         }
     }
 }

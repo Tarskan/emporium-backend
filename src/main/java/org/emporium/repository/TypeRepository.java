@@ -14,5 +14,5 @@ public interface TypeRepository extends CrudRepository<Type, String> {
     List<Type> findTypeAutocomplete(String name);
 
     @Query("from Type where name = ?1")
-    Optional<Type> findByName(String name);
+    Type findByName(String name);
 }

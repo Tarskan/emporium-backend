@@ -14,5 +14,5 @@ public interface SupportRepository extends CrudRepository<Support, String> {
     List<Support> findSupportTypeAutocomplete(String name);
 
     @Query("from Support where name = ?1")
-    Optional<Support> findByName(String name);
+    Support findByName(String name);
 }

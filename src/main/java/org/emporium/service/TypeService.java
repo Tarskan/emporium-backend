@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
-import java.util.Objects;
 
 @Singleton
 @Service
@@ -37,7 +36,7 @@ public class TypeService {
         try {
             return typeRepository.save(typeNew);
         } catch(Exception e) {
-            throw new IllegalArgumentException("Name: " + type.getName() + " en doublon dans la bdd");
+            throw new IllegalArgumentException("Name Type: " + type.getName() + " en doublon dans la bdd");
         }
 
     }
@@ -52,10 +51,10 @@ public class TypeService {
             try {
                 return typeRepository.save(typeModified);
             } catch(Exception e) {
-                throw new IllegalArgumentException("Name: " + type.getName() + " en doublon dans la bdd");
+                throw new IllegalArgumentException("Name Type: " + type.getName() + " en doublon dans la bdd");
             }
         } else {
-            throw new IllegalArgumentException("Id: " + type.getId() + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Type: " + type.getId() + " Non trouvée dans la bdd");
         }
     }
 
@@ -65,7 +64,7 @@ public class TypeService {
             typeRepository.delete(typeToDelete);
             return "Le type a était supprimer";
         } else {
-            return "Id " + idType + " n'existe pas ou a deja était supprimer";
+            return "Id Type " + idType + " n'existe pas ou a deja était supprimer";
         }
     }
 }

@@ -21,7 +21,7 @@ public class EditeurService {
     }
 
     public Editeur getByIdEditeur(String idEditeur) throws Exception {
-        return editeurRepository.findById(idEditeur).orElseThrow(() -> new Exception("Genre not found."));
+        return editeurRepository.findById(idEditeur).orElseThrow(() -> new Exception("Editeur not found."));
     }
 
     public List<Editeur> getEditeurAutocomplete(String name) {
@@ -36,7 +36,7 @@ public class EditeurService {
         try {
             return editeurRepository.save(genreNew);
         } catch(Exception e) {
-            throw new IllegalArgumentException("Name: " + editeur.getName() + " en doublon dans la bdd");
+            throw new IllegalArgumentException("Name Editeur: " + editeur.getName() + " en doublon dans la bdd");
         }
     }
 
@@ -50,10 +50,10 @@ public class EditeurService {
             try {
                 return editeurRepository.save(editeurModified);
             } catch(Exception e) {
-                throw new IllegalArgumentException("Name: " + editeur.getName() + " en doublon dans la bdd");
+                throw new IllegalArgumentException("Name Editeur: " + editeur.getName() + " en doublon dans la bdd");
             }
         } else {
-            throw new IllegalArgumentException("Id: " + editeur.getId() + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Editeur: " + editeur.getId() + " Non trouvée dans la bdd");
         }
     }
 
@@ -63,7 +63,7 @@ public class EditeurService {
             editeurRepository.delete(editeurToDelete);
             return "L'editeur a était supprimer";
         } else {
-            throw new IllegalArgumentException("Id: " + idEditeur + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Editeur: " + idEditeur + " Non trouvée dans la bdd");
         }
     }
 }

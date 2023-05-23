@@ -12,10 +12,10 @@ public class OeuvresCreateDTO {
     public String sousTitre;
     public String description;
     public ImageUpload image;
-    public String Type;
-    public String Auteur;
-    public String Editeur;
-    public String Support;
-    public String Genre;
+    public String idType;
+    public String idAuteur;
+    public String idEditeur;
+    public String idSupport;
+    public String idGenre;
 
 }

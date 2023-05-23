@@ -14,5 +14,5 @@ public interface AuteurRepository extends CrudRepository<Auteur, String> {
     List<Auteur> findAuteurAutocomplete(String name);
 
     @Query("from Auteur where name = ?1")
-    Optional<Auteur> findByName(String name);
+    Auteur findByName(String name);
 }

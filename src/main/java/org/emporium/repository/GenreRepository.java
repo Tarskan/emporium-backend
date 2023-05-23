@@ -15,5 +15,5 @@ public interface GenreRepository extends CrudRepository<Genre, String> {
     List<Genre> findGenreAutocomplete(String name);
 
     @Query("from Genre where name = ?1")
-    Optional<Genre> findByName(String name);
+    Genre findByName(String name);
 }
