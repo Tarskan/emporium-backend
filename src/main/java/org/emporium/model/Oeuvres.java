@@ -1,7 +1,6 @@
 package org.emporium.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -39,31 +38,29 @@ public class Oeuvres {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="idType")
-    private Type idType;
+    private Type type;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="idAuteur")
-    private Auteur idAuteur;
+    private Auteur auteur;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="idEditeur")
-    private Editeur idEditeur;
+    private Editeur editeur;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="idSupport")
-    private Support idSupport;
+    private Support support;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="idGenre")
-    private Genre idGenre;
+    private Genre genre;
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "collection", joinColumns = {@JoinColumn(name = "idOeuvre")}, inverseJoinColumns = {@JoinColumn(name = "UWUid")})
     @JsonBackReference("collection")
     public List<Utilisateur> listUti;
 
-    @JsonIgnore
     @OneToMany(mappedBy ="oeuvre", fetch = FetchType.LAZY)
     @JsonBackReference("oeuvresCom")
     public List<Commentaire> listCommentaire;

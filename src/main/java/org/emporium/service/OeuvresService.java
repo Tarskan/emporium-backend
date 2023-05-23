@@ -113,11 +113,11 @@ public class OeuvresService {
                     .description(oeuvres.description)
                     .image(image.getImageName())
                     .imagePath(image.getImagePath())
-                    .idType(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
-                    .idAuteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
-                    .idGenre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
-                    .idEditeur(editeurRepository.findById(oeuvres.getIdEditeur()).orElseThrow(() -> new Exception("Editeur not found.")))
-                    .idSupport(supportRepository.findById(oeuvres.getIdSupport()).orElseThrow(() -> new Exception("Support not found.")))
+                    .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
+                    .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
+                    .genre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
+                    .editeur(editeurRepository.findById(oeuvres.getIdEditeur()).orElseThrow(() -> new Exception("Editeur not found.")))
+                    .support(supportRepository.findById(oeuvres.getIdSupport()).orElseThrow(() -> new Exception("Support not found.")))
                     .creationDate(myDate)
                     .modificationDate(myDate)
                     .build();
@@ -147,18 +147,18 @@ public class OeuvresService {
                         .description(oeuvres.getDescription())
                         .image(image.getImageName())
                         .imagePath(image.getImagePath())
-                        .idType(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
-                        .idAuteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
-                        .idGenre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
-                        .idEditeur(editeurRepository.findById(oeuvres.getIdEditeur()).orElseThrow(() -> new Exception("Editeur not found.")))
-                        .idSupport(supportRepository.findById(oeuvres.getIdSupport()).orElseThrow(() -> new Exception("Support not found.")))
+                        .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
+                        .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
+                        .genre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
+                        .editeur(editeurRepository.findById(oeuvres.getIdEditeur()).orElseThrow(() -> new Exception("Editeur not found.")))
+                        .support(supportRepository.findById(oeuvres.getIdSupport()).orElseThrow(() -> new Exception("Support not found.")))
                         .creationDate(oeuvresOld.getCreationDate())
                         .modificationDate(myDate)
                         .build();
 
                 return oeuvresRepository.save(oeuvresModified);
         } else {
-            throw new IllegalArgumentException("Id oeuvres: " + oeuvres.getIdOeuvre() + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id: " + oeuvres.getIdOeuvre() + " Non trouvée dans la bdd");
         }
     }
 
@@ -175,7 +175,7 @@ public class OeuvresService {
             oeuvresRepository.delete(oeuvreToDelete);
             return "L'oeuvre a était supprimer";
         } else {
-            throw new IllegalArgumentException("Id oeuvres: " + IdOeuvre + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id: " + IdOeuvre + " Non trouvée dans la bdd");
         }
     }
 
