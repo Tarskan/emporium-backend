@@ -105,14 +105,14 @@ public class OeuvresService {
     public Oeuvres addOeuvre(OeuvresCreateDTO oeuvres) throws Exception {
             Date myDate = new Date();
 
-            ImageItem image = imageService.uploadImage(oeuvres.getImage());
+            //ImageItem image = imageService.uploadImage(oeuvres.getImage());
 
             Oeuvres oeuvresNew = Oeuvres.builder()
                     .titre(oeuvres.titre)
                     .sousTitre(oeuvres.sousTitre)
                     .description(oeuvres.description)
-                    .image(image.getImageName())
-                    .imagePath(image.getImagePath())
+                    /*.image(image.getImageName())
+                    .imagePath(image.getImagePath())*/
                     .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
                     .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
                     .genre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
@@ -129,7 +129,7 @@ public class OeuvresService {
         if (oeuvresRepository.existsById(oeuvres.getIdOeuvre())) {
                 Date myDate = new Date();
                 Oeuvres oeuvresOld = oeuvresRepository.findByIdOeuvre(oeuvres.getIdOeuvre());
-                ImageItem image = new ImageItem();
+                /*ImageItem image = new ImageItem();
                 if (oeuvres.getImage() != null) {
                     image = imageService.uploadImage(oeuvres.getImage());
                     ImageRequest imageRequest =new ImageRequest();
@@ -138,15 +138,15 @@ public class OeuvresService {
                 } else {
                     image.setImagePath(oeuvresOld.getImagePath());
                     image.setImageName(oeuvresOld.getImage());
-                }
+                }*/
 
                 Oeuvres oeuvresModified =  Oeuvres.builder()
                         .idOeuvre(oeuvres.getIdOeuvre())
                         .titre(oeuvres.getTitre())
                         .sousTitre(oeuvres.getSousTitre())
                         .description(oeuvres.getDescription())
-                        .image(image.getImageName())
-                        .imagePath(image.getImagePath())
+                        /*.image(image.getImageName())
+                        .imagePath(image.getImagePath())*/
                         .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
                         .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
                         .genre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
@@ -167,11 +167,11 @@ public class OeuvresService {
             Oeuvres oeuvreToDelete = oeuvresRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Id " + IdOeuvre + " n'existe pas ou a deja était supprimer"));
             List<Commentaire> comUser = commentaireRepository.findByIdOeuvre(IdOeuvre);
             commentaireRepository.deleteAll(comUser);
-            if (oeuvreToDelete.image != null) {
+            /*if (oeuvreToDelete.image != null) {
                 ImageRequest imageRequest =new ImageRequest();
                 imageRequest.setImageName(oeuvreToDelete.getImage());
                 imageService.deleteImage(imageRequest);
-            }
+            }*/
             oeuvresRepository.delete(oeuvreToDelete);
             return "L'oeuvre a était supprimer";
         } else {

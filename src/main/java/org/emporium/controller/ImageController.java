@@ -1,6 +1,5 @@
 package org.emporium.controller;
 
-import com.google.cloud.storage.BlobId;
 import org.emporium.model.ImageItem;
 import org.emporium.model.ImageRequest;
 import org.emporium.model.ImageUpload;
@@ -14,6 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 @Controller
 @Path("/image")
@@ -28,7 +28,16 @@ public class ImageController {
     public String Image(@RequestBody ImageRequest imageRequest) throws IOException {
         return imageService.getImage(imageRequest);
     }
-    @POST
+
+    @GET
+    @PermitAll
+    @Path("/test")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String test() throws IOException, URISyntaxException {
+        return imageService.test();
+    }
+
+   @POST
     @Path("/upload")
     @PermitAll
     @Consumes(MediaType.APPLICATION_JSON)

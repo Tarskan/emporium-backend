@@ -44,15 +44,15 @@ public class UtilisateurService {
     public Utilisateur addUser(UtilisateurCreateDTO utilisateur) {
         Date myDate = new Date();
 
-        ImageItem image = imageService.uploadImage(utilisateur.getProfilPicture());
+        //ImageItem image = imageService.uploadImage(utilisateur.getProfilPicture());
 
         Utilisateur utilisateurNew =  Utilisateur.builder()
                 .pseudo(utilisateur.pseudo)
                 .pwd(utilisateur.pwd)
                 .creationDate(myDate)
                 .modificationDate(myDate)
-                .profilPicture(image.getImageName())
-                .profilPicturePath(image.getImagePath())
+                /*.profilPicture(image.getImageName())
+                .profilPicturePath(image.getImagePath())*/
                 .build();
 
 
@@ -69,7 +69,7 @@ public class UtilisateurService {
 
             Utilisateur utilisateurOld = utilisateurRepository.findByUWUid(utilisateur.getUWUid());
             ImageItem image = new ImageItem();
-            if (utilisateur.getProfilPicture() != null) {
+            /*if (utilisateur.getProfilPicture() != null) {
                 image = imageService.uploadImage(utilisateur.getProfilPicture());
                 ImageRequest imageRequest = new ImageRequest();
                 imageRequest.setImageName(utilisateurOld.getProfilPicture());
@@ -77,7 +77,7 @@ public class UtilisateurService {
             } else {
                 image.setImagePath(utilisateurOld.getProfilPicturePath());
                 image.setImageName(utilisateurOld.getProfilPicture());
-            }
+            }*/
             Utilisateur utilisateurModify =  Utilisateur.builder()
                     .UWUid(utilisateur.getUWUid())
                     .pseudo(utilisateur.getPseudo())
@@ -105,11 +105,11 @@ public class UtilisateurService {
         if (utilisateurRepository.existsById(uwuid)) {
             Utilisateur userToDelete = utilisateurRepository.findByUWUid(uwuid);
             List<Commentaire> comUser = commentaireRepository.findByUWUid(uwuid);
-            if (userToDelete.profilPicture != null) {
+            /*if (userToDelete.profilPicture != null) {
                 ImageRequest imageRequest =new ImageRequest();
                 imageRequest.setImageName(userToDelete.getProfilPicture());
                 imageService.deleteImage(imageRequest);
-            }
+            }*/
             commentaireRepository.deleteAll(comUser);
             utilisateurRepository.delete(userToDelete);
             return "L'utilisateur est supprimer";
