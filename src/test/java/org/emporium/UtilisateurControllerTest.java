@@ -43,7 +43,7 @@ public class UtilisateurControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testModifyUtilisateurEndPoint() {
         UtilisateurModifyDTO utilisateurModifyDTO = new UtilisateurModifyDTO();
         utilisateurModifyDTO.setEquipe("killeur");
@@ -61,7 +61,7 @@ public class UtilisateurControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testAddUtilisateurEndPoint() {
         UtilisateurCreateDTO utilisateurCreateDTO = new UtilisateurCreateDTO();
         utilisateurCreateDTO.setPseudo("test");
