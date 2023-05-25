@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -41,18 +42,20 @@ public class UtilisateurService {
         return utilisateurRepository.findByPseudoLike(pseudo);
     }
 
-    public Utilisateur addUser(UtilisateurCreateDTO utilisateur) {
+    public Utilisateur addUser(UtilisateurCreateDTO utilisateur) throws IOException {
         Date myDate = new Date();
-
-        //ImageItem image = imageService.uploadImage(utilisateur.getProfilPicture());
+        ImageUpload imageUpload = new ImageUpload();
+        imageUpload.setFile(utilisateur.getProfilPicture());
+        imageUpload.setFileName(utilisateur.getImageName());
+        ImageItem image = imageService.uploadImage(imageUpload);
 
         Utilisateur utilisateurNew =  Utilisateur.builder()
                 .pseudo(utilisateur.pseudo)
                 .pwd(utilisateur.pwd)
                 .creationDate(myDate)
                 .modificationDate(myDate)
-                /*.profilPicture(image.getImageName())
-                .profilPicturePath(image.getImagePath())*/
+                .profilPicture(image.getImageName())
+                .profilPicturePath(image.getImagePath())
                 .build();
 
 
@@ -63,21 +66,24 @@ public class UtilisateurService {
         }
     }
 
-    public Utilisateur modifyUser(UtilisateurModifyDTO utilisateur) {
+    public Utilisateur modifyUser(UtilisateurModifyDTO utilisateur) throws IOException {
         if (utilisateurRepository.existsById(utilisateur.getUWUid())) {
             Date myDate = new Date();
 
             Utilisateur utilisateurOld = utilisateurRepository.findByUWUid(utilisateur.getUWUid());
             ImageItem image = new ImageItem();
-            /*if (utilisateur.getProfilPicture() != null) {
-                image = imageService.uploadImage(utilisateur.getProfilPicture());
+            ImageUpload imageUpload = new ImageUpload();
+            imageUpload.setFile(utilisateur.getProfilPicture());
+            imageUpload.setFileName(utilisateur.getImageName());
+            if (utilisateur.getProfilPicture() != null) {
+                image = imageService.uploadImage(imageUpload);
                 ImageRequest imageRequest = new ImageRequest();
                 imageRequest.setImageName(utilisateurOld.getProfilPicture());
                 imageService.deleteImage(imageRequest);
             } else {
                 image.setImagePath(utilisateurOld.getProfilPicturePath());
                 image.setImageName(utilisateurOld.getProfilPicture());
-            }*/
+            }
             Utilisateur utilisateurModify =  Utilisateur.builder()
                     .UWUid(utilisateur.getUWUid())
                     .pseudo(utilisateur.getPseudo())
@@ -105,11 +111,11 @@ public class UtilisateurService {
         if (utilisateurRepository.existsById(uwuid)) {
             Utilisateur userToDelete = utilisateurRepository.findByUWUid(uwuid);
             List<Commentaire> comUser = commentaireRepository.findByUWUid(uwuid);
-            /*if (userToDelete.profilPicture != null) {
+            if (userToDelete.profilPicture != null) {
                 ImageRequest imageRequest =new ImageRequest();
                 imageRequest.setImageName(userToDelete.getProfilPicture());
                 imageService.deleteImage(imageRequest);
-            }*/
+            }
             commentaireRepository.deleteAll(comUser);
             utilisateurRepository.delete(userToDelete);
             return "L'utilisateur est supprimer";

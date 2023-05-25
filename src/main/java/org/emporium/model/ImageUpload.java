@@ -5,18 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jboss.resteasy.reactive.PartType;
+
+import javax.ws.rs.FormParam;
+import javax.ws.rs.core.MediaType;
+import java.io.InputStream;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class ImageUpload {
-    @JsonProperty("image")
-    private byte[] image;
+    @FormParam("file")
+    @PartType(MediaType.APPLICATION_OCTET_STREAM)
+    public InputStream file;
 
-    @JsonProperty("imageName")
-    private String imageName;
-
-    @JsonProperty("imageExtension")
-    private String imageExtension;
+    @FormParam("fileName")
+    @PartType(MediaType.TEXT_PLAIN)
+    public String fileName;
 }

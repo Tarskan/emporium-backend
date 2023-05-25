@@ -4,12 +4,14 @@ import org.emporium.model.Utilisateur;
 import org.emporium.model.UtilisateurCreateDTO;
 import org.emporium.model.UtilisateurModifyDTO;
 import org.emporium.service.UtilisateurService;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -47,13 +49,15 @@ public class UtilisateurController {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Utilisateur PutUtilisateur(@RequestBody UtilisateurModifyDTO utilisateur) {
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Utilisateur PutUtilisateur(@MultipartForm UtilisateurModifyDTO utilisateur) throws IOException {
         return utilisateurService.modifyUser(utilisateur);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Utilisateur AddUtilisateur(@RequestBody UtilisateurCreateDTO utilisateur) {
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Utilisateur AddUtilisateur(@MultipartForm UtilisateurCreateDTO utilisateur) throws IOException {
         return utilisateurService.addUser(utilisateur);
     }
 

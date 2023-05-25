@@ -4,6 +4,7 @@ import org.emporium.model.Oeuvres;
 import org.emporium.model.OeuvresCreateDTO;
 import org.emporium.model.OeuvresModifyDTO;
 import org.emporium.service.OeuvresService;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -82,13 +83,15 @@ public class OeuvresController {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Oeuvres PutOeuvre(@RequestBody OeuvresModifyDTO oeuvres) throws Exception {
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Oeuvres PutOeuvre(@MultipartForm OeuvresModifyDTO oeuvres) throws Exception {
         return oeuvresService.modifyOeuvre(oeuvres);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Oeuvres AddOeuvre(@RequestBody OeuvresCreateDTO oeuvres) throws Exception {
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Oeuvres AddOeuvre(@MultipartForm OeuvresCreateDTO oeuvres) throws Exception {
         return oeuvresService.addOeuvre(oeuvres);
     }
 

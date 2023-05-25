@@ -2,8 +2,6 @@ package org.emporium.service;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.*;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.emporium.model.ImageItem;
@@ -16,9 +14,6 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -38,38 +33,22 @@ public class ImageService {
     @ApplicationScoped
     public void CloudStorageClient() throws IOException, URISyntaxException {
         byte[] decodedBytes = Base64.getDecoder().decode(myConfigGCP);
-        String decodedString = new String(decodedBytes);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Object jsonObject = gson.fromJson(decodedString, Object.class);
-        Object finaljsonObject = gson.fromJson(jsonObject.toString().replace("\u003d", ""), Object.class);
-        FileWriter fileWriter = new FileWriter("key.json");
-        gson.toJson(finaljsonObject, fileWriter);
-        fileWriter.close();
-        GoogleCredentials credentials = GoogleCredentials.fromStream(new FileInputStream("key.json"));
+        GoogleCredentials credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(decodedBytes));
         this.storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
     }
 
     public String test() throws IOException, URISyntaxException {
         byte[] decodedBytes = Base64.getDecoder().decode(myConfigGCP);
         String decodedString = new String(decodedBytes);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Object jsonObject = gson.fromJson(decodedString, Object.class);
-        Object finaljsonObject = gson.fromJson(jsonObject.toString().replace("\u003d", ""), Object.class);
-        /*ClassLoader classLoader = getClass().getClassLoader();
-        URL resourceUrl = classLoader.getResource("/key.json");
-        Path resourcePath = Paths.get(resourceUrl.toURI());
-        String absolutePath = resourcePath.toAbsolutePath().toString();*/
-        FileWriter fileWriter = new FileWriter("key.json");
-        gson.toJson(finaljsonObject, fileWriter);
-        fileWriter.close();
         return "ok";
     }
 
-    public ImageItem uploadImage(ImageUpload imageUpload) {
-        BlobId blobId = BlobId.of(bucketGCP, (bucketGCP+"/") + imageUpload.getImageName().hashCode() + UUID.randomUUID() + "." + imageUpload.getImageExtension());
+    public ImageItem uploadImage(ImageUpload imageUpload) throws IOException {
+        BlobId blobId = BlobId.of(bucketGCP, (bucketGCP+"/") + imageUpload.getFileName().hashCode() + UUID.randomUUID() + imageUpload.getFileName().substring(imageUpload.getFileName().lastIndexOf(".")));
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
 
-        storage.create(blobInfo, imageUpload.getImage());
+        storage.createFrom(blobInfo, imageUpload.getFile());
+        imageUpload.getFile().close();
         ImageItem imageItem = new ImageItem();
         imageItem.setImageName(storage.get(blobId).getName());
         imageItem.setImagePath(storage.get(blobId).getMediaLink());

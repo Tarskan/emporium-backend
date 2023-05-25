@@ -46,7 +46,7 @@ public class OeuvresService {
         if (oeuvresRepository.existsById(idOeuvre)) {
             return oeuvresRepository.findByIdOeuvre(idOeuvre);
         } else {
-            throw new IllegalArgumentException("Id: " + idOeuvre + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Oeuvres: " + idOeuvre + " Non trouvée dans la bdd");
         }
     }
 
@@ -54,7 +54,7 @@ public class OeuvresService {
         if (genreRepository.existsById(idGenre)) {
             return oeuvresRepository.findByIdGenre(idGenre);
         } else {
-            throw new IllegalArgumentException("Id: " + idGenre + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Oeuvres: " + idGenre + " Non trouvée dans la bdd");
         }
     }
 
@@ -62,7 +62,7 @@ public class OeuvresService {
         if (editeurRepository.existsById(idEditeur)) {
             return oeuvresRepository.findByIdEditeur(idEditeur);
         } else {
-            throw new IllegalArgumentException("Id: " + idEditeur + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Oeuvres: " + idEditeur + " Non trouvée dans la bdd");
         }
     }
 
@@ -70,7 +70,7 @@ public class OeuvresService {
         if (auteurRepository.existsById(idAuteur)) {
             return oeuvresRepository.findByIdAuteur(idAuteur);
         } else {
-            throw new IllegalArgumentException("Id: " + idAuteur + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Oeuvres: " + idAuteur + " Non trouvée dans la bdd");
         }
     }
 
@@ -78,7 +78,7 @@ public class OeuvresService {
         if (typeRepository.existsById(idType)) {
             return oeuvresRepository.findByIdType(idType);
         } else {
-            throw new IllegalArgumentException("Id: " + idType + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Oeuvres: " + idType + " Non trouvée dans la bdd");
         }
     }
 
@@ -86,7 +86,7 @@ public class OeuvresService {
         if (supportRepository.existsById(idSupport)) {
             return oeuvresRepository.findByIdSupport(idSupport);
         } else {
-            throw new IllegalArgumentException("Id: " + idSupport + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Oeuvres: " + idSupport + " Non trouvée dans la bdd");
         }
     }
 
@@ -104,15 +104,17 @@ public class OeuvresService {
 
     public Oeuvres addOeuvre(OeuvresCreateDTO oeuvres) throws Exception {
             Date myDate = new Date();
-
-            //ImageItem image = imageService.uploadImage(oeuvres.getImage());
+            ImageUpload imageUpload = new ImageUpload();
+            imageUpload.setFile(oeuvres.getImage());
+            imageUpload.setFileName(oeuvres.getImageName());
+            ImageItem image = imageService.uploadImage(imageUpload);
 
             Oeuvres oeuvresNew = Oeuvres.builder()
                     .titre(oeuvres.titre)
                     .sousTitre(oeuvres.sousTitre)
                     .description(oeuvres.description)
-                    /*.image(image.getImageName())
-                    .imagePath(image.getImagePath())*/
+                    .image(image.getImageName())
+                    .imagePath(image.getImagePath())
                     .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
                     .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
                     .genre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
@@ -129,24 +131,27 @@ public class OeuvresService {
         if (oeuvresRepository.existsById(oeuvres.getIdOeuvre())) {
                 Date myDate = new Date();
                 Oeuvres oeuvresOld = oeuvresRepository.findByIdOeuvre(oeuvres.getIdOeuvre());
-                /*ImageItem image = new ImageItem();
-                if (oeuvres.getImage() != null) {
-                    image = imageService.uploadImage(oeuvres.getImage());
+                ImageItem image = new ImageItem();
+                if (oeuvres.getProfilPicture() != null) {
+                    ImageUpload imageUpload = new ImageUpload();
+                    imageUpload.setFile(oeuvres.getProfilPicture());
+                    imageUpload.setFileName(oeuvres.getImageName());
+                    image = imageService.uploadImage(imageUpload);
                     ImageRequest imageRequest =new ImageRequest();
                     imageRequest.setImageName(oeuvresOld.getImage());
                     imageService.deleteImage(imageRequest);
                 } else {
                     image.setImagePath(oeuvresOld.getImagePath());
                     image.setImageName(oeuvresOld.getImage());
-                }*/
+                }
 
                 Oeuvres oeuvresModified =  Oeuvres.builder()
                         .idOeuvre(oeuvres.getIdOeuvre())
                         .titre(oeuvres.getTitre())
                         .sousTitre(oeuvres.getSousTitre())
                         .description(oeuvres.getDescription())
-                        /*.image(image.getImageName())
-                        .imagePath(image.getImagePath())*/
+                        .image(image.getImageName())
+                        .imagePath(image.getImagePath())
                         .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
                         .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
                         .genre(genreRepository.findById(oeuvres.getIdGenre()).orElseThrow(() -> new Exception("Genre not found.")))
@@ -158,24 +163,24 @@ public class OeuvresService {
 
                 return oeuvresRepository.save(oeuvresModified);
         } else {
-            throw new IllegalArgumentException("Id: " + oeuvres.getIdOeuvre() + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Oeuvres: " + oeuvres.getIdOeuvre() + " Non trouvée dans la bdd");
         }
     }
 
     public String suppOeuvre(String IdOeuvre) throws Exception {
         if (oeuvresRepository.existsById(IdOeuvre)) {
-            Oeuvres oeuvreToDelete = oeuvresRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Id " + IdOeuvre + " n'existe pas ou a deja était supprimer"));
+            Oeuvres oeuvreToDelete = oeuvresRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Id Oeuvres " + IdOeuvre + " n'existe pas ou a deja était supprimer"));
             List<Commentaire> comUser = commentaireRepository.findByIdOeuvre(IdOeuvre);
             commentaireRepository.deleteAll(comUser);
-            /*if (oeuvreToDelete.image != null) {
+            if (oeuvreToDelete.image != null) {
                 ImageRequest imageRequest =new ImageRequest();
                 imageRequest.setImageName(oeuvreToDelete.getImage());
                 imageService.deleteImage(imageRequest);
-            }*/
+            }
             oeuvresRepository.delete(oeuvreToDelete);
             return "L'oeuvre a était supprimer";
         } else {
-            throw new IllegalArgumentException("Id: " + IdOeuvre + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id Oeuvres: " + IdOeuvre + " Non trouvée dans la bdd");
         }
     }
 

@@ -4,6 +4,7 @@ import org.emporium.model.ImageItem;
 import org.emporium.model.ImageRequest;
 import org.emporium.model.ImageUpload;
 import org.emporium.service.ImageService;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -29,19 +30,11 @@ public class ImageController {
         return imageService.getImage(imageRequest);
     }
 
-    @GET
-    @PermitAll
-    @Path("/test")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String test() throws IOException, URISyntaxException {
-        return imageService.test();
-    }
-
-   @POST
+    @POST
     @Path("/upload")
     @PermitAll
-    @Consumes(MediaType.APPLICATION_JSON)
-    public ImageItem postImage(@RequestBody ImageUpload imageUpload) throws IOException {
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public ImageItem postImage(@MultipartForm ImageUpload imageUpload) throws IOException {
         return imageService.uploadImage(imageUpload);
     }
 
