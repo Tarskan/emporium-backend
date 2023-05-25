@@ -1,12 +1,17 @@
 package org.emporium.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Builder
@@ -64,5 +69,13 @@ public class Oeuvres {
     @OneToMany(mappedBy ="oeuvre", fetch = FetchType.LAZY)
     @JsonBackReference("oeuvresCom")
     public List<Commentaire> listCommentaire;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Oeuvres oeuvres = (Oeuvres) o;
+        return idOeuvre != null && Objects.equals(idOeuvre, oeuvres.idOeuvre);
+    }
 
 }

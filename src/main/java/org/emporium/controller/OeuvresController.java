@@ -81,6 +81,13 @@ public class OeuvresController {
         return oeuvresService.getByIdSupport(idSupport);
     }
 
+    @Path("/{idOeuvre}/auteur/{idAuteur}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Oeuvres> getRelatedTo(@PathParam("idOeuvre") String idOeuvre, @PathParam("idAuteur") String idAuteur) {
+        return oeuvresService.getRelatedTo(idAuteur, idOeuvre);
+    }
+
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)

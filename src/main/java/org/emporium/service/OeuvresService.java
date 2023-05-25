@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 
 @Singleton
@@ -100,6 +102,24 @@ public class OeuvresService {
         } else {
             return oeuvresRepository.findAllSorted();
         }
+    }
+
+    public List<Oeuvres> getRelatedTo(String idAuteur, String idOeuvre) {
+        List<Oeuvres> listOeuvresRelated = oeuvresRepository.findRelatedToOeuvresFromAuteur(idAuteur);
+        listOeuvresRelated.remove(oeuvresRepository.findByIdOeuvre(idOeuvre));
+        if (listOeuvresRelated.size() > 3) {
+            Random random = new Random();
+            int maxDebut = listOeuvresRelated.size() - 3;
+            int begin = random.nextInt(maxDebut);
+            int end = begin + 3;
+            System.out.println(begin + " " + end);
+            if (listOeuvresRelated.size() == 4) {
+                return listOeuvresRelated.subList(0,2);
+            } else if (listOeuvresRelated.size() > 3) {
+                return listOeuvresRelated.subList(begin,end);
+            }
+        }
+        return Collections.emptyList();
     }
 
     public Oeuvres addOeuvre(OeuvresCreateDTO oeuvres) throws Exception {
