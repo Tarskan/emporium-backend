@@ -36,6 +36,11 @@ public class Utilisateur {
     public String equipe;
     @Column(name = "resultat")
     public String resultat;
+
+    @Column(name = "email")
+    public String email;
+    @Column(name = "description", length = 3000)
+    public String description;
     @Column(name = "creationDate")
     public Date creationDate;
     @Column(name = "modificationDate")
