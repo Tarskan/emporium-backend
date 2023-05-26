@@ -23,7 +23,7 @@ jobs:
       - run:
           name: Build Quarkus application
           command: |
-            ./mvn package
+            mvn package
 
   docker-build-and-push:
     working_directory: /dockerapp
