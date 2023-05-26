@@ -23,8 +23,10 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
       - maven/install
-      - maven/run:
-          goals: package
+      - run:
+          name: Build Quarkus application
+          command: |
+            ./mvnw package
 
   docker-build-and-push:
     working_directory: /dockerapp
@@ -45,7 +47,6 @@ jobs:
             docker tag app $DOCKER_HUB_USER_ID/emporiumback:latest
             docker push $DOCKER_HUB_USER_ID/emporiumback:$CIRCLE_BUILD_NUM
             docker push $DOCKER_HUB_USER_ID/emporiumback:latest
-
   deploy:
     machine:
       enabled: true
@@ -62,6 +63,7 @@ jobs:
           name: Deploy Quarkus application to Fly.io
           command: |
             flyctl deploy --app=$FLY_APP_NAME --image=$FLY_DOCKER_IMAGE
+
 
 workflows:
   version: 1
