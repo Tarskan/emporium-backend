@@ -1,13 +1,16 @@
 package org.emporium.service;
 
-import org.emporium.model.GenericCreateDTO;
-import org.emporium.model.GenericModifyDTO;
-import org.emporium.model.Type;
+import org.emporium.model.*;
+import org.emporium.repository.CollectionRepository;
+import org.emporium.repository.OeuvresRepository;
 import org.emporium.repository.TypeRepository;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Singleton
@@ -15,6 +18,9 @@ import java.util.List;
 public class TypeService {
     @Inject
     TypeRepository typeRepository;
+
+    @Inject
+    OeuvresRepository oeuvresRepository;
 
     public List<Type> getAllType() {
         return typeRepository.findAll();
@@ -26,6 +32,18 @@ public class TypeService {
 
     public List<Type> getTypeAutocomplete(String name) {
         return typeRepository.findTypeAutocomplete(name);
+    }
+
+    public List<TypeDTO> getMostThreePopular() {
+        List<Type> listType = typeRepository.findAll();
+        List<TypeDTO> typeOrdered = new ArrayList<TypeDTO>();
+        for (int i = 0; i < listType.size(); i++) {
+            int count = oeuvresRepository.findByIdType(listType.get(i).getIdType()).size();
+            typeOrdered.add(new TypeDTO(listType.get(i), count));
+        }
+        typeOrdered.sort(Comparator.comparingInt(dto -> -dto.count));
+
+        return typeOrdered.subList(0,3);
     }
 
     public Type addType(GenericCreateDTO type) throws Exception {

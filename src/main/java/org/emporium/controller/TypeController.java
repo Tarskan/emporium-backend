@@ -3,6 +3,7 @@ package org.emporium.controller;
 import org.emporium.model.GenericCreateDTO;
 import org.emporium.model.GenericModifyDTO;
 import org.emporium.model.Type;
+import org.emporium.model.TypeDTO;
 import org.emporium.service.TypeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,13 @@ public class TypeController {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Type> RechercheUtilisateurByPseudo(@PathParam("type") String type) {
         return typeService.getTypeAutocomplete(type);
+    }
+
+    @Path("/popular")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<TypeDTO> MostThreePopularOne() {
+        return typeService.getMostThreePopular();
     }
 
     @PUT
