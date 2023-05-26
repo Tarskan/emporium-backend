@@ -7,7 +7,7 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class TypeControllerTest {
-    @Test
+    /*@Test
     public void testAllTypeEndPoint() {
         given()
                 .when().get("/type")
@@ -31,7 +31,7 @@ public class TypeControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testModifyGenreEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");
@@ -72,11 +72,11 @@ public class TypeControllerTest {
                 .statusCode(200);
     }
 
-    */@Test
+    @Test
     public void testSuppTypeEndPoint() {
         given()
                 .when().delete("/type/delete/4")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 }

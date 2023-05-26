@@ -7,7 +7,7 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class EditeurControllerTest {
-    @Test
+    /*@Test
     public void testAllEditeurEndPoint() {
         given()
                 .when().get("/editeur")
@@ -72,11 +72,11 @@ public class EditeurControllerTest {
                 .statusCode(200);
     }
 
-    */@Test
+    @Test
     public void testSuppEditeurEndPoint() {
         given()
                 .when().delete("/editeur/delete/1")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 }

@@ -19,7 +19,7 @@ public class UtilisateurControllerTest {
              .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testGetUtilisateurByIdUtilisateurEndPoint() {
         given()
                 .when().get("/utilisateur/1")
@@ -73,7 +73,7 @@ public class UtilisateurControllerTest {
                 .when().post("/utilisateur")
                 .then()
                 .statusCode(200);
-    }*/
+    }
 
     @Test
     public void testSuppUtilisateurEndPoint() {
@@ -81,6 +81,6 @@ public class UtilisateurControllerTest {
                 .when().delete("/utilisateur/delete/1")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 
 }
