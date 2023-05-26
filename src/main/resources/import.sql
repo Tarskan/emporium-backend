@@ -15,6 +15,8 @@ INSERT INTO Editeur(idEditeur, name) VALUES ('3', 'Test');
 INSERT INTO Genre(idGenre, name) VALUES ('1', 'Death metal');
 INSERT INTO Type(idType, name) VALUES ('1', 'Musique');
 INSERT INTO Type(idType, name) VALUES ('2', 'Jeux vidéo');
+INSERT INTO Type(idType, name) VALUES ('3', 'Livre');
+INSERT INTO Type(idType, name) VALUES ('4', 'Goodies');
 INSERT INTO Support(idSupport, name) VALUES ('1', 'DVD');
 INSERT INTO Support(idSupport, name) VALUES ('2', 'CD');
 INSERT INTO Support(idSupport, name) VALUES ('3', 'Vinyle');
@@ -29,6 +31,8 @@ INSERT INTO Oeuvres(IdOeuvre, Titre, SousTitre, Description, imagePath, idType, 
 INSERT INTO Oeuvres(IdOeuvre, Titre, SousTitre, Description, imagePath, idType, idAuteur, idEditeur, idSupport, idGenre, countFav, creationDate, modificationDate) VALUES ('7', 'Keine Lust', 'null', 'Musique de metal', 'https://i1.sndcdn.com/artworks-yAe1taHRXvyi8RJn-Vg3zuA-t500x500.jpg', '1', '3', '3', '3', '1', 0, '2023-02-16', '2023-05-08');
 INSERT INTO Oeuvres(IdOeuvre, Titre, SousTitre, Description, imagePath, idType, idAuteur, idEditeur, idSupport, idGenre, countFav, creationDate, modificationDate) VALUES ('8', 'Amerika', 'null', 'Musique de metal', 'https://cdn.rammsteinworld.com/uploads/galerie/promo/promo-amerika/004.jpg', '1', '3', '3', '3', '1', 0, '2023-02-16', '2023-05-14');
 INSERT INTO Oeuvres(IdOeuvre, Titre, SousTitre, Description, imagePath, idType, idAuteur, idEditeur, idSupport, idGenre, countFav, creationDate, modificationDate) VALUES ('9', 'Morgenstern', 'null', 'Musique de metal', 'https://i.ytimg.com/vi/KzvLsONyVy8/maxresdefault.jpg', '1', '3', '3', '3', '1', 0, '2023-02-16', '2023-05-17');
+INSERT INTO Oeuvres(IdOeuvre, Titre, SousTitre, Description, imagePath, idType, idAuteur, idEditeur, idSupport, idGenre, countFav, creationDate, modificationDate) VALUES ('10', 'Halo', 'null', 'Un jeu xbox', 'https://image.jeuxvideo.com/images/pc/h/a/halopc0f.jpg', '2', '3', '3', '3', '1', 0, '2023-02-16', '2023-05-14');
+INSERT INTO Oeuvres(IdOeuvre, Titre, SousTitre, Description, imagePath, idType, idAuteur, idEditeur, idSupport, idGenre, countFav, creationDate, modificationDate) VALUES ('11', '20 000 lieux sous les mers', 'null', 'Un bouquin', 'https://www.livredepoche.com/sites/default/files/images/livres/couv/9782253006329-001-T.jpeg', '3', '3', '3', '3', '1', 0, '2023-02-16', '2023-05-17');
 
 INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('1', '1', '1', true);
 INSERT INTO Collection(idCollection, UWUid, idOeuvre, favorite) VALUES ('6', '1', '2', true);
