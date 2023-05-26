@@ -1,9 +1,6 @@
 package org.emporium.service;
 
-import org.emporium.model.Commentaire;
-import org.emporium.model.CommentaireCreateDTO;
-import org.emporium.model.CommentaireLikeDTO;
-import org.emporium.model.CommentaireModifyDTO;
+import org.emporium.model.*;
 import org.emporium.repository.CommentaireRepository;
 import org.emporium.repository.OeuvresRepository;
 import org.emporium.repository.UtilisateurRepository;
@@ -11,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,9 +36,19 @@ public class CommentaireService {
         }
     }
 
-    public List<Commentaire> getCommentaireByUwuid(String uwuid) throws Exception {
+    public List<CommentaireProfilDTO> getCommentaireByUwuid(String uwuid) throws Exception {
         if (utilisateurRepository.existsById(uwuid)) {
-            return commentaireRepository.findByUWUid(uwuid);
+            List<CommentaireProfilDTO> listComUser = new ArrayList<CommentaireProfilDTO>();
+            List<Commentaire> listCom = commentaireRepository.findByUWUid(uwuid);
+            for (int i = 0; i < listCom.size(); i++) {
+                listComUser.add(new CommentaireProfilDTO(listCom.get(i), listCom.get(i).getOeuvre().getImagePath(), listCom.get(i).getOeuvre().getIdOeuvre()));
+            }
+            if (listCom.size() > 3) {
+                return listComUser.subList(0,3);
+            }  else {
+                return listComUser;
+            }
+
         } else {
             throw new IllegalArgumentException("Id user: " + uwuid + " Non trouvée dans la bdd");
         }

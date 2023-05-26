@@ -37,14 +37,6 @@ public class CollectionService {
         }
     }
 
-    public List<Collection> getByIdUWUid(String uwuid) {
-        if (utilisateurRepository.existsById(uwuid)) {
-            return collectionRepository.findByUWUid(uwuid);
-        } else {
-            throw new IllegalArgumentException("Id: " + uwuid + " Non trouvée dans la bdd");
-        }
-    }
-
     public List<Utilisateur> getByIdOeuvre(String idOeuvre) {
         if (oeuvresRepository.existsById(idOeuvre)) {
             List<Utilisateur> listUtilisateur = new ArrayList<Utilisateur>();
