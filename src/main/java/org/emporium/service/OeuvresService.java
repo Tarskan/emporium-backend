@@ -152,9 +152,9 @@ public class OeuvresService {
                 Date myDate = new Date();
                 Oeuvres oeuvresOld = oeuvresRepository.findByIdOeuvre(oeuvres.getIdOeuvre());
                 ImageItem image = new ImageItem();
-                if (oeuvres.getProfilPicture() != null) {
+                if (oeuvres.getImage() != null) {
                     ImageUpload imageUpload = new ImageUpload();
-                    imageUpload.setFile(oeuvres.getProfilPicture());
+                    imageUpload.setFile(oeuvres.getImage());
                     imageUpload.setFileName(oeuvres.getImageName());
                     image = imageService.uploadImage(imageUpload);
                     ImageRequest imageRequest =new ImageRequest();
