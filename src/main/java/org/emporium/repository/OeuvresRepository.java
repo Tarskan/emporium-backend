@@ -14,6 +14,9 @@ public interface OeuvresRepository extends CrudRepository<Oeuvres, String> {
     @Query("from Oeuvres order by modificationdate ASC")
     List<Oeuvres> findAllSorted();
 
+    @Query("from Oeuvres order by modificationdate DESC")
+    List<Oeuvres> findLastModified();
+
     @Query("from Oeuvres where idOeuvre = ?1")
     Oeuvres findByIdOeuvre(String idoeuvre);
 

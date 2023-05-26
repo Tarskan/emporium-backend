@@ -32,11 +32,11 @@ public class OeuvresController {
         return oeuvresService.getByIdOeuvre(idOeuvre);
     }
 
-    @Path("/lastAdd")
+    @Path("/lastModified")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Oeuvres> getByIdSupport() {
-        return oeuvresService.getLastAdd();
+        return oeuvresService.getLastModified();
     }
 
     @Path("/search/{oeuvreName}")
