@@ -3,7 +3,7 @@
 version: 2.1
 
 orbs:
-  maven: entur/maven-orb@0.0.12
+  maven: circleci/maven@1.4.1
 
 jobs:
   build:
