@@ -8,16 +8,17 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/postgres:15.3.0-postgis
+      - image: postgres:13.3
         environment:
           POSTGRES_USER: postgres
         auth:
           username: postgres
           password: postgrespw
+          POSTGRES_DB: mydatabase
 
       - image: circleci/openjdk:11-jdk
     environment:
-      DATABASE_URL: postgresql://postgres@localhost/circle_test
+      DATABASE_URL: postgresql://postgres@localhost/mydatabase
       DATABASE_USER: postgres
       DATABASE_PWD: postgrespw
     working_directory: ~/repo
@@ -75,7 +76,7 @@ jobs:
 
 workflows:
   version: 1
-  say-hello-workflow:
+  deploy-quarkus-on-fly-io:
     jobs:
       - build
       - docker-build-and-push:
