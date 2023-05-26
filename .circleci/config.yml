@@ -8,7 +8,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/postgres:15.3.0
+      - image: cimg/postgres:15.3.0-postgis
         environment:
           POSTGRES_USER: postgres
         auth:
