@@ -30,8 +30,8 @@ public class Oeuvres {
     public String sousTitre;
     @Column(name = "description", length = 2000)
     public String description;
-    @Column(name = "image", length = 1000)
-    public String image;
+    @Column(name = "imageName", length = 1000)
+    public String imageName;
     @Column(name = "imagePath", length = 1000)
     public String imagePath;
     @Column(name = "countFav")

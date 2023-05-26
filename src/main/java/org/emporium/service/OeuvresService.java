@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import org.emporium.model.Collection;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +20,9 @@ public class OeuvresService {
 
     @Inject
     OeuvresRepository oeuvresRepository;
+
+    @Inject
+    CollectionRepository collectionRepository;
 
     @Inject
     CommentaireRepository commentaireRepository;
@@ -108,16 +113,8 @@ public class OeuvresService {
         List<Oeuvres> listOeuvresRelated = oeuvresRepository.findRelatedToOeuvresFromAuteur(idAuteur);
         listOeuvresRelated.remove(oeuvresRepository.findByIdOeuvre(idOeuvre));
         if (listOeuvresRelated.size() > 3) {
-            Random random = new Random();
-            int maxDebut = listOeuvresRelated.size() - 3;
-            int begin = random.nextInt(maxDebut);
-            int end = begin + 3;
-            System.out.println(begin + " " + end);
-            if (listOeuvresRelated.size() == 4) {
-                return listOeuvresRelated.subList(0,2);
-            } else if (listOeuvresRelated.size() > 3) {
-                return listOeuvresRelated.subList(begin,end);
-            }
+            Collections.shuffle(listOeuvresRelated);
+            return listOeuvresRelated.subList(0, 3);
         }
         return Collections.emptyList();
     }
@@ -133,7 +130,7 @@ public class OeuvresService {
                     .titre(oeuvres.titre)
                     .sousTitre(oeuvres.sousTitre)
                     .description(oeuvres.description)
-                    .image(image.getImageName())
+                    .imageName(image.getImageName())
                     .imagePath(image.getImagePath())
                     .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
                     .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
@@ -158,11 +155,11 @@ public class OeuvresService {
                     imageUpload.setFileName(oeuvres.getImageName());
                     image = imageService.uploadImage(imageUpload);
                     ImageRequest imageRequest =new ImageRequest();
-                    imageRequest.setImageName(oeuvresOld.getImage());
+                    imageRequest.setImageName(oeuvresOld.getImageName());
                     imageService.deleteImage(imageRequest);
                 } else {
                     image.setImagePath(oeuvresOld.getImagePath());
-                    image.setImageName(oeuvresOld.getImage());
+                    image.setImageName(oeuvresOld.getImageName());
                 }
 
                 Oeuvres oeuvresModified =  Oeuvres.builder()
@@ -170,7 +167,7 @@ public class OeuvresService {
                         .titre(oeuvres.getTitre())
                         .sousTitre(oeuvres.getSousTitre())
                         .description(oeuvres.getDescription())
-                        .image(image.getImageName())
+                        .imageName(image.getImageName())
                         .imagePath(image.getImagePath())
                         .type(typeRepository.findById(oeuvres.getIdType()).orElseThrow(() -> new Exception("Type not found.")))
                         .auteur(auteurRepository.findById(oeuvres.getIdAuteur()).orElseThrow(() -> new Exception("Auteur not found.")))
@@ -191,10 +188,12 @@ public class OeuvresService {
         if (oeuvresRepository.existsById(IdOeuvre)) {
             Oeuvres oeuvreToDelete = oeuvresRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Id Oeuvres " + IdOeuvre + " n'existe pas ou a deja était supprimer"));
             List<Commentaire> comUser = commentaireRepository.findByIdOeuvre(IdOeuvre);
+            List<Collection> colUser = collectionRepository.findByIdOeuvre(IdOeuvre);
             commentaireRepository.deleteAll(comUser);
-            if (oeuvreToDelete.image != null) {
+            collectionRepository.deleteAll(colUser);
+            if (oeuvreToDelete.getImageName() != null) {
                 ImageRequest imageRequest =new ImageRequest();
-                imageRequest.setImageName(oeuvreToDelete.getImage());
+                imageRequest.setImageName(oeuvreToDelete.getImageName());
                 imageService.deleteImage(imageRequest);
             }
             oeuvresRepository.delete(oeuvreToDelete);
