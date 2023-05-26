@@ -75,7 +75,7 @@ public class TypeControllerTest {
     */@Test
     public void testSuppTypeEndPoint() {
         given()
-                .when().delete("/type/delete/2")
+                .when().delete("/type/delete/4")
                 .then()
                 .statusCode(200);
     }
