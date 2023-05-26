@@ -40,7 +40,7 @@ jobs:
           version: 19.03.13
       - run:
           name: Build application Docker image
-          command: docker build -t app .
+          command: docker build -f src/main/docker/Dockerfile.jvm -t app .
       - deploy:
           name: Publish application to docker hub
           command: |
