@@ -11,7 +11,7 @@ import static org.hamcrest.CoreMatchers.is;
 @QuarkusTest
 public class UtilisateurControllerTest {
 
-    @Test
+    /*@Test
     public void testAllUtilisateurEndPoint() {
         given()
           .when().get("/utilisateur")
@@ -19,7 +19,7 @@ public class UtilisateurControllerTest {
              .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetUtilisateurByIdUtilisateurEndPoint() {
         given()
                 .when().get("/utilisateur/1")
