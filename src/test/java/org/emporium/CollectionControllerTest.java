@@ -27,14 +27,6 @@ public class CollectionControllerTest {
     }
 
     @Test
-    public void testGetCollectionByIdGenreEndPoint() {
-        given()
-                .when().get("/collection/genre/1")
-                .then()
-                .statusCode(200);
-    }
-
-    @Test
     public void testGetCollectionByIdEditeurEndPoint() {
         given()
                 .when().get("/collection/oeuvres/2")
@@ -62,7 +54,7 @@ public class CollectionControllerTest {
     @Test
     public void testGetCollectionByIdUserEndPoint() {
         given()
-                .when().get("/collection/utilisateur/2")
+                .when().get("/collection/utilisateur/3")
                 .then()
                 .statusCode(200);
     }

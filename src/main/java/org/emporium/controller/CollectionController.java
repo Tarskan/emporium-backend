@@ -29,24 +29,17 @@ public class CollectionController {
         return collectionService.getByIdCollection(IdColection);
     }
 
-    @Path("/genre/{idGenre}")
+    @Path("/oeuvres/{idOeuvre}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Collection> getByGenre(@PathParam("idGenre") String idGenre) {
-        return collectionService.getByIdUWUid(idGenre);
-    }
-
-    @Path("/utilisateur/{idOeuvre}")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Utilisateur> getUserWhoPosses(@PathParam("idOeuvre") String idOeuvre) {
+    public List<Utilisateur> getOeuvresWhoArePossesed(@PathParam("idOeuvre") String idOeuvre) {
         return collectionService.getByIdOeuvre(idOeuvre);
     }
 
-    @Path("/oeuvres/{uwuid}")
+    @Path("/utilisateur/{uwuid}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Oeuvres> getOeuvresWhoArePossesed(@PathParam("uwuid") String uwuid) {
+    public List<CollectionDTO> getUserWhoPosses(@PathParam("uwuid") String uwuid) {
         return collectionService.getByUwuid(uwuid);
     }
 
