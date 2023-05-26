@@ -8,10 +8,8 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:11-jdk
+      - image: ubuntu-2204:2022.04.2
     working_directory: ~/repo
-    environment:
-      MAVEN_OPTS: -Xmx6400m
     steps:
       - checkout
       - restore_cache:
@@ -25,7 +23,7 @@ jobs:
       - run:
           name: Build Quarkus application
           command: |
-            ./mvnw package
+            ./mvn package
 
   docker-build-and-push:
     working_directory: /dockerapp
