@@ -25,9 +25,9 @@ public class OeuvresModifyDTO {
     @FormParam("description")
     @PartType(MediaType.TEXT_PLAIN)
     public String description;
-    @FormParam("profilPicture")
+    @FormParam("image")
     @PartType(MediaType.APPLICATION_OCTET_STREAM)
-    public InputStream profilPicture;
+    public InputStream image;
     @FormParam("imageName")
     @PartType(MediaType.TEXT_PLAIN)
     public String imageName;
