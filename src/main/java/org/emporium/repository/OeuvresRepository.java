@@ -20,9 +20,6 @@ public interface OeuvresRepository extends CrudRepository<Oeuvres, String> {
     @Query("from Oeuvres where idOeuvre = ?1")
     Oeuvres findByIdOeuvre(String idoeuvre);
 
-    @Query("from Oeuvres where titre = ?1")
-    Oeuvres findByTitre(String name);
-
     @Query("from Oeuvres where idType = ?1 order by modificationdate ASC")
     List<Oeuvres> findByIdType(String idtype);
 
@@ -38,7 +35,7 @@ public interface OeuvresRepository extends CrudRepository<Oeuvres, String> {
     @Query("from Oeuvres where idSupport = ?1 order by modificationdate ASC")
     List<Oeuvres> findByIdSupport(String idsupport);
 
-    @Query("from Oeuvres where titre like concat(?1, '%')")
+    @Query("from Oeuvres where titre like concat('%', ?1, '%')")
     List<Oeuvres> findByTitreAutoComplete(String titre);
 
     @Query("from Oeuvres where idAuteur = ?1")
