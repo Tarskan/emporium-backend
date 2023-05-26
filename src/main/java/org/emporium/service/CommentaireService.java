@@ -42,15 +42,15 @@ public class CommentaireService {
         if (utilisateurRepository.existsById(uwuid)) {
             return commentaireRepository.findByUWUid(uwuid);
         } else {
-            throw new IllegalArgumentException("Id: " + uwuid + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id user: " + uwuid + " Non trouvée dans la bdd");
         }
     }
 
     public List<Commentaire> getCommentaireByIdoeuvres(String idOeuvre) throws Exception {
-        if (utilisateurRepository.existsById(idOeuvre)) {
+        if (oeuvresRepository.existsById(idOeuvre)) {
             return commentaireRepository.findByIdOeuvre(idOeuvre);
         } else {
-            throw new IllegalArgumentException("Id: " + idOeuvre + " Non trouvée dans la bdd");
+            throw new IllegalArgumentException("Id oeuvres demander: " + idOeuvre + " Non trouvée dans la bdd");
         }
     }
 
