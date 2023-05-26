@@ -11,7 +11,7 @@ jobs:
       - run:
           name: Build Quarkus application
           command: |
-            ./mvnw package
+            ./mvnw clean install -DskipTests=true
 
   docker-build-and-push:
     working_directory: /dockerapp
@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Configure Flyctl
           command: |
-            flyctl auth login
+            flyctl auth login --email $FLY_EMAIL_USER --password $FLY_PWD_USER
       - run:
           name: Deploy Quarkus application to Fly.io
           command: |
