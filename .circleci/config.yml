@@ -11,7 +11,7 @@ jobs:
       - run:
           name: Build Quarkus application
           command: |
-            ./mvnw clean install -DskipTests=true
+            ./mvnw package
 
   docker-build-and-push:
     working_directory: /dockerapp
