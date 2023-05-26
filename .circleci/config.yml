@@ -6,7 +6,7 @@ orbs:
   maven: circleci/maven@1.4.1
 
 jobs:
-  build:
+  build: &shared-config
     docker:
       - image: circleci/openjdk:11-jdk
       - image: circleci/postgres:9.6.5
@@ -31,6 +31,7 @@ jobs:
             mvn package
 
   docker-build-and-push:
+    <<: *shared-config
     working_directory: /dockerapp
     docker:
       - image: docker:17.05.0-ce-git
