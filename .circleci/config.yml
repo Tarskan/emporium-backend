@@ -1,26 +1,64 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 # See: https://circleci.com/docs/configuration-reference
 version: 2.1
-
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/configuration-reference/#executor-job
+  build:
     docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/configuration-reference/#steps
+      - image: circleci/openjdk:11-jdk
+    working_directory: ~/repo
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: Build Quarkus application
+          command: |
+            ./mvnw package
 
-# Orchestrate jobs using workflows
-# See: https://circleci.com/docs/configuration-reference/#workflows
+  docker-build-and-push:
+    working_directory: /dockerapp
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: Build application Docker image
+          command: docker build -t app .
+      - deploy:
+          name: Publish application to docker hub
+          command: |
+            docker login -e $DOCKER_HUB_EMAIL -u $DOCKER_HUB_USER_ID -p $DOCKER_HUB_PWD
+            docker tag app $DOCKER_HUB_USER_ID/emporiumback:$CIRCLE_BUILD_NUM
+            docker tag app $DOCKER_HUB_USER_ID/emporiumback:latest
+            docker push $DOCKER_HUB_USER_ID/emporiumback:$CIRCLE_BUILD_NUM
+            docker push $DOCKER_HUB_USER_ID/emporiumback:latest
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - run:
+          name: Install Flyctl CLI
+          command: |
+            curl -L https://fly.io/install.sh | sh
+      - run:
+          name: Configure Flyctl
+          command: |
+            flyctl auth login
+      - run:
+          name: Deploy Quarkus application to Fly.io
+          command: |
+            flyctl deploy --app=$FLY_APP_NAME --image=$FLY_DOCKER_IMAGE
+
+
 workflows:
+  version: 1
   say-hello-workflow:
     jobs:
-      - say-hello
+      - build
+      - docker-build-and-push:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - build
+            - docker-build-and-push
