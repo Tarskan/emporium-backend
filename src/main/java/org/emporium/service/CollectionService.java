@@ -63,7 +63,23 @@ public class CollectionService {
             listOeuvres.addAll(ListCollect.stream().map(Collection::getOeuvre).collect(Collectors.toList()));
             List<CollectionDTO> collectionUser = new ArrayList<CollectionDTO>();
             for (int i = 0; i < listOeuvres.size(); i++) {
-                CollectionDTO objectCollection = new CollectionDTO(ListCollect.get(i), listOeuvres.get(1));
+                CollectionDTO objectCollection = new CollectionDTO(ListCollect.get(i), listOeuvres.get(i));
+                collectionUser.add(objectCollection);
+            }
+            return collectionUser;
+        } else {
+            throw new IllegalArgumentException("Id: " + uwuid + " Non trouvée dans la bdd");
+        }
+    }
+
+    public List<CollectionDTO> test(String uwuid) {
+        if (utilisateurRepository.existsById(uwuid)) {
+            List<Oeuvres> listOeuvres = new ArrayList<Oeuvres>();
+            List<Collection> ListCollect = collectionRepository.findByUWUid(uwuid);
+            listOeuvres.addAll(ListCollect.stream().map(Collection::getOeuvre).collect(Collectors.toList()));
+            List<CollectionDTO> collectionUser = new ArrayList<CollectionDTO>();
+            for (int i = 0; i < listOeuvres.size(); i++) {
+                CollectionDTO objectCollection = new CollectionDTO(ListCollect.get(i), listOeuvres.get(i));
                 collectionUser.add(objectCollection);
             }
             return collectionUser;
