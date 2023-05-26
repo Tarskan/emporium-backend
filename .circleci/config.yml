@@ -19,9 +19,11 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
       - run:
-          name: Build Quarkus application
-          command: |
-            ./mvnw package
+          name: Build (Standard)
+          command: ./mvnw clean package -DskipTests -Dmaven.test.skip=true
+      - run:
+          name: Verify (Standard)
+          command: ./mvnw test
 
   docker-build-and-push:
     working_directory: /dockerapp
