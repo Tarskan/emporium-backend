@@ -14,13 +14,10 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
-      - steps:
-          name: Download Dependencies
-          command: mvn dependency:go-offline
-            - save_cache:
-                paths:
-                  - ~/.m2
-                key: v1-dependencies-{{ checksum "pom.xml" }}
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
       - run:
           name: Build Quarkus application
           command: |
