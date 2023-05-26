@@ -7,7 +7,7 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class SupportControllerTest {
-    @Test
+    /*@Test
     public void testAllSupportEndPoint() {
         given()
                 .when().get("/support")
@@ -15,7 +15,7 @@ public class SupportControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetGenreByIdSupportEndPoint() {
         given()
                 .when().get("/support/2")
