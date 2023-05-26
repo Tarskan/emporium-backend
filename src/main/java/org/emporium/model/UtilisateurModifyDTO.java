@@ -16,12 +16,18 @@ public class UtilisateurModifyDTO {
     @FormParam("UWUid")
     @PartType(MediaType.TEXT_PLAIN)
     public String UWUid;
+    @FormParam("email")
+    @PartType(MediaType.TEXT_PLAIN)
+    public String email;
     @FormParam("pseudo")
     @PartType(MediaType.TEXT_PLAIN)
     public String pseudo;
     @FormParam("pwd")
     @PartType(MediaType.TEXT_PLAIN)
     public String pwd;
+    @FormParam("description")
+    @PartType(MediaType.TEXT_PLAIN)
+    public String description;
     @FormParam("profilPicture")
     @PartType(MediaType.APPLICATION_OCTET_STREAM)
     public InputStream profilPicture;

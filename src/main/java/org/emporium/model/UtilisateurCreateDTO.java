@@ -13,6 +13,9 @@ import java.io.InputStream;
 @AllArgsConstructor
 @Data
 public class UtilisateurCreateDTO {
+    @FormParam("email")
+    @PartType(MediaType.TEXT_PLAIN)
+    public String email;
     @FormParam("pseudo")
     @PartType(MediaType.TEXT_PLAIN)
     public String pseudo;

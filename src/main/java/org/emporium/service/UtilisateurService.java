@@ -50,8 +50,9 @@ public class UtilisateurService {
         ImageItem image = imageService.uploadImage(imageUpload);
 
         Utilisateur utilisateurNew =  Utilisateur.builder()
-                .pseudo(utilisateur.pseudo)
-                .pwd(utilisateur.pwd)
+                .email(utilisateur.getEmail())
+                .pseudo(utilisateur.getPseudo())
+                .pwd(utilisateur.getPwd())
                 .creationDate(myDate)
                 .modificationDate(myDate)
                 .profilPicture(image.getImageName())
@@ -86,8 +87,10 @@ public class UtilisateurService {
             }
             Utilisateur utilisateurModify =  Utilisateur.builder()
                     .UWUid(utilisateur.getUWUid())
+                    .email(utilisateur.getEmail())
                     .pseudo(utilisateur.getPseudo())
                     .pwd(utilisateur.getPwd())
+                    .description(utilisateur.getDescription())
                     .equipe(utilisateur.getEquipe())
                     .grade(utilisateur.getGrade())
                     .resultat(utilisateur.getResultat())
