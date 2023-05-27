@@ -22,7 +22,7 @@ public class UtilisateurControllerTest {
     @Test
     public void testGetUtilisateurByIdUtilisateurEndPoint() {
         given()
-                .when().get("/utilisateur/1")
+                .when().get("/utilisateur/test6@gmail.com")
                 .then()
                 .statusCode(200);
     }
