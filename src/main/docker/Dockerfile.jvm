@@ -86,7 +86,7 @@ COPY . .
 
 RUN chmod +x mvnw
 
-RUN ./mvnw package
+RUN ./mvnw compile
 
 # We make four distinct layers so if there are application changes the library layers can be re-used
 COPY --chown=185 /target/quarkus-app/lib/ /deployments/lib/
