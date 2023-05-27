@@ -8,7 +8,7 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class CommentaireControllerTest {
-    /*@Test
+    @Test
     public void testAllUtilisateurEndPoint() {
         given()
                 .when().get("/commentaire")
@@ -61,7 +61,7 @@ public class CommentaireControllerTest {
                 .when().post("/utilisateur")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 
     @Test
     public void testSuppCommentaireEndPoint() {
@@ -69,5 +69,5 @@ public class CommentaireControllerTest {
                 .when().delete("/commentaire/delete/5")
                 .then()
                 .statusCode(200);
-    }*/
+    }
 }

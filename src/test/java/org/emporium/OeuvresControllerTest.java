@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 @QuarkusTest
 public class OeuvresControllerTest {
 
-    /*@Test
+    @Test
     public void testAllOeuvresEndPoint() {
         given()
                 .when().get("/oeuvres")
@@ -74,7 +74,7 @@ public class OeuvresControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testModifyOeuvresEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");
@@ -113,7 +113,7 @@ public class OeuvresControllerTest {
                 .when().post("/oeuvres")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 
     @Test
     public void testSuppOeuvresEndPoint() {
@@ -121,5 +121,5 @@ public class OeuvresControllerTest {
                 .when().delete("/oeuvres/delete/1")
                 .then()
                 .statusCode(200);
-    }*/
+    }
 }

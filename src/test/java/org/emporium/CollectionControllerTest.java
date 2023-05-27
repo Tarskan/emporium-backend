@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 @QuarkusTest
 public class CollectionControllerTest {
 
-    /*@Test
+    @Test
     public void testAllCollectionEndPoint() {
         given()
                 .when().get("/collection")
@@ -49,7 +49,7 @@ public class CollectionControllerTest {
                 .when().get("/collection/oeuvres/favorite/2")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 
     @Test
     public void testGetCollectionByIdUserEndPoint() {
@@ -65,5 +65,5 @@ public class CollectionControllerTest {
                 .when().delete("/collection/delete/6")
                 .then()
                 .statusCode(200);
-    }*/
+    }
 }

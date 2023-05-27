@@ -7,7 +7,7 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class GenreControllerTest {
-    /*@Test
+    @Test
     public void testAllGenreEndPoint() {
         given()
                 .when().get("/genre")
@@ -70,7 +70,7 @@ public class GenreControllerTest {
                 .when().post("/oeuvres")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 
     @Test
     public void testSuppGenreEndPoint() {
@@ -78,5 +78,5 @@ public class GenreControllerTest {
                 .when().delete("/genre/delete/1")
                 .then()
                 .statusCode(500);
-    }*/
+    }
 }

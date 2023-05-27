@@ -1,13 +1,14 @@
 package org.emporium;
 
 import io.quarkus.test.junit.QuarkusTest;
+import org.emporium.model.OeuvresModifyDTO;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class SupportControllerTest {
-    /*@Test
+    @Test
     public void testAllSupportEndPoint() {
         given()
                 .when().get("/support")
@@ -31,7 +32,7 @@ public class SupportControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testModifyGenreEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");
@@ -70,7 +71,7 @@ public class SupportControllerTest {
                 .when().post("/oeuvres")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 
     @Test
     public void testSuppSupportEndPoint() {
@@ -78,5 +79,5 @@ public class SupportControllerTest {
                 .when().delete("/support/delete/1")
                 .then()
                 .statusCode(200);
-    }*/
+    }
 }

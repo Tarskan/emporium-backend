@@ -15,7 +15,7 @@ public class AuteurControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetAuteurByIdOeuvresEndPoint() {
         given()
                 .when().get("/auteur/1")
@@ -70,7 +70,7 @@ public class AuteurControllerTest {
                 .when().post("/oeuvres")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 
     @Test
     public void testSuppOeuvresEndPoint() {
@@ -78,5 +78,5 @@ public class AuteurControllerTest {
                 .when().delete("/oeuvres/delete/1")
                 .then()
                 .statusCode(200);
-    }*/
+    }
 }
