@@ -65,11 +65,11 @@ jobs:
       - run:
           name: Configure Flyctl
           command: |
-            flyctl auth login --email $FLY_EMAIL_USER --password $FLY_PWD_USER
+            /root/.fly/flyctl auth login --email $FLY_EMAIL_USER --password $FLY_PWD_USER
       - run:
           name: Deploy Quarkus application to Fly.io
           command: |
-            flyctl deploy --app=$FLY_APP_NAME --image=$FLY_DOCKER_IMAGE
+            /root/.fly/flyctl deploy --app=$FLY_APP_NAME --image=$FLY_DOCKER_IMAGE
 
 
 workflows:
