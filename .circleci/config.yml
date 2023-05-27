@@ -65,10 +65,7 @@ jobs:
       - run:
           name: Configure Flyctl
           command: |
-            /home/circleci/.fly/bin/flyctl auth login --email $FLY_EMAIL_USER --password $FLY_PWD_USER
-      - run:
-          name: Simulate Empty Input
-          command: echo "" | command-to-run-with-input
+            /home/circleci/.fly/bin/flyctl auth login --email $FLY_EMAIL_USER --password $FLY_PWD_USER | echo "" 
       - run:
           name: Deploy Quarkus application to Fly.io
           command: |
