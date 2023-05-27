@@ -27,6 +27,8 @@ public class Utilisateur {
     private String UWUid;
     @Column(name = "pseudo", unique = true)
     public String pseudo;
+    @Column(name = "email", unique = true)
+    public String email;
     @Column(name = "pwd")
     @JsonIgnore
     public String pwd;
@@ -36,9 +38,6 @@ public class Utilisateur {
     public String equipe;
     @Column(name = "resultat")
     public String resultat;
-
-    @Column(name = "email")
-    public String email;
     @Column(name = "description", length = 3000)
     public String description;
     @Column(name = "creationDate")

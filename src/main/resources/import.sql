@@ -1,8 +1,8 @@
-INSERT INTO Utilisateur(UWUid, pseudo, grade, equipe, resultat, creationDate, modificationDate) VALUES ('1', 'Tarskan', 'Sous-chef', 'killeur', 'champion', '2023-05-01', '2023-05-02');
-INSERT INTO Utilisateur(UWUid, pseudo, grade, equipe, resultat, creationDate, modificationDate) VALUES ('2', 'Yumeko', 'Larbin', 'killeur', 'champion','2023-05-01', '2023-05-01');
-INSERT INTO Utilisateur(UWUid, pseudo, grade, equipe, resultat, creationDate, modificationDate) VALUES ('3', 'Riri', 'Adjoint', 'killeur', 'champion', '2023-05-03', '2023-05-04');
-INSERT INTO Utilisateur(UWUid, pseudo, grade, equipe, resultat, creationDate, modificationDate) VALUES ('4', 'Fifi', 'Admin', 'killeur', 'champion', '2023-05-03', '2023-05-03');
-INSERT INTO Utilisateur(UWUid, pseudo, grade, equipe, resultat, creationDate, modificationDate) VALUES ('5', 'Loulou', 'chef', 'killeur', 'champion', '2023-05-02', '2023-05-02');
+INSERT INTO Utilisateur(UWUid, pseudo, grade, equipe, resultat, creationDate, modificationDate, email) VALUES ('1', 'Tarskan', 'Sous-chef', 'killeur', 'champion', '2023-05-01', '2023-05-02', 'test1@gmail.com');
+INSERT INTO Utilisateur(UWUid, pseudo, grade, equipe, resultat, creationDate, modificationDate, email) VALUES ('2', 'Yumeko', 'Larbin', 'killeur', 'champion','2023-05-01', '2023-05-01', 'test4@gmail.com');
+INSERT INTO Utilisateur(UWUid, pseudo, grade, equipe, resultat, creationDate, modificationDate, email) VALUES ('3', 'Riri', 'Adjoint', 'killeur', 'champion', '2023-05-03', '2023-05-04', 'test3@gmail.com');
+INSERT INTO Utilisateur(UWUid, pseudo, grade, equipe, resultat, creationDate, modificationDate, email) VALUES ('4', 'Fifi', 'Admin', 'killeur', 'champion', '2023-05-03', '2023-05-03', 'test2@gmail.com');
+INSERT INTO Utilisateur(UWUid, pseudo, grade, equipe, resultat, creationDate, modificationDate, email) VALUES ('5', 'Loulou', 'chef', 'killeur', 'champion', '2023-05-02', '2023-05-02', 'test6@gmail.com');
 
 INSERT INTO Auteur(idAuteur, name) VALUES ('1', 'Amon Amarth');
 INSERT INTO Auteur(idAuteur, name) VALUES ('2', 'Spirit Box');
