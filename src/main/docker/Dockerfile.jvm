@@ -83,9 +83,6 @@ WORKDIR /repo
 
 COPY . /repo
 
-USER root
-RUN chmod +x mvnw
-
 RUN ./mvnw install -DskipTests -Dmaven.test.skip=true
 
 EXPOSE 8080
