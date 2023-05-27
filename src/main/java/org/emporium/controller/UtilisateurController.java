@@ -34,7 +34,13 @@ public class UtilisateurController {
             return utilisateurService.GetUserByEmail(adresseMail);
     }
 
-
+    @Path("/identification/{uwuid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetByUwuid(@PathParam("uwuid") String uwuid) {
+        return utilisateurService.GetUserByUwuid(uwuid);
+    }
+    
     @Path("/search/{pseudo}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -35,6 +35,10 @@ public class UtilisateurService {
         return Response.ok(utilisateurRepository.findByEmail(email)).build();
     }
 
+    public Response GetUserByUwuid(String uwuid) {
+        return Response.ok(utilisateurRepository.findByEmail(uwuid)).build();
+    }
+
     public Response GetUserByPseudo(String pseudo) {
         return Response.ok(utilisateurRepository.findByPseudo(pseudo)).build();
     }
