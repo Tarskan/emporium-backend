@@ -75,8 +75,11 @@
 #   accessed directly. (example: "foo.example.com,bar.example.com")
 #
 ###
-FROM registry.access.redhat.com/ubi8/openjdk-11:1.14
 FROM maven:3.6.3-openjdk-11-slim
+RUN mvn -f pom.xml clean package
+
+FROM registry.access.redhat.com/ubi8/openjdk-11:1.14
+
 
 ENV LANGUAGE='en_US:en'
 
