@@ -46,10 +46,17 @@ public class TypeService {
         List<TypeDTO> typeOrdered = new ArrayList<TypeDTO>();
         for (int i = 0; i < listType.size(); i++) {
             int count = oeuvresRepository.findByIdType(listType.get(i).getIdType()).size();
-            typeOrdered.add(new TypeDTO(listType.get(i), count));
+            typeOrdered.add(new TypeDTO(listType.get(i), count, null));
         }
         typeOrdered.sort(Comparator.comparingInt(dto -> -dto.count));
-        return Response.ok(typeOrdered.subList(0,3)).build();
+        typeOrdered = typeOrdered.subList(0,3);
+        String  typeImagePath = null;
+        for (int i = 0; i < typeOrdered.size(); i++) {
+            typeImagePath = oeuvresRepository.findByIdType((listType.get(i).getIdType())).get(0).imagePath;
+            typeOrdered.get(i).setImageTypePath(typeImagePath);
+        }
+
+        return Response.ok(typeOrdered).build();
     }
 
     public Response addType(GenericCreateDTO type) throws Exception {

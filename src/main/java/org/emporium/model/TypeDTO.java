@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class TypeDTO {
     public Type type;
     public int count;
+    public String imageTypePath;
 }
