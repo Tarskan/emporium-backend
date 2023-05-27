@@ -22,9 +22,6 @@ public class UtilisateurModifyDTO {
     @FormParam("pseudo")
     @PartType(MediaType.TEXT_PLAIN)
     public String pseudo;
-    @FormParam("pwd")
-    @PartType(MediaType.TEXT_PLAIN)
-    public String pwd;
     @FormParam("description")
     @PartType(MediaType.TEXT_PLAIN)
     public String description;

@@ -19,9 +19,6 @@ public class UtilisateurCreateDTO {
     @FormParam("pseudo")
     @PartType(MediaType.TEXT_PLAIN)
     public String pseudo;
-    @FormParam("pwd")
-    @PartType(MediaType.TEXT_PLAIN)
-    public String pwd;
     @FormParam("profilPicture")
     @PartType(MediaType.APPLICATION_OCTET_STREAM)
     public InputStream profilPicture;

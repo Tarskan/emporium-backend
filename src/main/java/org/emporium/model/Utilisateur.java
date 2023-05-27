@@ -29,9 +29,6 @@ public class Utilisateur {
     public String pseudo;
     @Column(name = "email", unique = true)
     public String email;
-    @Column(name = "pwd")
-    @JsonIgnore
-    public String pwd;
     @Column(name = "grade")
     public String grade;
     @Column(name = "equipe")

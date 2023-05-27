@@ -30,8 +30,8 @@ public class UtilisateurService {
         return utilisateurRepository.findAllSorted();
     }
 
-    public Utilisateur GetUserByUwuid(String uwuid) {
-        return utilisateurRepository.findByUWUid(uwuid);
+    public Utilisateur GetUserByEmail(String email) {
+        return utilisateurRepository.findByEmail(email);
     }
 
     public Utilisateur GetUserByPseudo(String pseudo) {
@@ -52,7 +52,6 @@ public class UtilisateurService {
         Utilisateur utilisateurNew =  Utilisateur.builder()
                 .email(utilisateur.getEmail())
                 .pseudo(utilisateur.getPseudo())
-                .pwd(utilisateur.getPwd())
                 .creationDate(myDate)
                 .modificationDate(myDate)
                 .profilPicture(image.getImageName())
@@ -63,12 +62,12 @@ public class UtilisateurService {
         try {
             return utilisateurRepository.save(utilisateurNew);
         } catch(Exception e) {
-            throw new IllegalArgumentException("Pseudo: " + utilisateur.getPseudo() + " en doublon dans la bdd");
+            throw new IllegalArgumentException("Pseudo ou email en doublon dans la bdd");
         }
     }
 
     public Utilisateur modifyUser(UtilisateurModifyDTO utilisateur) throws IOException {
-        if (utilisateurRepository.existsById(utilisateur.getUWUid())) {
+        if (utilisateurRepository.emailExist(utilisateur.getEmail()) && Objects.equals(utilisateurRepository.findByEmail(utilisateur.getEmail()).getUWUid(), utilisateur.getUWUid())) {
             Date myDate = new Date();
 
             Utilisateur utilisateurOld = utilisateurRepository.findByUWUid(utilisateur.getUWUid());
@@ -89,7 +88,6 @@ public class UtilisateurService {
                     .UWUid(utilisateur.getUWUid())
                     .email(utilisateur.getEmail())
                     .pseudo(utilisateur.getPseudo())
-                    .pwd(utilisateur.getPwd())
                     .description(utilisateur.getDescription())
                     .equipe(utilisateur.getEquipe())
                     .grade(utilisateur.getGrade())
@@ -103,7 +101,7 @@ public class UtilisateurService {
                 return utilisateurRepository.save(utilisateurModify);
             }
             catch(Exception e) {
-                throw new IllegalArgumentException("Pseudo: " + utilisateur.getPseudo() + " en doublon dans la bdd");
+                throw new IllegalArgumentException("Pseudo ou email en doublon dans la bdd");
             }
         } else {
             throw new IllegalArgumentException("Id: " + utilisateur.getUWUid() + " Non trouvée dans la bdd");

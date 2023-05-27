@@ -15,6 +15,12 @@ public interface UtilisateurRepository extends CrudRepository<Utilisateur, Strin
     @Query("from Utilisateur where UWUid = ?1")
     Utilisateur findByUWUid(String uwuid);
 
+    @Query("from Utilisateur where email = ?1")
+    Utilisateur findByEmail(String email);
+
+    @Query("from Utilisateur where email = ?1")
+    Boolean emailExist(String email);
+
     @Query("from Utilisateur where pseudo = ?1")
     Utilisateur findByPseudo(String pseudo);
 
