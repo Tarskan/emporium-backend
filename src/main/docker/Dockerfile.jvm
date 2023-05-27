@@ -89,7 +89,7 @@ RUN chmod +x mvnw
 
 RUN ./mvnw install -DskipTests -Dmaven.test.skip=true
 
-
+USER 185
 # We make four distinct layers so if there are application changes the library layers can be re-used
 COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
 COPY --chown=185 target/quarkus-app/*.jar /deployments/
