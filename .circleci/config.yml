@@ -65,7 +65,7 @@ jobs:
       - run:
           name: Configure Flyctl
           command: |
-            /home/circleci/.fly/bin/flyctl auth login --email $FLY_EMAIL_USER --password $FLY_PWD_USER
+            /home/circleci/.fly/bin/flyctl auth docker --access-token $FLY_IO_TOKEN
       - run:
           name: Deploy Quarkus application to Fly.io
           command: |
