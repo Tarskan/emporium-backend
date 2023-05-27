@@ -63,6 +63,9 @@ jobs:
           command: |
             curl -L https://fly.io/install.sh | sh
       - run:
+          name: press henter
+          command: |
+      - run:
           name: Configure Flyctl
           command: |
             /home/circleci/.fly/bin/flyctl auth login --email $FLY_EMAIL_USER --password $FLY_PWD_USER
