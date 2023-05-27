@@ -31,7 +31,7 @@ jobs:
             mvn package
       - save_cache:
           paths:
-            - project
+            - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
   docker-build-and-push:
