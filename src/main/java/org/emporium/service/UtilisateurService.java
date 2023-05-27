@@ -63,12 +63,14 @@ public class UtilisateurService {
         try {
             return Response.ok(utilisateurRepository.save(utilisateurNew)).build();
         } catch(Exception e) {
-            throw new IllegalArgumentException("Pseudo ou email en doublon dans la bdd");
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Pseudo ou email en doublon dans la bdd")
+                    .build();
         }
     }
 
     public Response modifyUser(UtilisateurModifyDTO utilisateur) throws IOException {
-        if (utilisateurRepository.emailExist(utilisateur.getEmail()) && Objects.equals(utilisateurRepository.findByEmail(utilisateur.getEmail()).getUWUid(), utilisateur.getUWUid())) {
+        if (Objects.equals(utilisateurRepository.findByEmail(utilisateur.getEmail()).getUWUid(), utilisateur.getUWUid())) {
             Date myDate = new Date();
 
             Utilisateur utilisateurOld = utilisateurRepository.findByUWUid(utilisateur.getUWUid());
