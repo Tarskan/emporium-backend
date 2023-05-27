@@ -14,4 +14,7 @@ public interface TypeRepository extends CrudRepository<Type, String> {
 
     @Query("from Type where name = ?1")
     Type findByName(String name);
+
+    @Query("from Type where idOuevre = ?1")
+    Type findByIdOeuvre(String idoeuvre);
 }

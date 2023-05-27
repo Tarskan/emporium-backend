@@ -27,8 +27,14 @@ public class TypeService {
         return Response.ok(typeRepository.findAll()).build();
     }
 
-    public Response getByIdType(String IdOeuvre) throws Exception {
-        return Response.ok(typeRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Type not found."))).build();
+    public Response getByIdType(String idType) throws Exception {
+        if (typeRepository.findById(idType) != null) {
+            return Response.ok(typeRepository.findById(idType).orElseThrow(() -> new Exception("Type not found."))).build();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("IdType : " + idType + " non trouvé")
+                    .build();
+        }
     }
 
     public Response getTypeAutocomplete(String name) {

@@ -19,7 +19,7 @@ public interface UtilisateurRepository extends CrudRepository<Utilisateur, Strin
     Utilisateur findByEmail(String email);
 
     @Query("from Utilisateur where email = ?1")
-    Boolean emailExist(String email);
+    Utilisateur findByMail(String email);
 
     @Query("from Utilisateur where pseudo = ?1")
     Utilisateur findByPseudo(String pseudo);

@@ -30,7 +30,7 @@ public class UtilisateurController {
     @Path("/{adresseMail}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetPseudo(@PathParam("adresseMail") String adresseMail) {
+    public Response GetByEmail(@PathParam("adresseMail") String adresseMail) {
             return utilisateurService.GetUserByEmail(adresseMail);
     }
 

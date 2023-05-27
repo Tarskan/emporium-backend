@@ -32,15 +32,33 @@ public class UtilisateurService {
     }
 
     public Response GetUserByEmail(String email) {
-        return Response.ok(utilisateurRepository.findByEmail(email)).build();
+        if (utilisateurRepository.findByMail(email) != null) {
+            return Response.ok(utilisateurRepository.findByEmail(email)).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Email :" + email + "non trouvé")
+                    .build();
+        }
     }
 
     public Response GetUserByUwuid(String uwuid) {
-        return Response.ok(utilisateurRepository.findByEmail(uwuid)).build();
+        if (utilisateurRepository.existsById(uwuid)) {
+            return Response.ok(utilisateurRepository.findByUWUid(uwuid)).build();
+        } else  {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Uwuid :" + uwuid + " non trouvé")
+                    .build();
+        }
     }
 
     public Response GetUserByPseudo(String pseudo) {
-        return Response.ok(utilisateurRepository.findByPseudo(pseudo)).build();
+        if (utilisateurRepository.findByPseudo(pseudo) != null) {
+            return Response.ok(utilisateurRepository.findByPseudo(pseudo)).build();
+        } else  {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Pseudo :" + pseudo + "non trouvé")
+                    .build();
+        }
     }
 
     public Response SearchByPseudo(String pseudo) {
