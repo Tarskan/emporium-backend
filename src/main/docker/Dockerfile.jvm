@@ -75,7 +75,6 @@
 #   accessed directly. (example: "foo.example.com,bar.example.com")
 #
 ###
-FROM maven:3.6.3-openjdk-11-slim
 FROM registry.access.redhat.com/ubi8/openjdk-11:1.14
 
 
@@ -85,13 +84,7 @@ WORKDIR /repo
 
 COPY . /repo
 
-RUN chmod +x mvnw
-
 RUN ./mvnw install
-
-RUN ./mvnw org.apache.maven.plugins:maven-compiler-plugin:compile
-
-RUN ./mvnw org.apache.maven.plugins:maven-compiler-plugin:2.0.2:compile
 
 # We make four distinct layers so if there are application changes the library layers can be re-used
 COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
