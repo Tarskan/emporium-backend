@@ -25,21 +25,18 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
             - v1-dependencies-
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: v1-dependencies-{{ checksum "pom.xml" }}
       - run:
           name: Build Quarkus application
           command: |
             mvn package
-      - run:
-          name: Build application Docker image
-          command: docker build -f src/main/docker/Dockerfile.jvm -t app .
+      - save_cache:
+          paths:
+            - project
+          key: v1-dependencies-{{ checksum "pom.xml" }}
 
   docker-build-and-push:
     <<: *shared-config
-    working_directory: ~/dockerapp
+    working_directory: /dockerapp
     docker:
       - image: docker:17.05.0-ce-git
     steps:
