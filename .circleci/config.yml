@@ -69,7 +69,7 @@ jobs:
       - run:
           name: Deploy Quarkus application to Fly.io
           command: |
-            /home/circleci/.fly/bin/flyctl deploy --app=$FLY_APP_NAME --image=$FLY_DOCKER_IMAGE
+            /home/circleci/.fly/bin/flyctl deploy --image=$FLY_DOCKER_IMAGE
 
 
 workflows:
