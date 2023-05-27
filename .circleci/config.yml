@@ -62,15 +62,14 @@ jobs:
           name: Install Flyctl CLI
           command: |
             curl -L https://fly.io/install.sh | sh
-            chmod +x /root/.fly/flyctl
       - run:
           name: Configure Flyctl
           command: |
-            /root/.fly/flyctl auth login --email $FLY_EMAIL_USER --password $FLY_PWD_USER
+            /home/circleci/.fly/flyctl auth login --email $FLY_EMAIL_USER --password $FLY_PWD_USER
       - run:
           name: Deploy Quarkus application to Fly.io
           command: |
-            /root/.fly/flyctl deploy --app=$FLY_APP_NAME --image=$FLY_DOCKER_IMAGE
+            /home/circleci/.fly/flyctl deploy --app=$FLY_APP_NAME --image=$FLY_DOCKER_IMAGE
 
 
 workflows:
