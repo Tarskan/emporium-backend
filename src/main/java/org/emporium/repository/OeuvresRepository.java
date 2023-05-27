@@ -20,7 +20,7 @@ public interface OeuvresRepository extends CrudRepository<Oeuvres, String> {
     @Query("from Oeuvres where idOeuvre = ?1")
     Oeuvres findByIdOeuvre(String idoeuvre);
 
-    @Query("from Oeuvres where idType = ?1 order by modificationdate ASC")
+    @Query("from Oeuvres where idType = ?1 order by modificationdate DESC")
     List<Oeuvres> findByIdType(String idtype);
 
     @Query("from Oeuvres where idGenre = ?1 order by modificationdate ASC")
