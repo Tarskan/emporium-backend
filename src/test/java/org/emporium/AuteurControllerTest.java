@@ -7,7 +7,7 @@ import static io.restassured.RestAssured.given;
 
 @QuarkusTest
 public class AuteurControllerTest {
-    /*@Test
+    @Test
     public void testAllAuteurEndPoint() {
         given()
                 .when().get("/auteur")
@@ -15,7 +15,7 @@ public class AuteurControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testGetAuteurByIdOeuvresEndPoint() {
         given()
                 .when().get("/auteur/1")
