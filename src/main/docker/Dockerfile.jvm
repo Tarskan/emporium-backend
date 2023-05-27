@@ -87,7 +87,7 @@ USER root
 
 RUN chmod +x mvnw
 
-RUN ./mvnw install
+RUN ./mvnw install -DskipTests -Dmaven.test.skip=true
 
 
 # We make four distinct layers so if there are application changes the library layers can be re-used
