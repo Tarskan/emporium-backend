@@ -30,6 +30,13 @@ public class CommentaireController {
         return commentaireService.getByIdCommentaire(idCommentaire);
     }
 
+    @Path("/last")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getByIdCommentaire() throws Exception {
+        return commentaireService.getLastCommentaire();
+    }
+
     @Path("/utilisateur/{uwuid}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

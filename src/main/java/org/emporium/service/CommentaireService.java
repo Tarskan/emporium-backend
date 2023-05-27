@@ -58,6 +58,20 @@ public class CommentaireService {
         }
     }
 
+    public Response getLastCommentaire() throws Exception {
+        List<CommentaireProfilDTO> listComUser = new ArrayList<CommentaireProfilDTO>();
+        List<Commentaire> listCom = commentaireRepository.findLastSorted();
+        for (int i = 0; i < listCom.size(); i++) {
+            listComUser.add(new CommentaireProfilDTO(listCom.get(i), listCom.get(i).getOeuvre().getImagePath(), listCom.get(i).getOeuvre().getIdOeuvre()));
+        }
+        if (listCom.size() > 3) {
+            return Response.ok(listComUser.subList(0,5)).build();
+        }  else {
+            return Response.ok(listComUser).build();
+        }
+    }
+
+
     public Response getCommentaireByIdoeuvres(String idOeuvre) throws Exception {
         if (oeuvresRepository.existsById(idOeuvre)) {
             return Response.ok(commentaireRepository.findByIdOeuvre(idOeuvre)).build();

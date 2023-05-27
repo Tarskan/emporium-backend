@@ -10,6 +10,9 @@ public interface CommentaireRepository extends CrudRepository<Commentaire, Strin
     @Query("from Commentaire order by modificationdate ASC")
     List<Commentaire> findAllSorted();
 
+    @Query("from Commentaire order by modificationdate DESC")
+    List<Commentaire> findLastSorted();
+
     @Query("from Commentaire where UWUid = ?1 ORDER BY modificationdate ASC")
     List<Commentaire> findByUWUid(String uwuid);
 
