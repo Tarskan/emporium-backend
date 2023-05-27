@@ -83,6 +83,8 @@ WORKDIR /repo
 
 COPY . /repo
 
+RUN ./mvnw package
+
 # We make four distinct layers so if there are application changes the library layers can be re-used
 COPY --chown=185 /target/quarkus-app/lib/ /deployments/lib/
 COPY --chown=185 /target/quarkus-app/*.jar /deployments/
