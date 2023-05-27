@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Controller
@@ -21,47 +22,47 @@ public class TypeController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Type> getAllType() throws Exception {
+    public Response getAllType() throws Exception {
         return typeService.getAllType();
     }
 
     @Path("/{idType}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Type getByIdType(@PathParam("idType") String idType) throws Exception {
+    public Response getByIdType(@PathParam("idType") String idType) throws Exception {
         return typeService.getByIdType(idType);
     }
 
     @Path("/search/{type}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Type> RechercheUtilisateurByPseudo(@PathParam("type") String type) {
+    public Response RechercheUtilisateurByPseudo(@PathParam("type") String type) {
         return typeService.getTypeAutocomplete(type);
     }
 
     @Path("/popular")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<TypeDTO> MostThreePopularOne() {
+    public Response MostThreePopularOne() {
         return typeService.getMostThreePopular();
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Type PutType(@RequestBody GenericModifyDTO type) throws Exception {
+    public Response PutType(@RequestBody GenericModifyDTO type) throws Exception {
         return typeService.modifyType(type);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Type AddType(@RequestBody GenericCreateDTO type) throws Exception {
+    public Response AddType(@RequestBody GenericCreateDTO type) throws Exception {
         return typeService.addType(type);
     }
 
     @Path("/delete/{idType}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public String DeleteType(@PathParam("idType") String idType) throws Exception {
+    public Response DeleteType(@PathParam("idType") String idType) throws Exception {
         return typeService.suppType(idType);
     }
 }

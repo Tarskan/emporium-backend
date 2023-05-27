@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,14 +23,14 @@ public class UtilisateurController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Utilisateur> getAllUtilisateur() {
+    public Response getAllUtilisateur() {
         return utilisateurService.getAllUser();
     }
 
     @Path("/{adresseMail}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Utilisateur GetPseudo(@PathParam("adresseMail") String adresseMail) {
+    public Response GetPseudo(@PathParam("adresseMail") String adresseMail) {
             return utilisateurService.GetUserByEmail(adresseMail);
     }
 
@@ -37,35 +38,35 @@ public class UtilisateurController {
     @Path("/search/{pseudo}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Utilisateur RechercheUtilisateurByPseudo(@PathParam("pseudo") String pseudo) {
+    public Response RechercheUtilisateurByPseudo(@PathParam("pseudo") String pseudo) {
         return utilisateurService.GetUserByPseudo(pseudo);
     }
 
     @Path("/searchLike/{pseudo}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Utilisateur> RechercheParPseudo(@PathParam("pseudo") String pseudo) {
+    public Response RechercheParPseudo(@PathParam("pseudo") String pseudo) {
         return utilisateurService.SearchByPseudo(pseudo);
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Utilisateur PutUtilisateur(@MultipartForm UtilisateurModifyDTO utilisateur) throws IOException {
+    public Response PutUtilisateur(@MultipartForm UtilisateurModifyDTO utilisateur) throws IOException {
         return utilisateurService.modifyUser(utilisateur);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Utilisateur AddUtilisateur(@MultipartForm UtilisateurCreateDTO utilisateur) throws IOException {
+    public Response AddUtilisateur(@MultipartForm UtilisateurCreateDTO utilisateur) throws IOException {
         return utilisateurService.addUser(utilisateur);
     }
 
     @Path("/delete/{uwuid}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public String DeleteUser(@PathParam("uwuid") String uwuid) {
+    public Response DeleteUser(@PathParam("uwuid") String uwuid) {
         return utilisateurService.suppUser(uwuid);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Singleton
@@ -16,31 +17,38 @@ public class EditeurService {
     @Inject
     EditeurRepository editeurRepository;
 
-    public List<Editeur> getAllEditeur() {
-        return editeurRepository.findAll();
+    public Response getAllEditeur() {
+        return Response.ok(editeurRepository.findAll()).build();
     }
 
-    public Editeur getByIdEditeur(String idEditeur) throws Exception {
-        return editeurRepository.findById(idEditeur).orElseThrow(() -> new Exception("Editeur not found."));
+    public Response getByIdEditeur(String idEditeur) throws Exception {
+        if (editeurRepository.existsById(idEditeur)) {
+            return Response.ok(editeurRepository.findById(idEditeur)).build();
+        }
+        return Response.status(Response.Status.BAD_REQUEST)
+                .entity("id Editeur: " + idEditeur + " en doublon dans la bdd")
+                .build();
     }
 
-    public List<Editeur> getEditeurAutocomplete(String name) {
-        return editeurRepository.findEditeurAutocomplete(name);
+    public Response getEditeurAutocomplete(String name) {
+        return Response.ok(editeurRepository.findEditeurAutocomplete(name)).build();
     }
 
-    public Editeur addEditeur(GenericCreateDTO editeur) throws Exception {
+    public Response addEditeur(GenericCreateDTO editeur) throws Exception {
         Editeur genreNew = Editeur.builder()
                 .name(editeur.name)
                 .build();
 
         try {
-            return editeurRepository.save(genreNew);
+            return Response.ok(editeurRepository.save(genreNew)).build();
         } catch(Exception e) {
-            throw new IllegalArgumentException("Name Editeur: " + editeur.getName() + " en doublon dans la bdd");
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Name Editeur: " + editeur.getName() + " en doublon dans la bdd")
+                    .build();
         }
     }
 
-    public Editeur modifyEditeur(GenericModifyDTO editeur) {
+    public Response modifyEditeur(GenericModifyDTO editeur) {
         if (editeurRepository.existsById(editeur.getId())) {
             Editeur editeurModified = Editeur.builder()
                     .idEditeur(editeur.getId())
@@ -48,22 +56,28 @@ public class EditeurService {
                     .build();
 
             try {
-                return editeurRepository.save(editeurModified);
+                return Response.ok(editeurRepository.save(editeurModified)).build();
             } catch(Exception e) {
-                throw new IllegalArgumentException("Name Editeur: " + editeur.getName() + " en doublon dans la bdd");
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Name Editeur: " + editeur.getName() + " en doublon dans la bdd")
+                        .build();
             }
         } else {
-            throw new IllegalArgumentException("Id Editeur: " + editeur.getId() + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Editeur: " + editeur.getId() + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public String suppEditeur(String idEditeur) throws Exception {
+    public Response suppEditeur(String idEditeur) throws Exception {
         if (editeurRepository.existsById(idEditeur)) {
             Editeur editeurToDelete = editeurRepository.findById(idEditeur).orElseThrow(() -> new Exception("Id " + idEditeur + " n'existe pas ou a deja était supprimer"));
             editeurRepository.delete(editeurToDelete);
-            return "L'editeur a était supprimer";
+            return Response.ok("L'editeur a était supprimer").build();
         } else {
-            throw new IllegalArgumentException("Id Editeur: " + idEditeur + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Editeur: " + idEditeur + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 }

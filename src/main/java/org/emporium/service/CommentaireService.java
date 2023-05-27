@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,19 +25,21 @@ public class CommentaireService {
     @Inject
     UtilisateurRepository utilisateurRepository;
 
-    public List<Commentaire> getAllCommentaire() {
-        return commentaireRepository.findAllSorted();
+    public Response getAllCommentaire() {
+        return Response.ok(commentaireRepository.findAllSorted()).build();
     }
 
-    public Commentaire getByIdCommentaire(String idCommentaire) throws Exception {
+    public Response getByIdCommentaire(String idCommentaire) throws Exception {
         if (commentaireRepository.existsById(idCommentaire)) {
-            return commentaireRepository.findById(idCommentaire).orElseThrow(() -> new Exception("Commentaire not found."));
+            return Response.ok(commentaireRepository.findById(idCommentaire)).build();
         } else {
-            throw new IllegalArgumentException("Id: " + idCommentaire + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id comentaire: " + idCommentaire + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public List<CommentaireProfilDTO> getCommentaireByUwuid(String uwuid) throws Exception {
+    public Response getCommentaireByUwuid(String uwuid) throws Exception {
         if (utilisateurRepository.existsById(uwuid)) {
             List<CommentaireProfilDTO> listComUser = new ArrayList<CommentaireProfilDTO>();
             List<Commentaire> listCom = commentaireRepository.findByUWUid(uwuid);
@@ -44,104 +47,149 @@ public class CommentaireService {
                 listComUser.add(new CommentaireProfilDTO(listCom.get(i), listCom.get(i).getOeuvre().getImagePath(), listCom.get(i).getOeuvre().getIdOeuvre()));
             }
             if (listCom.size() > 3) {
-                return listComUser.subList(0,3);
+                return Response.ok(listComUser.subList(0,3)).build();
             }  else {
-                return listComUser;
+                return Response.ok(listComUser).build();
             }
-
         } else {
-            throw new IllegalArgumentException("Id user: " + uwuid + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id user: " + uwuid + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public List<Commentaire> getCommentaireByIdoeuvres(String idOeuvre) throws Exception {
+    public Response getCommentaireByIdoeuvres(String idOeuvre) throws Exception {
         if (oeuvresRepository.existsById(idOeuvre)) {
-            return commentaireRepository.findByIdOeuvre(idOeuvre);
+            return Response.ok(commentaireRepository.findByIdOeuvre(idOeuvre)).build();
         } else {
-            throw new IllegalArgumentException("Id oeuvres demander: " + idOeuvre + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id oeuvres demander: " + idOeuvre + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public Commentaire addCommentaire(CommentaireCreateDTO commentaire) throws Exception {
+    public Response addCommentaire(CommentaireCreateDTO commentaire) throws Exception {
         Date myDate = new Date();
+        if (utilisateurRepository.existsById(commentaire.getUWUid())) {
+            if (oeuvresRepository.existsById(commentaire.getIdOeuvre())) {
+                Commentaire commentaireNew = Commentaire.builder()
+                        .utilisateur(utilisateurRepository.findById(commentaire.getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
+                        .oeuvre(oeuvresRepository.findById(commentaire.getIdOeuvre()).orElseThrow(() -> new Exception("Oeuvres not found.")))
+                        .text(commentaire.getText())
+                        .nbLike(0)
+                        .nbDislike(0)
+                        .creationDate(myDate)
+                        .modificationDate(myDate)
+                        .build();
 
-        Commentaire commentaireNew = Commentaire.builder()
-                .utilisateur(utilisateurRepository.findById(commentaire.getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
-                .oeuvre(oeuvresRepository.findById(commentaire.getIdOeuvre()).orElseThrow(() -> new Exception("Oeuvres not found.")))
-                .text(commentaire.getText())
-                .nbLike(0)
-                .nbDislike(0)
-                .creationDate(myDate)
-                .modificationDate(myDate)
-                .build();
-
-        return commentaireRepository.save(commentaireNew);
+                return Response.ok(commentaireRepository.save(commentaireNew)).build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Id oeuvres: " + commentaire.getIdOeuvre() + " Non trouvée dans la bdd")
+                        .build();
+            }
+        } else {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id utilisateur: " + commentaire.getUWUid() + " Non trouvée dans la bdd")
+                    .build();
+        }
     }
 
-    public Commentaire likeManagement(CommentaireLikeDTO commentaire) throws Exception {
+    public Response likeManagement(CommentaireLikeDTO commentaire) throws Exception {
         if (commentaireRepository.existsById(commentaire.getIdCommentaire())) {
             Commentaire commentaireOld = commentaireRepository.findById(commentaire.getIdCommentaire()).orElseThrow(() -> new Exception("Commentaire not found."));
 
             Commentaire commentaireModified;
-            if (commentaire.getLike()) {
-                commentaireModified = Commentaire.builder()
-                        .idCommentaire(commentaire.idCommentaire)
-                        .utilisateur(utilisateurRepository.findById(commentaireOld.getUtilisateur().getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
-                        .oeuvre(oeuvresRepository.findById(commentaire.getIdOeuvre()).orElseThrow(() -> new Exception("Oeuvres not found.")))
-                        .text(commentaireOld.getText())
-                        .nbLike(commentaireOld.getNbLike())
-                        .nbDislike(commentaireOld.getNbDislike())
-                        .creationDate(commentaireOld.getCreationDate())
-                        .modificationDate(commentaireOld.getModificationDate())
-                        .build();
-                commentaireModified.setNbLike(commentaireModified.getNbLike() + 1);
+            if (utilisateurRepository.existsById(commentaire.getUWUid())) {
+                if (oeuvresRepository.existsById(commentaire.getIdOeuvre())) {
+                    if (commentaire.getLike()) {
+                        commentaireModified = Commentaire.builder()
+                                .idCommentaire(commentaire.idCommentaire)
+                                .utilisateur(utilisateurRepository.findById(commentaireOld.getUtilisateur().getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
+                                .oeuvre(oeuvresRepository.findById(commentaire.getIdOeuvre()).orElseThrow(() -> new Exception("Oeuvres not found.")))
+                                .text(commentaireOld.getText())
+                                .nbLike(commentaireOld.getNbLike())
+                                .nbDislike(commentaireOld.getNbDislike())
+                                .creationDate(commentaireOld.getCreationDate())
+                                .modificationDate(commentaireOld.getModificationDate())
+                                .build();
+                        commentaireModified.setNbLike(commentaireModified.getNbLike() + 1);
+                    } else {
+                        commentaireModified = Commentaire.builder()
+                                .utilisateur(utilisateurRepository.findById(commentaireOld.getUtilisateur().getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
+                                .oeuvre(oeuvresRepository.findById(commentaire.getIdOeuvre()).orElseThrow(() -> new Exception("Oeuvres not found.")))
+                                .text(commentaireOld.getText())
+                                .nbLike(commentaireOld.getNbLike())
+                                .nbDislike(commentaireOld.getNbDislike())
+                                .creationDate(commentaireOld.getCreationDate())
+                                .modificationDate(commentaireOld.getModificationDate())
+                                .build();
+                        commentaireModified.setNbDislike(commentaireModified.getNbDislike() + 1);
+                    }
+                } else {
+                    return Response.status(Response.Status.NOT_FOUND)
+                            .entity("Id oeuvres: " + commentaire.getIdOeuvre() + " Non trouvée dans la bdd")
+                            .build();
+                }
             } else {
-                commentaireModified = Commentaire.builder()
-                        .utilisateur(utilisateurRepository.findById(commentaireOld.getUtilisateur().getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
-                        .oeuvre(oeuvresRepository.findById(commentaire.getIdOeuvre()).orElseThrow(() -> new Exception("Oeuvres not found.")))
-                        .text(commentaireOld.getText())
-                        .nbLike(commentaireOld.getNbLike())
-                        .nbDislike(commentaireOld.getNbDislike())
-                        .creationDate(commentaireOld.getCreationDate())
-                        .modificationDate(commentaireOld.getModificationDate())
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Id utilisateur: " + commentaire.getUWUid() + " Non trouvée dans la bdd")
                         .build();
-                commentaireModified.setNbDislike(commentaireModified.getNbDislike() + 1);
             }
-            return commentaireRepository.save(commentaireModified);
+
+            return Response.ok(commentaireRepository.save(commentaireModified)).build();
         } else {
-            throw new IllegalArgumentException("Id: " + commentaire.getIdCommentaire() + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id commentaire: " + commentaire.getIdCommentaire() + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public Commentaire modifyCommentaire(CommentaireModifyDTO commentaire) throws Exception {
+    public Response modifyCommentaire(CommentaireModifyDTO commentaire) throws Exception {
         Date myDate = new Date();
 
         if (commentaireRepository.existsById(commentaire.getIdCommentaire())) {
-            Commentaire commentaireOld = commentaireRepository.findById(commentaire.getIdCommentaire()).orElseThrow(() -> new Exception("Commentaire not found."));
-            Commentaire commentaireModified = Commentaire.builder()
-                    .idCommentaire(commentaire.idCommentaire)
-                    .utilisateur(utilisateurRepository.findById(commentaire.getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
-                    .oeuvre(oeuvresRepository.findById(commentaire.getIdOeuvre()).orElseThrow(() -> new Exception("Oeuvres not found.")))
-                    .text(commentaire.getText())
-                    .nbLike(commentaireOld.getNbLike())
-                    .nbDislike(commentaireOld.getNbDislike())
-                    .creationDate(commentaireOld.getCreationDate())
-                    .modificationDate(myDate)
-                    .build();
+            if (utilisateurRepository.existsById(commentaire.getUWUid())) {
+                if (oeuvresRepository.existsById(commentaire.getIdOeuvre())) {
+                    Commentaire commentaireOld = commentaireRepository.findById(commentaire.getIdCommentaire()).orElseThrow(() -> new Exception("Commentaire not found."));
+                    Commentaire commentaireModified = Commentaire.builder()
+                            .idCommentaire(commentaire.idCommentaire)
+                            .utilisateur(utilisateurRepository.findById(commentaire.getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
+                            .oeuvre(oeuvresRepository.findById(commentaire.getIdOeuvre()).orElseThrow(() -> new Exception("Oeuvres not found.")))
+                            .text(commentaire.getText())
+                            .nbLike(commentaireOld.getNbLike())
+                            .nbDislike(commentaireOld.getNbDislike())
+                            .creationDate(commentaireOld.getCreationDate())
+                            .modificationDate(myDate)
+                            .build();
 
-            return commentaireRepository.save(commentaireModified);
+                    return Response.ok(commentaireRepository.save(commentaireModified)).build();
+                } else {
+                    return Response.status(Response.Status.NOT_FOUND)
+                            .entity("Id oeuvres: " + commentaire.getIdOeuvre() + " Non trouvée dans la bdd")
+                            .build();
+                }
+            } else {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Id utilisateur: " + commentaire.getUWUid() + " Non trouvée dans la bdd")
+                        .build();
+            }
         } else {
-            throw new IllegalArgumentException("Id: " + commentaire.getIdCommentaire() + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id commentaire: " + commentaire.getIdCommentaire() + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public String suppCommentaire(String idCommentaire) throws Exception {
+    public Response suppCommentaire(String idCommentaire) throws Exception {
         if (commentaireRepository.existsById(idCommentaire)) {
             Commentaire commentaireToDelete = commentaireRepository.findById(idCommentaire).orElseThrow(() -> new Exception("Id " + idCommentaire + " n'existe pas ou a deja était supprimer"));
             commentaireRepository.delete(commentaireToDelete);
-            return "Le commentaire a était supprimer";
+            return Response.ok("Le commentaire a était supprimer").build();
         } else {
-            throw new IllegalArgumentException("Id: " + idCommentaire + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id: " + idCommentaire + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 }

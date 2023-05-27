@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -26,23 +27,23 @@ public class UtilisateurService {
     ImageService imageService;
 
 
-    public List<Utilisateur> getAllUser() {
-        return utilisateurRepository.findAllSorted();
+    public Response getAllUser() {
+        return Response.ok(utilisateurRepository.findAllSorted()).build();
     }
 
-    public Utilisateur GetUserByEmail(String email) {
-        return utilisateurRepository.findByEmail(email);
+    public Response GetUserByEmail(String email) {
+        return Response.ok(utilisateurRepository.findByEmail(email)).build();
     }
 
-    public Utilisateur GetUserByPseudo(String pseudo) {
-        return utilisateurRepository.findByPseudo(pseudo);
+    public Response GetUserByPseudo(String pseudo) {
+        return Response.ok(utilisateurRepository.findByPseudo(pseudo)).build();
     }
 
-    public List<Utilisateur> SearchByPseudo(String pseudo) {
-        return utilisateurRepository.findByPseudoLike(pseudo);
+    public Response SearchByPseudo(String pseudo) {
+        return Response.ok(utilisateurRepository.findByPseudoLike(pseudo)).build();
     }
 
-    public Utilisateur addUser(UtilisateurCreateDTO utilisateur) throws IOException {
+    public Response addUser(UtilisateurCreateDTO utilisateur) throws IOException {
         Date myDate = new Date();
         ImageUpload imageUpload = new ImageUpload();
         imageUpload.setFile(utilisateur.getProfilPicture());
@@ -60,13 +61,13 @@ public class UtilisateurService {
 
 
         try {
-            return utilisateurRepository.save(utilisateurNew);
+            return Response.ok(utilisateurRepository.save(utilisateurNew)).build();
         } catch(Exception e) {
             throw new IllegalArgumentException("Pseudo ou email en doublon dans la bdd");
         }
     }
 
-    public Utilisateur modifyUser(UtilisateurModifyDTO utilisateur) throws IOException {
+    public Response modifyUser(UtilisateurModifyDTO utilisateur) throws IOException {
         if (utilisateurRepository.emailExist(utilisateur.getEmail()) && Objects.equals(utilisateurRepository.findByEmail(utilisateur.getEmail()).getUWUid(), utilisateur.getUWUid())) {
             Date myDate = new Date();
 
@@ -98,7 +99,7 @@ public class UtilisateurService {
                     .profilPicturePath(image.getImagePath())
                     .build();
             try {
-                return utilisateurRepository.save(utilisateurModify);
+                return Response.ok(utilisateurRepository.save(utilisateurModify)).build();
             }
             catch(Exception e) {
                 throw new IllegalArgumentException("Pseudo ou email en doublon dans la bdd");
@@ -108,7 +109,7 @@ public class UtilisateurService {
         }
     }
 
-    public String suppUser(String uwuid) {
+    public Response suppUser(String uwuid) {
         if (utilisateurRepository.existsById(uwuid)) {
             Utilisateur userToDelete = utilisateurRepository.findByUWUid(uwuid);
             List<Commentaire> comUser = commentaireRepository.findByUWUid(uwuid);
@@ -119,9 +120,11 @@ public class UtilisateurService {
             }
             commentaireRepository.deleteAll(comUser);
             utilisateurRepository.delete(userToDelete);
-            return "L'utilisateur est supprimer";
+            return Response.ok("L'utilisateur est supprimer").build();
         } else {
-            return "Id " + uwuid + " n'existe pas ou a deja était supprimer";
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id " + uwuid + " n'existe pas ou a deja était supprimer")
+                    .build();
         }
     }
 }

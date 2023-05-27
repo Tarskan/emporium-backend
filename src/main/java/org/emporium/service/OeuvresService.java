@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.ws.rs.core.Response;
+
 import org.emporium.model.Collection;
 
 import java.util.Collections;
@@ -45,81 +47,93 @@ public class OeuvresService {
     @Inject
     ImageService imageService;
 
-    public List<Oeuvres> getAllOeuvres() {
-        return oeuvresRepository.findAllSorted();
+    public Response getAllOeuvres() {
+        return Response.ok(oeuvresRepository.findAllSorted()).build();
     }
 
-    public Oeuvres getByIdOeuvre(String idOeuvre) {
+    public Response getByIdOeuvre(String idOeuvre) {
         if (oeuvresRepository.existsById(idOeuvre)) {
-            return oeuvresRepository.findByIdOeuvre(idOeuvre);
+            return Response.ok(oeuvresRepository.findByIdOeuvre(idOeuvre)).build();
         } else {
-            throw new IllegalArgumentException("Id Oeuvres: " + idOeuvre + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Oeuvres: " + idOeuvre + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public List<Oeuvres> getByIdGenre(String idGenre) {
+    public Response getByIdGenre(String idGenre) {
         if (genreRepository.existsById(idGenre)) {
-            return oeuvresRepository.findByIdGenre(idGenre);
+            return Response.ok(oeuvresRepository.findByIdGenre(idGenre)).build();
         } else {
-            throw new IllegalArgumentException("Id Oeuvres: " + idGenre + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Oeuvres: " + idGenre + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public List<Oeuvres> getByIdEditeur(String idEditeur) {
+    public Response getByIdEditeur(String idEditeur) {
         if (editeurRepository.existsById(idEditeur)) {
-            return oeuvresRepository.findByIdEditeur(idEditeur);
+            return Response.ok(oeuvresRepository.findByIdEditeur(idEditeur)).build();
         } else {
-            throw new IllegalArgumentException("Id Oeuvres: " + idEditeur + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Oeuvres: " + idEditeur + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public List<Oeuvres> getByIdAuteur(String idAuteur) {
+    public Response getByIdAuteur(String idAuteur) {
         if (auteurRepository.existsById(idAuteur)) {
-            return oeuvresRepository.findByIdAuteur(idAuteur);
+            return Response.ok(oeuvresRepository.findByIdAuteur(idAuteur)).build();
         } else {
-            throw new IllegalArgumentException("Id Oeuvres: " + idAuteur + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Oeuvres: " + idAuteur + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public List<Oeuvres> getByIdType(String idType) {
+    public Response getByIdType(String idType) {
         if (typeRepository.existsById(idType)) {
-            return oeuvresRepository.findByIdType(idType);
+            return Response.ok(oeuvresRepository.findByIdType(idType)).build();
         } else {
-            throw new IllegalArgumentException("Id Oeuvres: " + idType + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Oeuvres: " + idType + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public List<Oeuvres> getByIdSupport(String idSupport) {
+    public Response getByIdSupport(String idSupport) {
         if (supportRepository.existsById(idSupport)) {
-            return oeuvresRepository.findByIdSupport(idSupport);
+            return Response.ok(oeuvresRepository.findByIdSupport(idSupport)).build();
         } else {
-            throw new IllegalArgumentException("Id Oeuvres: " + idSupport + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Oeuvres: " + idSupport + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public List<Oeuvres> getByTitreAutocomplete(String titre) {
-        return oeuvresRepository.findByTitreAutoComplete(titre);
+    public Response getByTitreAutocomplete(String titre) {
+        return Response.ok(oeuvresRepository.findByTitreAutoComplete(titre)).build();
     }
 
-    public List<Oeuvres> getLastModified() {
+    public Response getLastModified() {
         if (oeuvresRepository.findAllSorted().size() > 4) {
-            return oeuvresRepository.findLastModified().subList(0,5);
+            return Response.ok(oeuvresRepository.findLastModified().subList(0,5)).build();
         } else {
-            return oeuvresRepository.findLastModified();
+            return Response.ok(oeuvresRepository.findLastModified()).build();
         }
     }
 
-    public List<Oeuvres> getRelatedTo(String idAuteur, String idOeuvre) {
+    public Response getRelatedTo(String idAuteur, String idOeuvre) {
         List<Oeuvres> listOeuvresRelated = oeuvresRepository.findRelatedToOeuvresFromAuteur(idAuteur);
         listOeuvresRelated.remove(oeuvresRepository.findByIdOeuvre(idOeuvre));
         if (listOeuvresRelated.size() > 3) {
             Collections.shuffle(listOeuvresRelated);
-            return listOeuvresRelated.subList(0, 3);
+            return Response.ok(listOeuvresRelated.subList(0, 3)).build();
         }
-        return Collections.emptyList();
+        return Response.ok(Collections.emptyList()).build();
     }
 
-    public Oeuvres addOeuvre(OeuvresCreateDTO oeuvres) throws Exception {
+    public Response addOeuvre(OeuvresCreateDTO oeuvres) throws Exception {
             Date myDate = new Date();
             ImageUpload imageUpload = new ImageUpload();
             imageUpload.setFile(oeuvres.getImage());
@@ -141,10 +155,10 @@ public class OeuvresService {
                     .modificationDate(myDate)
                     .build();
 
-            return oeuvresRepository.save(oeuvresNew);
+            return Response.ok(oeuvresRepository.save(oeuvresNew)).build();
     }
 
-    public Oeuvres modifyOeuvre(OeuvresModifyDTO oeuvres) throws Exception {
+    public Response modifyOeuvre(OeuvresModifyDTO oeuvres) throws Exception {
         if (oeuvresRepository.existsById(oeuvres.getIdOeuvre())) {
                 Date myDate = new Date();
                 Oeuvres oeuvresOld = oeuvresRepository.findByIdOeuvre(oeuvres.getIdOeuvre());
@@ -178,13 +192,15 @@ public class OeuvresService {
                         .modificationDate(myDate)
                         .build();
 
-                return oeuvresRepository.save(oeuvresModified);
+            return Response.ok(oeuvresRepository.save(oeuvresModified)).build();
         } else {
-            throw new IllegalArgumentException("Id Oeuvres: " + oeuvres.getIdOeuvre() + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Oeuvres: " + oeuvres.getIdOeuvre() + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public String suppOeuvre(String IdOeuvre) throws Exception {
+    public Response suppOeuvre(String IdOeuvre) throws Exception {
         if (oeuvresRepository.existsById(IdOeuvre)) {
             Oeuvres oeuvreToDelete = oeuvresRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Id Oeuvres " + IdOeuvre + " n'existe pas ou a deja était supprimer"));
             List<Commentaire> comUser = commentaireRepository.findByIdOeuvre(IdOeuvre);
@@ -197,9 +213,11 @@ public class OeuvresService {
                 imageService.deleteImage(imageRequest);
             }
             oeuvresRepository.delete(oeuvreToDelete);
-            return "L'oeuvre a était supprimer";
+            return Response.ok("L'oeuvre a était supprimer").build();
         } else {
-            throw new IllegalArgumentException("Id Oeuvres: " + IdOeuvre + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Oeuvres: " + IdOeuvre + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 

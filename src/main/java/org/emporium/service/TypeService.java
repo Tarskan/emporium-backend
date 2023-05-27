@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -22,19 +23,19 @@ public class TypeService {
     @Inject
     OeuvresRepository oeuvresRepository;
 
-    public List<Type> getAllType() {
-        return typeRepository.findAll();
+    public Response getAllType() {
+        return Response.ok(typeRepository.findAll()).build();
     }
 
-    public Type getByIdType(String IdOeuvre) throws Exception {
-        return typeRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Type not found."));
+    public Response getByIdType(String IdOeuvre) throws Exception {
+        return Response.ok(typeRepository.findById(IdOeuvre).orElseThrow(() -> new Exception("Type not found."))).build();
     }
 
-    public List<Type> getTypeAutocomplete(String name) {
-        return typeRepository.findTypeAutocomplete(name);
+    public Response getTypeAutocomplete(String name) {
+        return Response.ok(typeRepository.findTypeAutocomplete(name)).build();
     }
 
-    public List<TypeDTO> getMostThreePopular() {
+    public Response getMostThreePopular() {
         List<Type> listType = typeRepository.findAll();
         List<TypeDTO> typeOrdered = new ArrayList<TypeDTO>();
         for (int i = 0; i < listType.size(); i++) {
@@ -42,24 +43,25 @@ public class TypeService {
             typeOrdered.add(new TypeDTO(listType.get(i), count));
         }
         typeOrdered.sort(Comparator.comparingInt(dto -> -dto.count));
-
-        return typeOrdered.subList(0,3);
+        return Response.ok(typeOrdered.subList(0,3)).build();
     }
 
-    public Type addType(GenericCreateDTO type) throws Exception {
+    public Response addType(GenericCreateDTO type) throws Exception {
         Type typeNew =  Type.builder()
                 .name(type.name)
                 .build();
 
         try {
-            return typeRepository.save(typeNew);
+            return Response.ok(typeRepository.save(typeNew)).build();
         } catch(Exception e) {
-            throw new IllegalArgumentException("Name Type: " + type.getName() + " en doublon dans la bdd");
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Name Type: " + type.getName() + " en doublon dans la bdd")
+                    .build();
         }
 
     }
 
-    public Type modifyType(GenericModifyDTO type) {
+    public Response modifyType(GenericModifyDTO type) {
         if (typeRepository.existsById(type.getId())) {
                 Type typeModified = Type.builder()
                         .idType(type.getId())
@@ -67,22 +69,28 @@ public class TypeService {
                         .build();
 
             try {
-                return typeRepository.save(typeModified);
+                return Response.ok(typeRepository.save(typeModified)).build();
             } catch(Exception e) {
-                throw new IllegalArgumentException("Name Type: " + type.getName() + " en doublon dans la bdd");
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Name Type: " + type.getName() + " en doublon dans la bdd")
+                        .build();
             }
         } else {
-            throw new IllegalArgumentException("Id Type: " + type.getId() + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Type: " + type.getId() + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public String suppType(String idType) throws Exception {
+    public Response suppType(String idType) throws Exception {
         if (typeRepository.existsById(idType)) {
             Type typeToDelete = typeRepository.findById(idType).orElseThrow(() -> new Exception("Id " + idType + " n'existe pas ou a deja était supprimer"));
             typeRepository.delete(typeToDelete);
-            return "Le type a était supprimer";
+            return Response.ok("Le type a était supprimer").build();
         } else {
-            return "Id Type " + idType + " n'existe pas ou a deja était supprimer";
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Type " + idType + " n'existe pas ou a deja était supprimer")
+                    .build();
         }
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,35 +18,38 @@ public class GenreService {
     @Inject
     GenreRepository genreRepository;
 
-    public List<Genre> getAllGenre() {
-        return genreRepository.findAll();
+    public Response getAllGenre() {
+        return Response.ok(genreRepository.findAll()).build();
     }
 
-    public Genre getByIdGenre(String idGenre) throws Exception {
+    public Response getByIdGenre(String idGenre) throws Exception {
         if (genreRepository.existsById(idGenre)) {
-            return genreRepository.findById(idGenre).orElseThrow(() -> new Exception("Genre not found."));
+            return Response.ok(genreRepository.findById(idGenre).orElseThrow(() -> new Exception("Genre not found."))).build();
         } else {
-            throw new IllegalArgumentException("Id Genre: " + idGenre + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Genre: " + idGenre + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public List<Genre> getGenreAutocomplete(String name) {
-        return genreRepository.findGenreAutocomplete(name);
+    public Response getGenreAutocomplete(String name) {
+        return Response.ok(genreRepository.findGenreAutocomplete(name)).build();
     }
 
-    public Genre addGenre(GenericCreateDTO genre) {
+    public Response addGenre(GenericCreateDTO genre) {
         Genre genreNew = Genre.builder()
                 .name(genre.name)
                 .build();
-
         try {
-            return genreRepository.save(genreNew);
+            return Response.ok(genreRepository.save(genreNew)).build();
         } catch(Exception e) {
-            throw new IllegalArgumentException("Name Genre: " + genre.getName() + " en doublon dans la bdd");
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Name Genre: " + genre.getName() + " en doublon dans la bdd")
+                    .build();
         }
     }
 
-    public Genre modifyGenre(GenericModifyDTO genre) {
+    public Response modifyGenre(GenericModifyDTO genre) {
         if (genreRepository.existsById(genre.getId())) {
             Genre genreModified = Genre.builder()
                     .idGenre(genre.getId())
@@ -53,22 +57,28 @@ public class GenreService {
                     .build();
 
             try {
-                return genreRepository.save(genreModified);
+                return Response.ok(genreRepository.save(genreModified)).build();
             } catch(Exception e) {
-                throw new IllegalArgumentException("Name Genre: " + genre.getName() + " en doublon dans la bdd");
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Name Genre: " + genre.getName() + " en doublon dans la bdd")
+                        .build();
             }
         } else {
-            throw new IllegalArgumentException("Id Genre: " + genre.getId() + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Genre: " + genre.getId() + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public String suppGenre(String idGenre) throws Exception {
+    public Response suppGenre(String idGenre) throws Exception {
         if (genreRepository.existsById(idGenre)) {
             Genre genreToDelete = genreRepository.findById(idGenre).orElseThrow(() -> new Exception("Id " + idGenre + " n'existe pas ou a deja était supprimer"));
             genreRepository.delete(genreToDelete);
-            return "Le genre a était supprimer";
+            return Response.ok("Le genre a était supprimer").build();
         } else {
-            throw new IllegalArgumentException("Id Genre: " + idGenre + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Genre: " + idGenre + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 }

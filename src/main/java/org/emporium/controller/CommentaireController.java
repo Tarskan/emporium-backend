@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Controller
@@ -18,54 +19,54 @@ public class CommentaireController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Commentaire> getAllCommentaire() {
+    public Response getAllCommentaire() {
         return commentaireService.getAllCommentaire();
     }
 
     @Path("/{idCommentaire}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Commentaire getByIdCommentaire(@PathParam("idCommentaire") String idCommentaire) throws Exception {
+    public Response getByIdCommentaire(@PathParam("idCommentaire") String idCommentaire) throws Exception {
         return commentaireService.getByIdCommentaire(idCommentaire);
     }
 
     @Path("/utilisateur/{uwuid}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<CommentaireProfilDTO> getByCommentaireByUwuid(@PathParam("uwuid") String uwuid) throws Exception {
+    public Response getByCommentaireByUwuid(@PathParam("uwuid") String uwuid) throws Exception {
         return commentaireService.getCommentaireByUwuid(uwuid);
     }
 
     @Path("/oeuvres/{idOeuvres}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Commentaire> getByCommentaireByIdOeuvres(@PathParam("idOeuvres") String idOeuvres) throws Exception {
+    public Response getByCommentaireByIdOeuvres(@PathParam("idOeuvres") String idOeuvres) throws Exception {
         return commentaireService.getCommentaireByIdoeuvres(idOeuvres);
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Commentaire PutCommentaire(@RequestBody CommentaireModifyDTO commentaire) throws Exception {
+    public Response PutCommentaire(@RequestBody CommentaireModifyDTO commentaire) throws Exception {
         return commentaireService.modifyCommentaire(commentaire);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Commentaire AddCommentaire(@RequestBody CommentaireCreateDTO commentaire) throws Exception {
+    public Response AddCommentaire(@RequestBody CommentaireCreateDTO commentaire) throws Exception {
         return commentaireService.addCommentaire(commentaire);
     }
 
     @Path("/like")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Commentaire AddLikeCommentaire(@RequestBody CommentaireLikeDTO commentaire) throws Exception {
+    public Response AddLikeCommentaire(@RequestBody CommentaireLikeDTO commentaire) throws Exception {
         return commentaireService.likeManagement(commentaire);
     }
 
     @Path("/delete/{idCommentaire}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public String DeleteCommentaire(@PathParam("idCommentaire") String idCommentaire) throws Exception {
+    public Response DeleteCommentaire(@PathParam("idCommentaire") String idCommentaire) throws Exception {
         return commentaireService.suppCommentaire(idCommentaire);
     }
 }

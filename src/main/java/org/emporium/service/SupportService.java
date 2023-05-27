@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.List;
-import java.util.Objects;
+import javax.ws.rs.core.Response;
 
 @Singleton
 @Service
@@ -17,36 +16,40 @@ public class SupportService {
     @Inject
     SupportRepository supportRepository;
 
-    public List<Support> getAllSupport() {
-        return supportRepository.findAll();
+    public Response getAllSupport() {
+        return Response.ok(supportRepository.findAll()).build();
     }
 
-    public Support getByIdSupport(String idSupport) throws Exception {
+    public Response getByIdSupport(String idSupport) throws Exception {
         if (supportRepository.existsById(idSupport)) {
-            return supportRepository.findById(idSupport).orElseThrow(() -> new Exception("Support not found."));
+            return Response.ok(supportRepository.findById(idSupport).orElseThrow(() -> new Exception("Support not found."))).build();
         } else {
-            throw new IllegalArgumentException("Id Support: " + idSupport + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Support: " + idSupport + " Non trouvée dans la bdd")
+                    .build();
         }
 
     }
 
-    public List<Support> getSupportAutocomplete(String name) {
-        return supportRepository.findSupportTypeAutocomplete(name);
+    public Response getSupportAutocomplete(String name) {
+        return Response.ok(supportRepository.findSupportTypeAutocomplete(name)).build();
     }
 
-    public Support addSupport(GenericCreateDTO support) throws Exception {
+    public Response addSupport(GenericCreateDTO support) throws Exception {
         Support supportNew = Support.builder()
                 .name(support.name)
                 .build();
 
         try {
-            return supportRepository.save(supportNew);
+            return Response.ok(supportRepository.save(supportNew)).build();
         } catch(Exception e) {
-            throw new IllegalArgumentException("Name Support: " + support.getName() + " en doublon dans la bdd");
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Name Support: " + support.getName() + " en doublon dans la bdd")
+                    .build();
         }
     }
 
-    public Support modifySupport(GenericModifyDTO support) {
+    public Response modifySupport(GenericModifyDTO support) {
         if (supportRepository.existsById(support.getId())) {
             Support supportModified = Support.builder()
                     .idSupport(support.getId())
@@ -54,22 +57,29 @@ public class SupportService {
                     .build();
 
             try {
-                return supportRepository.save(supportModified);
+                return Response.ok(supportRepository.save(supportModified)).build();
             } catch(Exception e) {
-                throw new IllegalArgumentException("Name Support: " + support.getName() + " en doublon dans la bdd");
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Name Support: " + support.getName() + " en doublon dans la bdd")
+                        .build();
+
             }
         } else {
-            throw new IllegalArgumentException("Id Support: " + support.getId() + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id Support: " + support.getId() + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 
-    public String suppSupport(String idSupport) throws Exception {
+    public Response suppSupport(String idSupport) throws Exception {
         if (supportRepository.existsById(idSupport)) {
             Support supportToDelete = supportRepository.findById(idSupport).orElseThrow(() -> new Exception("Id " + idSupport + " n'existe pas ou a deja était supprimer"));
             supportRepository.delete(supportToDelete);
-            return "Le support a était supprimer";
+            return Response.ok("Le support a était supprimer").build();
         } else {
-            throw new IllegalArgumentException("Id: " + idSupport + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Id support: " + idSupport + " Non trouvée dans la bdd")
+                    .build();
         }
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Controller
@@ -18,54 +19,54 @@ public class CollectionController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Collection> getAllCollection() {
+    public Response getAllCollection() {
         return collectionService.getAllCollection();
     }
 
     @Path("/{IdColection}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection getById(@PathParam("IdColection") String IdColection) throws Exception {
+    public Response getById(@PathParam("IdColection") String IdColection) throws Exception {
         return collectionService.getByIdCollection(IdColection);
     }
 
     @Path("/oeuvres/{idOeuvre}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Utilisateur> getOeuvresWhoArePossesed(@PathParam("idOeuvre") String idOeuvre) {
+    public Response getOeuvresWhoArePossesed(@PathParam("idOeuvre") String idOeuvre) {
         return collectionService.getByIdOeuvre(idOeuvre);
     }
 
     @Path("/utilisateur/{uwuid}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<CollectionDTO> getUserWhoPosses(@PathParam("uwuid") String uwuid) {
+    public Response getUserWhoPosses(@PathParam("uwuid") String uwuid) {
         return collectionService.getByUwuid(uwuid);
     }
 
     @Path("/oeuvres/favorite")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Oeuvres> getUserFavorite(@RequestBody CollectionCreateDTO collectionDTO) {
+    public Response getUserFavorite(@RequestBody CollectionCreateDTO collectionDTO) {
         return collectionService.getByFavoriteForUwuid(collectionDTO);
     }
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection PutCollection(@RequestBody CollectionModifyDTO collection) throws Exception {
+    public Response PutCollection(@RequestBody CollectionModifyDTO collection) throws Exception {
         return collectionService.modifyCollection(collection);
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection AddCollection(@RequestBody CollectionCreateDTO collection) throws Exception {
+    public Response AddCollection(@RequestBody CollectionCreateDTO collection) throws Exception {
         return collectionService.addCollection(collection);
     }
 
     @Path("/delete/{IdColection}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public String DeleteCollection(@PathParam("IdColection") String IdColection) throws Exception {
+    public Response DeleteCollection(@PathParam("IdColection") String IdColection) throws Exception {
         return collectionService.suppCollection(IdColection);
     }
 }
