@@ -1,4 +1,4 @@
-# emporium
+# Emporium Back-end
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
@@ -11,7 +11,7 @@ You can run your application in dev mode that enables live coding using:
 ./mvnw compile quarkus:dev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:9000/q/dev/.
 
 ## Packaging and running the application
 
@@ -50,7 +50,7 @@ If you want to learn more about building native executables, please consult http
 ## Related Guides
 
 - Hibernate ORM ([guide](https://quarkus.io/guides/hibernate-orm)): Define your persistent model with Hibernate ORM and JPA
-- JDBC Driver - H2 ([guide](https://quarkus.io/guides/datasource)): Connect to the H2 database via JDBC
+- JDBC Driver - postgresql ([guide](https://quarkus.io/guides/datasource)): Connect to the postgresql database via JDBC
 
 ## Provided Code
 
