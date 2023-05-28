@@ -46,10 +46,14 @@ public class TypeService {
         List<TypeDTO> typeOrdered = new ArrayList<TypeDTO>();
         for (int i = 0; i < listType.size(); i++) {
             int count = oeuvresRepository.findByIdType(listType.get(i).getIdType()).size();
-            typeOrdered.add(new TypeDTO(listType.get(i), count, null));
+            if(count > 0) {
+                typeOrdered.add(new TypeDTO(listType.get(i), count, null));
+            }
         }
         typeOrdered.sort(Comparator.comparingInt(dto -> -dto.count));
-        typeOrdered = typeOrdered.subList(0,3);
+        if(typeOrdered.size() > 3) {
+            typeOrdered = typeOrdered.subList(0,3);
+        }
         String  typeImagePath = null;
         for (int i = 0; i < typeOrdered.size(); i++) {
             typeImagePath = oeuvresRepository.findByIdType((listType.get(i).getIdType())).get(0).imagePath;
