@@ -92,17 +92,12 @@ public class CollectionService {
                 .favorite(collection.getFavorite())
                 .build();
 
-        if(collectionNew.getFavorite()) {
-            collectionNew.getOeuvre().setCountFav(collectionNew.getOeuvre().getCountFav()+1);
-            oeuvresRepository.save(collectionNew.getOeuvre());
-        }
 
         return Response.ok(collectionRepository.save(collectionNew)).build();
     }
 
     public Response modifyCollection(CollectionModifyDTO collection) throws Exception {
         if (collectionRepository.existsById(collection.getIdCollection())) {
-            Collection collectionOld = collectionRepository.findById(collection.getIdCollection()).orElseThrow(() -> new Exception("Un problème est survenu"));
             Collection collectionModify =  Collection.builder()
                     .idCollection(collection.getIdCollection())
                     .favorite(collection.getFavorite())
@@ -110,15 +105,7 @@ public class CollectionService {
                     .oeuvre(oeuvresRepository.findById(collection.getIdOeuvre()).orElseThrow(() -> new Exception("Oeuvres not found.")))
                     .build();
 
-            if(collectionModify.getFavorite()) {
-                if (collectionModify.getFavorite() != collectionOld.getFavorite()) {
-                    collectionModify.getOeuvre().setCountFav(collectionModify.getOeuvre().getCountFav()+1);
-                }
-            } else {
-                if (collectionModify.getFavorite() != collectionOld.getFavorite()) {
-                    collectionModify.getOeuvre().setCountFav(collectionModify.getOeuvre().getCountFav()-1);
-                }
-            }
+
             oeuvresRepository.save(collectionModify.getOeuvre());
 
             return Response.ok(collectionRepository.save(collectionModify)).build();
@@ -132,10 +119,6 @@ public class CollectionService {
     public Response suppCollection(String idCollection) throws Exception {
         if (collectionRepository.existsById(idCollection)) {
             Collection collectionToDelete = collectionRepository.findById(idCollection).orElseThrow(() -> new Exception("Id " + idCollection + " n'existe pas ou a deja était supprimer"));
-            if (collectionToDelete.getFavorite()) {
-                collectionToDelete.getOeuvre().setCountFav(collectionToDelete.getOeuvre().getCountFav()-1);
-                oeuvresRepository.save(collectionToDelete.getOeuvre());
-            }
             collectionRepository.delete(collectionToDelete);
             return Response.ok("La collection a était supprimer").build();
         } else {

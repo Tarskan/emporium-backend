@@ -134,11 +134,13 @@ public class OeuvresService {
     public Response getRelatedTo(String idAuteur, String idOeuvre) {
         List<Oeuvres> listOeuvresRelated = oeuvresRepository.findRelatedToOeuvresFromAuteur(idAuteur);
         listOeuvresRelated.remove(oeuvresRepository.findByIdOeuvre(idOeuvre));
+        Collections.shuffle(listOeuvresRelated);
         if (listOeuvresRelated.size() > 3) {
             Collections.shuffle(listOeuvresRelated);
             return Response.ok(listOeuvresRelated.subList(0, 3)).build();
+        } else {
+            return Response.ok(listOeuvresRelated).build();
         }
-        return Response.ok(Collections.emptyList()).build();
     }
 
     public Response addOeuvre(OeuvresCreateDTO oeuvres) throws Exception {

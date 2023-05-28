@@ -34,8 +34,6 @@ public class Oeuvres {
     public String imageName;
     @Column(name = "imagePath", length = 1000)
     public String imagePath;
-    @Column(name = "countFav")
-    public Integer countFav;
     @Column(name = "creationDate")
     public Date creationDate;
     @Column(name = "modificationDate")
