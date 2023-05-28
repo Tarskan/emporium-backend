@@ -121,6 +121,8 @@ public class UtilisateurService {
                     .modificationDate(myDate)
                     .profilPicture(image.getImageName())
                     .profilPicturePath(image.getImagePath())
+                    .listOeuvres(utilisateurOld.getListOeuvres())
+                    .listCommentaire(utilisateurOld.getListCommentaire())
                     .build();
             try {
                 return Response.ok(utilisateurRepository.save(utilisateurModify)).build();
