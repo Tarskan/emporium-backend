@@ -123,6 +123,14 @@ public class OeuvresService {
         }
     }
 
+    public Response getFirstPack() {
+        if (oeuvresRepository.findAllSorted().size() > 30) {
+            return Response.ok(oeuvresRepository.findLastModified().subList(0,30)).build();
+        } else {
+            return Response.ok(oeuvresRepository.findLastModified()).build();
+        }
+    }
+
     public Response getRelatedTo(String idAuteur, String idOeuvre) {
         List<Oeuvres> listOeuvresRelated = oeuvresRepository.findRelatedToOeuvresFromAuteur(idAuteur);
         listOeuvresRelated.remove(oeuvresRepository.findByIdOeuvre(idOeuvre));

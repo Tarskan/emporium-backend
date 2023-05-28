@@ -36,8 +36,15 @@ public class OeuvresController {
     @Path("/lastModified")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getByIdSupport() {
+    public Response getByLastAdded() {
         return oeuvresService.getLastModified();
+    }
+
+    @Path("/firstPack")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFirstPack() {
+        return oeuvresService.getFirstPack();
     }
 
     @Path("/search/{oeuvreName}")
