@@ -56,7 +56,7 @@ public class OeuvresControllerTest {
                 .when().get("/oeuvres/auteur/1")
                 .then()
                 .statusCode(200);
-    }*/
+    }
 
     @Test
     public void testGetOeuvresByIdTypeEndPoint() {
@@ -66,7 +66,7 @@ public class OeuvresControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetOeuvresByIdSupportEndPoint() {
         given()
                 .when().get("/oeuvres/support/1")
