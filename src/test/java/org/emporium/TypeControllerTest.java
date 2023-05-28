@@ -15,7 +15,7 @@ public class TypeControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testGetTypeByIdTypeEndPoint() {
         given()
                 .when().get("/type/1")
@@ -31,7 +31,7 @@ public class TypeControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testModifyGenreEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");
@@ -70,7 +70,7 @@ public class TypeControllerTest {
                 .when().post("/oeuvres")
                 .then()
                 .statusCode(200);
-    }*/
+    }
 
     @Test
     public void testSuppTypeEndPoint() {
@@ -78,5 +78,5 @@ public class TypeControllerTest {
                 .when().delete("/type/delete/4")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 }

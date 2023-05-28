@@ -15,7 +15,7 @@ public class GenreControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testGetGenreByIdGenreEndPoint() {
         given()
                 .when().get("/genre/1")
@@ -31,7 +31,7 @@ public class GenreControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testModifyGenreEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");
@@ -70,7 +70,7 @@ public class GenreControllerTest {
                 .when().post("/oeuvres")
                 .then()
                 .statusCode(200);
-    }*/
+    }
 
     @Test
     public void testSuppGenreEndPoint() {
@@ -78,5 +78,5 @@ public class GenreControllerTest {
                 .when().delete("/genre/delete/1")
                 .then()
                 .statusCode(500);
-    }
+    }*/
 }

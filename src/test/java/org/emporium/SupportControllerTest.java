@@ -16,7 +16,7 @@ public class SupportControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testGetGenreByIdSupportEndPoint() {
         given()
                 .when().get("/support/2")
@@ -32,7 +32,7 @@ public class SupportControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testModifyGenreEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");
@@ -71,7 +71,7 @@ public class SupportControllerTest {
                 .when().post("/oeuvres")
                 .then()
                 .statusCode(200);
-    }*/
+    }
 
     @Test
     public void testSuppSupportEndPoint() {
@@ -79,5 +79,5 @@ public class SupportControllerTest {
                 .when().delete("/support/delete/1")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 }

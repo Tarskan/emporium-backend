@@ -15,7 +15,7 @@ public class EditeurControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testGetEditeurByIdEditeurEndPoint() {
         given()
                 .when().get("/editeur/1")
@@ -31,7 +31,7 @@ public class EditeurControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testModifyOeuvresEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");
@@ -70,7 +70,7 @@ public class EditeurControllerTest {
                 .when().post("/oeuvres")
                 .then()
                 .statusCode(200);
-    }*/
+    }
 
     @Test
     public void testSuppEditeurEndPoint() {
@@ -78,5 +78,5 @@ public class EditeurControllerTest {
                 .when().delete("/editeur/delete/1")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 }

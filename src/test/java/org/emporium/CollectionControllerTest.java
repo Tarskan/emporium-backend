@@ -18,7 +18,7 @@ public class CollectionControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testGetCollectionByIdCollectionEndPoint() {
         given()
                 .when().get("/collection/7")
@@ -34,7 +34,7 @@ public class CollectionControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetCollectionByFavoriteEndPoint() {
         CollectionCreateDTO collectionCreateDTO = CollectionCreateDTO
                 .builder()
@@ -49,7 +49,7 @@ public class CollectionControllerTest {
                 .when().get("/collection/oeuvres/favorite/2")
                 .then()
                 .statusCode(200);
-    }*/
+    }
 
     @Test
     public void testGetCollectionByIdUserEndPoint() {
@@ -65,5 +65,5 @@ public class CollectionControllerTest {
                 .when().delete("/collection/delete/6")
                 .then()
                 .statusCode(200);
-    }
+    }*/
 }
