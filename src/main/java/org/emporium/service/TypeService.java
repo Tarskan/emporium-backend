@@ -56,7 +56,7 @@ public class TypeService {
         }
         String  typeImagePath = null;
         for (int i = 0; i < typeOrdered.size(); i++) {
-            typeImagePath = oeuvresRepository.findByIdType((listType.get(i).getIdType())).get(0).imagePath;
+            typeImagePath = oeuvresRepository.findByIdType((typeOrdered.get(i).getType().getIdType())).get(0).imagePath;
             typeOrdered.get(i).setImageTypePath(typeImagePath);
         }
 
