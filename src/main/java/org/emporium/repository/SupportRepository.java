@@ -9,7 +9,7 @@ import java.util.List;
 public interface SupportRepository extends CrudRepository<Support, String> {
     List<Support> findAll();
 
-    @Query("from Support where name like concat(?1, '%')")
+    @Query("from Support where lower(name) like concat(%, lower(?1), '%')")
     List<Support> findSupportTypeAutocomplete(String name);
 
     @Query("from Support where name = ?1")

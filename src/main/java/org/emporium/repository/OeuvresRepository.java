@@ -35,7 +35,7 @@ public interface OeuvresRepository extends CrudRepository<Oeuvres, String> {
     @Query("from Oeuvres where idSupport = ?1 order by modificationdate ASC")
     List<Oeuvres> findByIdSupport(String idsupport);
 
-    @Query("from Oeuvres where titre like concat('%', ?1, '%')")
+    @Query("from Oeuvres where lower(titre) like concat('%', lower(?1), '%')")
     List<Oeuvres> findByTitreAutoComplete(String titre);
 
     @Query("from Oeuvres where idAuteur = ?1")
