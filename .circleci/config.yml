@@ -56,6 +56,3 @@ workflows:
   deploy-quarkus-on-fly-io:
     jobs:
       - build
-      - docker-build-and-push:
-          requires:
-            - build
