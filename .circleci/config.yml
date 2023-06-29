@@ -6,9 +6,9 @@ orbs:
   maven: circleci/maven@1.4.1
 
 jobs:
-  build: &shared-config
+  build:
     docker:
-      - image: circleci/openjdk:11-jdk
+      - image: cimg/openjdk:11-jdk
         environment:
           DATABASE_URL: postgresql://localhost:5432/circle_test
           DATABASE_USER: postgres
