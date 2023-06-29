@@ -71,5 +71,5 @@ workflows:
     jobs:
       - build
       - deployFlyIO:
-        requires:
-          - build
+          requires:
+            - build
