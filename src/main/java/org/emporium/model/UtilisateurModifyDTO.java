@@ -31,14 +31,5 @@ public class UtilisateurModifyDTO {
     @FormParam("imageName")
     @PartType(MediaType.TEXT_PLAIN)
     public String imageName;
-    @FormParam("grade")
-    @PartType(MediaType.TEXT_PLAIN)
-    public String grade;
-    @FormParam("equipe")
-    @PartType(MediaType.TEXT_PLAIN)
-    public String equipe;
-    @FormParam("resultat")
-    @PartType(MediaType.TEXT_PLAIN)
-    public String resultat;
 
 }
