@@ -44,6 +44,13 @@ public class CollectionController {
         return collectionService.getByUwuid(uwuid);
     }
 
+    @Path("/utilisateur/{uwuid}/oeuvres/{idOeuvre}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getInCollectionUser(@PathParam("uwuid") String uwuid, @PathParam("idOeuvre") String idOeuvre) {
+        return collectionService.isInCollectionUser(uwuid, idOeuvre);
+    }
+
     @Path("/oeuvres/favorite")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
