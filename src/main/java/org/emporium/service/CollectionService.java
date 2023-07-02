@@ -85,16 +85,6 @@ public class CollectionService {
         }
     }
 
-    public Response isInCollectionUser(String uwuid, String idOeuvre) {
-        if (oeuvresRepository.existsById(idOeuvre) && utilisateurRepository.existsById(uwuid)) {
-            return Response.ok(collectionRepository.findIfPosses(idOeuvre, uwuid)).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Id utilisateur ou oeuvres: non trouvée dans la bdd")
-                    .build();
-        }
-    }
-
     public Response addCollection(CollectionCreateDTO collection) throws Exception {
         Collection collectionNew =  Collection.builder()
                 .utilisateur(utilisateurRepository.findById(collection.getUWUid()).orElseThrow(() -> new Exception("Utilisateur not found.")))
