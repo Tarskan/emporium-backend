@@ -29,6 +29,12 @@ public class Utilisateur {
     public String pseudo;
     @Column(name = "email", unique = true)
     public String email;
+    @Column(name = "grade")
+    public String grade;
+    @Column(name = "equipe")
+    public String equipe;
+    @Column(name = "resultat")
+    public String resultat;
     @Column(name = "description", length = 3000)
     public String description;
     @Column(name = "creationDate")
