@@ -28,20 +28,20 @@ public class OeuvresCreateDTO {
     @FormParam("imageName")
     @PartType(MediaType.TEXT_PLAIN)
     public String imageName;
-    @FormParam("idType")
+    @FormParam("type")
     @PartType(MediaType.TEXT_PLAIN)
-    public String idType;
-    @FormParam("idAuteur")
+    public String type;
+    @FormParam("auteur")
     @PartType(MediaType.TEXT_PLAIN)
-    public String idAuteur;
-    @FormParam("idEditeur")
+    public String auteur;
+    @FormParam("editeur")
     @PartType(MediaType.TEXT_PLAIN)
-    public String idEditeur;
-    @FormParam("idSupport")
+    public String editeur;
+    @FormParam("support")
     @PartType(MediaType.TEXT_PLAIN)
-    public String idSupport;
-    @FormParam("idGenre")
+    public String support;
+    @FormParam("genre")
     @PartType(MediaType.TEXT_PLAIN)
-    public String idGenre;
+    public String genre;
 
 }
