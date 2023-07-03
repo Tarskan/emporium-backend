@@ -1,11 +1,13 @@
 package org.emporium.controller;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.emporium.model.GenericCreateDTO;
 import org.emporium.model.GenericModifyDTO;
 import org.emporium.service.AuteurService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -17,7 +19,11 @@ public class AuteurController {
     @Inject
     AuteurService auteurService;
 
+    @Inject
+    JsonWebToken jwt;
+
     @GET
+    @RolesAllowed("User")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllAuteur() {
         return auteurService.getAllAuteur();
