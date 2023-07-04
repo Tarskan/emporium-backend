@@ -69,7 +69,15 @@ workflows:
   version: 1
   deploy-quarkus-on-fly-io:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              only:
+                - main
       - deploy:
           requires:
             - build
+          filters:
+              branches:
+                only:
+                  - main
