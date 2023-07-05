@@ -28,7 +28,8 @@ public class AuteurController {
     @GET
     @RolesAllowed("User")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllAuteur(@Context SecurityContext securityContext) {
+    public Response getAllAuteur() {
+        System.out.println(jwt);
         return auteurService.getAllAuteur();
     }
 
