@@ -1,5 +1,6 @@
 package org.emporium.controller;
 
+import io.quarkus.security.identity.SecurityIdentity;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.emporium.model.GenericCreateDTO;
 import org.emporium.model.GenericModifyDTO;
@@ -8,28 +9,35 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
 
 @Controller
 @Path("/auteur")
+
 public class AuteurController {
     @Inject
     AuteurService auteurService;
 
     @Inject
+    @ApplicationScoped
     JsonWebToken jwt;
 
+    @Inject
+    @ApplicationScoped
+    SecurityIdentity securityIdentity;
+
     @GET
-    @RolesAllowed("User")
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllAuteur() {
-        System.out.println(jwt);
+    public Response getAllAuteur(@Context SecurityContext securityContext) {
+        System.out.println(jwt.getAudience());
+        System.out.println(securityIdentity.getPrincipal());
         return auteurService.getAllAuteur();
     }
 
