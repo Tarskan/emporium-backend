@@ -10,10 +10,7 @@ import javax.ws.rs.core.Response;
 
 import org.emporium.model.Collection;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 @Singleton
@@ -144,123 +141,52 @@ public class OeuvresService {
     }
 
     public Response addOeuvre(OeuvresCreateDTO oeuvres) throws Exception {
-        Date myDate = new Date();
-        ImageUpload imageUpload = new ImageUpload();
-        imageUpload.setFile(oeuvres.getImage());
-        imageUpload.setFileName(oeuvres.getImageName());
-        ImageItem image = imageService.uploadImage(imageUpload);
-
-        if (typeRepository.findByName(oeuvres.getType()) == null) {
-            Type typeNew = Type.builder()
-                    .name(oeuvres.getType())
-                    .build();
-            typeRepository.save(typeNew);
-        }
-
-        if (auteurRepository.findByName(oeuvres.getAuteur()) == null) {
-            Auteur auteurNew = Auteur.builder()
-                    .name(oeuvres.getAuteur())
-                    .build();
-            auteurRepository.save(auteurNew);
-        }
-
-        if (genreRepository.findByName(oeuvres.getGenre()) == null) {
-            Genre genreNew = Genre.builder()
-                    .name(oeuvres.getGenre())
-                    .build();
-            genreRepository.save(genreNew);
-        }
-
-        if (editeurRepository.findByName(oeuvres.getEditeur()) == null) {
-            Editeur editeurNew = Editeur.builder()
-                    .name(oeuvres.getEditeur())
-                    .build();
-            editeurRepository.save(editeurNew);
-        }
-
-        if (supportRepository.findByName(oeuvres.getSupport()) == null) {
-            Support supportNew = Support.builder()
-                    .name(oeuvres.getSupport())
-                    .build();
-            supportRepository.save(supportNew);
-        }
-
-        Oeuvres oeuvresNew = Oeuvres.builder()
-                .titre(oeuvres.titre)
-                .sousTitre(oeuvres.sousTitre)
-                .description(oeuvres.description)
-                .imageName(image.getImageName())
-                .imagePath(image.getImagePath())
-                .type(typeRepository.findByName(oeuvres.getType()))
-                .auteur(auteurRepository.findByName(oeuvres.getAuteur()))
-                .genre(genreRepository.findByName(oeuvres.getGenre()))
-                .editeur(editeurRepository.findByName(oeuvres.getEditeur()))
-                .support(supportRepository.findByName(oeuvres.getSupport()))
-                .creationDate(myDate)
-                .modificationDate(myDate)
-                .build();
-
-            return Response.ok(oeuvresRepository.save(oeuvresNew)).build();
-    }
-
-    public Response modifyOeuvre(OeuvresModifyDTO oeuvres) throws Exception {
-        if (oeuvresRepository.existsById(oeuvres.getIdOeuvre())) {
+        if (oeuvresRepository.findByTitre(oeuvres.titre.toLowerCase()) == null) {
             Date myDate = new Date();
-            Oeuvres oeuvresOld = oeuvresRepository.findByIdOeuvre(oeuvres.getIdOeuvre());
-            ImageItem image = new ImageItem();
-            if (oeuvres.getImage() != null) {
-                ImageUpload imageUpload = new ImageUpload();
-                imageUpload.setFile(oeuvres.getImage());
-                imageUpload.setFileName(oeuvres.getImageName());
-                image = imageService.uploadImage(imageUpload);
-                ImageRequest imageRequest =new ImageRequest();
-                imageRequest.setImageName(oeuvresOld.getImageName());
-                imageService.deleteImage(imageRequest);
-            } else {
-                image.setImagePath(oeuvresOld.getImagePath());
-                image.setImageName(oeuvresOld.getImageName());
-            }
+            ImageUpload imageUpload = new ImageUpload();
+            imageUpload.setFile(oeuvres.getImage());
+            imageUpload.setFileName(oeuvres.getImageName());
+            ImageItem image = imageService.uploadImage(imageUpload);
 
-            if (typeRepository.findByName(oeuvres.getType()) == null) {
+            if (typeRepository.findByName(oeuvres.getType().toLowerCase()) == null) {
                 Type typeNew = Type.builder()
                         .name(oeuvres.getType())
                         .build();
                 typeRepository.save(typeNew);
             }
 
-            if (auteurRepository.findByName(oeuvres.getAuteur()) == null) {
+            if (auteurRepository.findByName(oeuvres.getAuteur().toLowerCase()) == null) {
                 Auteur auteurNew = Auteur.builder()
                         .name(oeuvres.getAuteur())
                         .build();
                 auteurRepository.save(auteurNew);
             }
 
-            if (genreRepository.findByName(oeuvres.getGenre()) == null) {
+            if (genreRepository.findByName(oeuvres.getGenre().toLowerCase()) == null) {
                 Genre genreNew = Genre.builder()
                         .name(oeuvres.getGenre())
                         .build();
                 genreRepository.save(genreNew);
             }
 
-            if (editeurRepository.findByName(oeuvres.getEditeur()) == null) {
+            if (editeurRepository.findByName(oeuvres.getEditeur().toLowerCase()) == null) {
                 Editeur editeurNew = Editeur.builder()
                         .name(oeuvres.getEditeur())
                         .build();
                 editeurRepository.save(editeurNew);
             }
 
-            if (supportRepository.findByName(oeuvres.getSupport()) == null) {
+            if (supportRepository.findByName(oeuvres.getSupport().toLowerCase()) == null) {
                 Support supportNew = Support.builder()
                         .name(oeuvres.getSupport())
                         .build();
                 supportRepository.save(supportNew);
             }
 
-            Oeuvres oeuvresModified =  Oeuvres.builder()
-                    .idOeuvre(oeuvres.getIdOeuvre())
-                    .titre(oeuvres.getTitre())
-                    .sousTitre(oeuvres.getSousTitre())
-                    .description(oeuvres.getDescription())
+            Oeuvres oeuvresNew = Oeuvres.builder()
+                    .titre(oeuvres.titre)
+                    .sousTitre(oeuvres.sousTitre)
+                    .description(oeuvres.description)
                     .imageName(image.getImageName())
                     .imagePath(image.getImagePath())
                     .type(typeRepository.findByName(oeuvres.getType()))
@@ -268,11 +194,94 @@ public class OeuvresService {
                     .genre(genreRepository.findByName(oeuvres.getGenre()))
                     .editeur(editeurRepository.findByName(oeuvres.getEditeur()))
                     .support(supportRepository.findByName(oeuvres.getSupport()))
-                    .creationDate(oeuvresOld.getCreationDate())
+                    .creationDate(myDate)
                     .modificationDate(myDate)
                     .build();
 
-            return Response.ok(oeuvresRepository.save(oeuvresModified)).build();
+            return Response.ok(oeuvresRepository.save(oeuvresNew)).build();
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Le titre de l'oeuvre: " + oeuvres.getTitre() + " en doublon dans la bdd")
+                    .build();
+        }
+    }
+
+    public Response modifyOeuvre(OeuvresModifyDTO oeuvres) throws Exception {
+        if (oeuvresRepository.existsById(oeuvres.getIdOeuvre())) {
+            if (oeuvresRepository.findByTitre(oeuvres.titre.toLowerCase()) == null || Objects.equals(oeuvresRepository.findByTitre(oeuvres.titre.toLowerCase()).getIdOeuvre(), oeuvres.getIdOeuvre())) {
+                Date myDate = new Date();
+                Oeuvres oeuvresOld = oeuvresRepository.findByIdOeuvre(oeuvres.getIdOeuvre());
+                ImageItem image = new ImageItem();
+                if (oeuvres.getImage() != null) {
+                    ImageUpload imageUpload = new ImageUpload();
+                    imageUpload.setFile(oeuvres.getImage());
+                    imageUpload.setFileName(oeuvres.getImageName());
+                    image = imageService.uploadImage(imageUpload);
+                    ImageRequest imageRequest =new ImageRequest();
+                    imageRequest.setImageName(oeuvresOld.getImageName());
+                    imageService.deleteImage(imageRequest);
+                } else {
+                    image.setImagePath(oeuvresOld.getImagePath());
+                    image.setImageName(oeuvresOld.getImageName());
+                }
+
+                if (typeRepository.findByName(oeuvres.getType().toLowerCase()) == null) {
+                    Type typeNew = Type.builder()
+                            .name(oeuvres.getType())
+                            .build();
+                    typeRepository.save(typeNew);
+                }
+
+                if (auteurRepository.findByName(oeuvres.getAuteur().toLowerCase()) == null) {
+                    Auteur auteurNew = Auteur.builder()
+                            .name(oeuvres.getAuteur())
+                            .build();
+                    auteurRepository.save(auteurNew);
+                }
+
+                if (genreRepository.findByName(oeuvres.getGenre().toLowerCase().toLowerCase()) == null) {
+                    Genre genreNew = Genre.builder()
+                            .name(oeuvres.getGenre())
+                            .build();
+                    genreRepository.save(genreNew);
+                }
+
+                if (editeurRepository.findByName(oeuvres.getEditeur().toLowerCase().toLowerCase()) == null) {
+                    Editeur editeurNew = Editeur.builder()
+                            .name(oeuvres.getEditeur())
+                            .build();
+                    editeurRepository.save(editeurNew);
+                }
+
+                if (supportRepository.findByName(oeuvres.getSupport().toLowerCase().toLowerCase()) == null) {
+                    Support supportNew = Support.builder()
+                            .name(oeuvres.getSupport())
+                            .build();
+                    supportRepository.save(supportNew);
+                }
+
+                Oeuvres oeuvresModified =  Oeuvres.builder()
+                        .idOeuvre(oeuvres.getIdOeuvre())
+                        .titre(oeuvres.getTitre())
+                        .sousTitre(oeuvres.getSousTitre())
+                        .description(oeuvres.getDescription())
+                        .imageName(image.getImageName())
+                        .imagePath(image.getImagePath())
+                        .type(typeRepository.findByName(oeuvres.getType()))
+                        .auteur(auteurRepository.findByName(oeuvres.getAuteur()))
+                        .genre(genreRepository.findByName(oeuvres.getGenre()))
+                        .editeur(editeurRepository.findByName(oeuvres.getEditeur()))
+                        .support(supportRepository.findByName(oeuvres.getSupport()))
+                        .creationDate(oeuvresOld.getCreationDate())
+                        .modificationDate(myDate)
+                        .build();
+
+                return Response.ok(oeuvresRepository.save(oeuvresModified)).build();
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Le titre de l'oeuvre: " + oeuvres.getTitre() + " en doublon dans la bdd")
+                        .build();
+            }
         } else {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity("Id Oeuvres: " + oeuvres.getIdOeuvre() + " Non trouvée dans la bdd")

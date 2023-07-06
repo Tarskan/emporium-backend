@@ -37,12 +37,12 @@ public class GenreService {
     }
 
     public Response addGenre(GenericCreateDTO genre) {
-        Genre genreNew = Genre.builder()
-                .name(genre.name)
-                .build();
-        try {
+        if (genreRepository.findByName(genre.name.toLowerCase()) == null) {
+            Genre genreNew = Genre.builder()
+                    .name(genre.name)
+                    .build();
             return Response.ok(genreRepository.save(genreNew)).build();
-        } catch(Exception e) {
+        } else {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Name Genre: " + genre.getName() + " en doublon dans la bdd")
                     .build();
@@ -51,14 +51,14 @@ public class GenreService {
 
     public Response modifyGenre(GenericModifyDTO genre) {
         if (genreRepository.existsById(genre.getId())) {
-            Genre genreModified = Genre.builder()
+            if (genreRepository.findByName(genre.name.toLowerCase()) == null) {
+                Genre genreModified = Genre.builder()
                     .idGenre(genre.getId())
                     .name(genre.getName())
                     .build();
 
-            try {
                 return Response.ok(genreRepository.save(genreModified)).build();
-            } catch(Exception e) {
+            } else {
                 return Response.status(Response.Status.BAD_REQUEST)
                         .entity("Name Genre: " + genre.getName() + " en doublon dans la bdd")
                         .build();
