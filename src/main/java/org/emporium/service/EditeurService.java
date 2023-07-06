@@ -1,5 +1,6 @@
 package org.emporium.service;
 
+import org.emporium.model.Auteur;
 import org.emporium.model.Editeur;
 import org.emporium.model.GenericCreateDTO;
 import org.emporium.model.GenericModifyDTO;
@@ -35,13 +36,13 @@ public class EditeurService {
     }
 
     public Response addEditeur(GenericCreateDTO editeur) throws Exception {
-        Editeur genreNew = Editeur.builder()
-                .name(editeur.name)
-                .build();
+        if (editeurRepository.findByName(editeur.name.toLowerCase()) == null) {
+            Editeur editeurNew = Editeur.builder()
+                    .name(editeur.name)
+                    .build();
 
-        try {
-            return Response.ok(editeurRepository.save(genreNew)).build();
-        } catch(Exception e) {
+            return Response.ok(editeurRepository.save(editeurNew)).build();
+        } else {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Name Editeur: " + editeur.getName() + " en doublon dans la bdd")
                     .build();
@@ -50,14 +51,14 @@ public class EditeurService {
 
     public Response modifyEditeur(GenericModifyDTO editeur) {
         if (editeurRepository.existsById(editeur.getId())) {
-            Editeur editeurModified = Editeur.builder()
+            if(editeurRepository.findByName(editeur.name.toLowerCase()) == null) {
+                Editeur editeurModified = Editeur.builder()
                     .idEditeur(editeur.getId())
                     .name(editeur.getName())
                     .build();
 
-            try {
                 return Response.ok(editeurRepository.save(editeurModified)).build();
-            } catch(Exception e) {
+            } else {
                 return Response.status(Response.Status.BAD_REQUEST)
                         .entity("Name Editeur: " + editeur.getName() + " en doublon dans la bdd")
                         .build();

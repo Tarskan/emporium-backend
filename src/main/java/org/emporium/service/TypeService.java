@@ -64,13 +64,13 @@ public class TypeService {
     }
 
     public Response addType(GenericCreateDTO type) throws Exception {
-        Type typeNew =  Type.builder()
+        if (typeRepository.findByName(type.name.toLowerCase()) == null) {
+            Type typeNew =  Type.builder()
                 .name(type.name)
                 .build();
 
-        try {
             return Response.ok(typeRepository.save(typeNew)).build();
-        } catch(Exception e) {
+        } else {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Name Type: " + type.getName() + " en doublon dans la bdd")
                     .build();
@@ -80,14 +80,14 @@ public class TypeService {
 
     public Response modifyType(GenericModifyDTO type) {
         if (typeRepository.existsById(type.getId())) {
+            if (typeRepository.findByName(type.name.toLowerCase()) == null) {
                 Type typeModified = Type.builder()
                         .idType(type.getId())
                         .name(type.name)
                         .build();
 
-            try {
                 return Response.ok(typeRepository.save(typeModified)).build();
-            } catch(Exception e) {
+            } else {
                 return Response.status(Response.Status.BAD_REQUEST)
                         .entity("Name Type: " + type.getName() + " en doublon dans la bdd")
                         .build();

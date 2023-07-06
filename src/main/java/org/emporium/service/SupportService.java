@@ -36,13 +36,13 @@ public class SupportService {
     }
 
     public Response addSupport(GenericCreateDTO support) throws Exception {
-        Support supportNew = Support.builder()
+        if (supportRepository.findByName(support.name.toLowerCase()) == null) {
+            Support supportNew = Support.builder()
                 .name(support.name)
                 .build();
 
-        try {
             return Response.ok(supportRepository.save(supportNew)).build();
-        } catch(Exception e) {
+        } else {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Name Support: " + support.getName() + " en doublon dans la bdd")
                     .build();
@@ -51,14 +51,14 @@ public class SupportService {
 
     public Response modifySupport(GenericModifyDTO support) {
         if (supportRepository.existsById(support.getId())) {
-            Support supportModified = Support.builder()
+            if (supportRepository.findByName(support.name.toLowerCase()) == null) {
+                Support supportModified = Support.builder()
                     .idSupport(support.getId())
                     .name(support.getName())
                     .build();
 
-            try {
                 return Response.ok(supportRepository.save(supportModified)).build();
-            } catch(Exception e) {
+            } else {
                 return Response.status(Response.Status.BAD_REQUEST)
                         .entity("Name Support: " + support.getName() + " en doublon dans la bdd")
                         .build();

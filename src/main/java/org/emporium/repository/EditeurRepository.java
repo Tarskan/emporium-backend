@@ -12,6 +12,6 @@ public interface EditeurRepository extends CrudRepository<Editeur, String> {
     @Query("from Editeur where lower(name) like concat(%, lower(?1), '%')")
     List<Editeur> findEditeurAutocomplete(String name);
 
-    @Query("from Editeur where name = ?1")
+    @Query("from Editeur where lower(name) = ?1")
     Editeur findByName(String name);
 }

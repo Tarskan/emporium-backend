@@ -12,6 +12,6 @@ public interface AuteurRepository extends CrudRepository<Auteur, String> {
     @Query("from Auteur where lower(name) like concat(%, lower(?1), '%')")
     List<Auteur> findAuteurAutocomplete(String name);
 
-    @Query("from Auteur where name = ?1")
+    @Query("from Auteur where lower(name) = ?1")
     Auteur findByName(String name);
 }

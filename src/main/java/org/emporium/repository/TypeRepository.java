@@ -12,7 +12,7 @@ public interface TypeRepository extends CrudRepository<Type, String> {
     @Query("from Type where lower(name) like concat(%, lower(?1), '%')")
     List<Type> findTypeAutocomplete(String name);
 
-    @Query("from Type where name = ?1")
+    @Query("from Type where lower(name) = ?1")
     Type findByName(String name);
 
     @Query("from Type where idOuevre = ?1")

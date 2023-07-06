@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Locale;
 
 @Singleton
 @Service
@@ -36,14 +37,14 @@ public class AuteurService {
     }
 
     public Response addAuteur(GenericCreateDTO auteur) {
-        Auteur auteurNew = Auteur.builder()
-                .name(auteur.name)
-                .build();
+        if (auteurRepository.findByName(auteur.name.toLowerCase()) == null) {
+            Auteur auteurNew = Auteur.builder()
+                    .name(auteur.name)
+                    .build();
 
-        try {
             return Response.ok(auteurRepository.save(auteurNew)).build();
-        } catch(Exception e) {
-            return Response.status(Response.Status.NOT_FOUND)
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Name Auteur: " + auteur.getName() + " en doublon dans la bdd")
                     .build();
         }
@@ -51,15 +52,15 @@ public class AuteurService {
 
     public Response modifyAuteur(GenericModifyDTO auteur) {
         if (auteurRepository.existsById(auteur.getId())) {
+            if(auteurRepository.findByName(auteur.name.toLowerCase()) == null) {
                 Auteur auteurModified = Auteur.builder()
                         .idAuteur(auteur.getId())
                         .name(auteur.getName())
                         .build();
 
-            try {
                 return Response.ok(auteurRepository.save(auteurModified)).build();
-            } catch(Exception e) {
-                return Response.status(Response.Status.NOT_FOUND)
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST)
                         .entity("Name Auteur: " + auteur.getName() + " en doublon dans la bdd")
                         .build();
             }
