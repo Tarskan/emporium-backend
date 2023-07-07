@@ -18,7 +18,7 @@ public class OeuvresControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetOeuvresByIdOeuvresEndPoint() {
         given()
                 .when().get("/oeuvres/2")
@@ -74,7 +74,7 @@ public class OeuvresControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testModifyOeuvresEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");

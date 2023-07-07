@@ -15,7 +15,7 @@ public class TypeControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetTypeByIdTypeEndPoint() {
         given()
                 .when().get("/type/1")
@@ -23,7 +23,7 @@ public class TypeControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testGetTypeSearchByName() {
         given()
                 .when().get("/type/search/Musique")

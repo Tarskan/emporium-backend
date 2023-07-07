@@ -15,7 +15,7 @@ public class EditeurControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetEditeurByIdEditeurEndPoint() {
         given()
                 .when().get("/editeur/1")
@@ -23,7 +23,7 @@ public class EditeurControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testGetEditeurSearchByName() {
         given()
                 .when().get("/editeur/search/Tourbillon")

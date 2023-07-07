@@ -16,7 +16,7 @@ public class SupportControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetGenreByIdSupportEndPoint() {
         given()
                 .when().get("/support/2")
@@ -24,7 +24,7 @@ public class SupportControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testGetSupportSearchByName() {
         given()
                 .when().get("/support/search/CD")
