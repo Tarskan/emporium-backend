@@ -31,5 +31,8 @@ public class UtilisateurModifyDTO {
     @FormParam("imageName")
     @PartType(MediaType.TEXT_PLAIN)
     public String imageName;
+    @FormParam("authId")
+    @PartType(MediaType.TEXT_PLAIN)
+    public String authId;
 
 }

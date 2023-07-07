@@ -66,33 +66,40 @@ public class UtilisateurService {
     }
 
     public Response addUser(UtilisateurCreateDTO utilisateur) throws IOException {
-        Date myDate = new Date();
-        ImageUpload imageUpload = new ImageUpload();
-        imageUpload.setFile(utilisateur.getProfilPicture());
-        imageUpload.setFileName(utilisateur.getImageName());
-        ImageItem image = imageService.uploadImage(imageUpload);
+        if (utilisateurRepository.findByAuthId(utilisateur.getAuthId()) == null) {
+            Date myDate = new Date();
+            ImageUpload imageUpload = new ImageUpload();
+            imageUpload.setFile(utilisateur.getProfilPicture());
+            imageUpload.setFileName(utilisateur.getImageName());
+            ImageItem image = imageService.uploadImage(imageUpload);
 
-        Utilisateur utilisateurNew =  Utilisateur.builder()
-                .email(utilisateur.getEmail())
-                .pseudo(utilisateur.getPseudo())
-                .creationDate(myDate)
-                .modificationDate(myDate)
-                .profilPicture(image.getImageName())
-                .profilPicturePath(image.getImagePath())
-                .build();
+            Utilisateur utilisateurNew =  Utilisateur.builder()
+                    .email(utilisateur.getEmail())
+                    .pseudo(utilisateur.getPseudo())
+                    .creationDate(myDate)
+                    .modificationDate(myDate)
+                    .profilPicture(image.getImageName())
+                    .profilPicturePath(image.getImagePath())
+                    .authId(utilisateur.getAuthId())
+                    .build();
 
 
-        try {
-            return Response.ok(utilisateurRepository.save(utilisateurNew)).build();
-        } catch(Exception e) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Pseudo ou email en doublon dans la bdd")
+            try {
+                return Response.ok(utilisateurRepository.save(utilisateurNew)).build();
+            } catch(Exception e) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Pseudo ou email en doublon dans la bdd")
+                        .build();
+            }
+        } else {
+            return Response.status(Response.Status.CONFLICT)
+                    .entity("Auth0 id déja utiliser")
                     .build();
         }
     }
 
     public Response modifyUser(UtilisateurModifyDTO utilisateur) throws IOException {
-        if (Objects.equals(utilisateurRepository.findByEmail(utilisateur.getEmail()).getUWUid(), utilisateur.getUWUid())) {
+        if (Objects.equals(utilisateurRepository.findByEmail(utilisateur.getEmail()).getUWUid(), utilisateur.getUWUid()) && Objects.equals(utilisateurRepository.findByUWUid(utilisateur.getUWUid()).getAuthId(), utilisateur.getAuthId())) {
             Date myDate = new Date();
 
             Utilisateur utilisateurOld = utilisateurRepository.findByUWUid(utilisateur.getUWUid());
@@ -110,7 +117,7 @@ public class UtilisateurService {
                 image.setImageName(utilisateurOld.getProfilPicture());
             }
             Utilisateur utilisateurModify =  Utilisateur.builder()
-                    .UWUid(utilisateur.getUWUid())
+                    .UWUid(utilisateurOld.getUWUid())
                     .email(utilisateur.getEmail())
                     .pseudo(utilisateur.getPseudo())
                     .description(utilisateur.getDescription())
@@ -120,15 +127,20 @@ public class UtilisateurService {
                     .profilPicturePath(image.getImagePath())
                     .listOeuvres(utilisateurOld.getListOeuvres())
                     .listCommentaire(utilisateurOld.getListCommentaire())
+                    .authId(utilisateurOld.getAuthId())
                     .build();
             try {
                 return Response.ok(utilisateurRepository.save(utilisateurModify)).build();
             }
             catch(Exception e) {
-                throw new IllegalArgumentException("Pseudo ou email en doublon dans la bdd");
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .entity("Pseudo ou email en doublon dans la bdd")
+                        .build();
             }
         } else {
-            throw new IllegalArgumentException("Id: " + utilisateur.getUWUid() + " Non trouvée dans la bdd");
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Auth0 id ou Uwuid ne matchent pas")
+                    .build();
         }
     }
 

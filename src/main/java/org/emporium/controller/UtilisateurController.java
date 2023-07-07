@@ -1,5 +1,6 @@
 package org.emporium.controller;
 
+
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.emporium.model.Utilisateur;
 import org.emporium.model.UtilisateurCreateDTO;
@@ -77,6 +78,7 @@ public class UtilisateurController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @RolesAllowed({ "User", "Admin" })
     public Response AddUtilisateur(@MultipartForm UtilisateurCreateDTO utilisateur) throws IOException {
         return utilisateurService.addUser(utilisateur);
     }
