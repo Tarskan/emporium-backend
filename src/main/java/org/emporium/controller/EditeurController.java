@@ -1,7 +1,6 @@
 package org.emporium.controller;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
-import org.emporium.model.Editeur;
 import org.emporium.model.GenericCreateDTO;
 import org.emporium.model.GenericModifyDTO;
 import org.emporium.service.EditeurService;
@@ -14,7 +13,6 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Controller
 @Path("/editeur")

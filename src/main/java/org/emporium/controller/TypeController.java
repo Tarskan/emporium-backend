@@ -3,8 +3,6 @@ package org.emporium.controller;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.emporium.model.GenericCreateDTO;
 import org.emporium.model.GenericModifyDTO;
-import org.emporium.model.Type;
-import org.emporium.model.TypeDTO;
 import org.emporium.service.TypeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +13,6 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
-
 @Controller
 @Path("/type")
 public class TypeController {

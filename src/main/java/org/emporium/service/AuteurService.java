@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.core.Response;
-import java.util.List;
-import java.util.Locale;
 
 @Singleton
 @Service

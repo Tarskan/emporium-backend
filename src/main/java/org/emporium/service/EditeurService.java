@@ -1,6 +1,5 @@
 package org.emporium.service;
 
-import org.emporium.model.Auteur;
 import org.emporium.model.Editeur;
 import org.emporium.model.GenericCreateDTO;
 import org.emporium.model.GenericModifyDTO;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Singleton
 @Service
