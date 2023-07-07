@@ -97,16 +97,17 @@ workflows:
               only:
                 - main
       - build:
+          requires:
+            - test
           filters:
             branches:
               only:
                 - main
-                - test
       - deploy:
           requires:
             - build
+            - test
           filters:
               branches:
                 only:
                   - main
-                  - test
