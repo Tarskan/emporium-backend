@@ -16,7 +16,7 @@ public class CommentaireControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetCommentaireByIdCommentaireEndPoint() {
         given()
                 .when().get("/commentaire/5")
@@ -33,7 +33,7 @@ public class CommentaireControllerTest {
     }
 
 
-    @Test
+    /*@Test
     public void testModifyCommentaireEndPoint() {
         CommentaireModifyDTO commentaireModifyDTO = new CommentaireModifyDTO();
         commentaireModifyDTO.setText("Yumeko");

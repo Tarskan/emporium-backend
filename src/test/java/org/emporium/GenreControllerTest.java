@@ -15,7 +15,7 @@ public class GenreControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetGenreByIdGenreEndPoint() {
         given()
                 .when().get("/genre/1")
@@ -23,7 +23,7 @@ public class GenreControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testGetGenreSearchByName() {
         given()
                 .when().get("/genre/search/Death metal")

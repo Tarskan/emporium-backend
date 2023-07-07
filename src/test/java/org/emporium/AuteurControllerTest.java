@@ -15,7 +15,7 @@ public class AuteurControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetAuteurByIdOeuvresEndPoint() {
         given()
                 .when().get("/auteur/1")
@@ -23,7 +23,7 @@ public class AuteurControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testGetAuteurSearchByTitre() {
         given()
                 .when().get("/auteur/search/Ramstein")
