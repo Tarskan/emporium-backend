@@ -1,18 +1,15 @@
 package org.emporium.controller;
 
-import org.emporium.model.Oeuvres;
 import org.emporium.model.OeuvresCreateDTO;
 import org.emporium.model.OeuvresModifyDTO;
 import org.emporium.service.OeuvresService;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Controller
 @Path("/oeuvres")

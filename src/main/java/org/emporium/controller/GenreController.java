@@ -2,7 +2,6 @@ package org.emporium.controller;
 
 import org.emporium.model.GenericCreateDTO;
 import org.emporium.model.GenericModifyDTO;
-import org.emporium.model.Genre;
 import org.emporium.service.GenreService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +10,6 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Controller
 @Path("/genre")

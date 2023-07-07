@@ -1,7 +1,6 @@
 package org.emporium.service;
 
 import org.emporium.model.*;
-import org.emporium.repository.CollectionRepository;
 import org.emporium.repository.OeuvresRepository;
 import org.emporium.repository.TypeRepository;
 import org.springframework.stereotype.Service;
@@ -10,7 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 

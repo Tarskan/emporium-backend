@@ -1,19 +1,16 @@
 package org.emporium.controller;
 
-import org.emporium.model.Utilisateur;
 import org.emporium.model.UtilisateurCreateDTO;
 import org.emporium.model.UtilisateurModifyDTO;
 import org.emporium.service.UtilisateurService;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @Path("/utilisateur")

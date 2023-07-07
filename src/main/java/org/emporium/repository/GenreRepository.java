@@ -1,6 +1,5 @@
 package org.emporium.repository;
 
-import org.emporium.model.Auteur;
 import org.emporium.model.Genre;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
