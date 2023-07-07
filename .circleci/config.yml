@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Test Quarkus application
           command: |
-            mvn package -Denv=dev
+            mvn verify
   build:
     docker:
       - image: circleci/openjdk:11-jdk
