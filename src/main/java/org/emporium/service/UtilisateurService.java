@@ -43,7 +43,20 @@ public class UtilisateurService {
 
     public Response GetUserByUwuid(String uwuid) {
         if (utilisateurRepository.existsById(uwuid)) {
-            return Response.ok(utilisateurRepository.findByUWUid(uwuid)).build();
+            Utilisateur utilisateur = utilisateurRepository.findByUWUid(uwuid);
+            UtilisateurFullDTO utilisateurFull = UtilisateurFullDTO.builder()
+                    .profilPicture(utilisateur.getProfilPicture())
+                    .profilPicturePath(utilisateur.getProfilPicturePath())
+                    .email(utilisateur.getEmail())
+                    .pseudo(utilisateur.getPseudo())
+                    .UWUid(utilisateur.getUWUid())
+                    .description(utilisateur.getDescription())
+                    .modificationDate(utilisateur.getModificationDate())
+                    .creationDate(utilisateur.getCreationDate())
+                    .nbCom(commentaireRepository.findByUWUid(uwuid).size())
+                    .build();
+
+            return Response.ok(utilisateurFull).build();
         } else  {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity("Uwuid :" + uwuid + " non trouvé")
