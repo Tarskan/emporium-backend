@@ -36,13 +36,7 @@ public class ImageService {
         GoogleCredentials credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(decodedBytes));
         this.storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
     }
-
-    public String test() throws IOException, URISyntaxException {
-        byte[] decodedBytes = Base64.getDecoder().decode(myConfigGCP);
-        String decodedString = new String(decodedBytes);
-        return "ok";
-    }
-
+    
     public ImageItem uploadImage(ImageUpload imageUpload) throws IOException {
         BlobId blobId = BlobId.of(bucketGCP, (bucketGCP+"/") + imageUpload.getFileName().hashCode() + UUID.randomUUID() + imageUpload.getFileName().substring(imageUpload.getFileName().lastIndexOf(".")));
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
