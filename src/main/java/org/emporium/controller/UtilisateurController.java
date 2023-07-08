@@ -3,12 +3,10 @@ package org.emporium.controller;
 import io.quarkus.security.Authenticated;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.emporium.model.UtilisateurCreateDTO;
-import org.emporium.model.UtilisateurDeleteDTO;
 import org.emporium.model.UtilisateurModifyDTO;
 import org.emporium.service.UtilisateurService;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -82,12 +80,12 @@ public class UtilisateurController {
         return utilisateurService.addUser(utilisateur);
     }
 
-    @Path("/delete")
+    @Path("/delete/{authId}")
     @DELETE
     @RolesAllowed({ "User", "Admin" })
     @Produces(MediaType.APPLICATION_JSON)
-    public Response DeleteUser(@MultipartForm UtilisateurDeleteDTO utilisateurDeleteDTO) {
-        return utilisateurService.suppUser(utilisateurDeleteDTO);
+    public Response DeleteUser(@PathParam("authId") String authId) {
+        return utilisateurService.suppUser(authId);
     }
 }
 

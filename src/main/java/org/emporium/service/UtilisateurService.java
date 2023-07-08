@@ -182,27 +182,22 @@ public class UtilisateurService {
         }
     }
 
-    public Response suppUser(UtilisateurDeleteDTO utilisateurDeleteDTO) {
-        if (utilisateurRepository.existsById(utilisateurDeleteDTO.getUwuid())) {
-            Utilisateur userToDelete = utilisateurRepository.findByUWUid(utilisateurDeleteDTO.getUwuid());
-            if (Objects.equals(userToDelete.getAuthId(), utilisateurDeleteDTO.getAuthId())) {
-                List<Commentaire> comUser = commentaireRepository.findByUWUid(utilisateurDeleteDTO.getUwuid());
-                if (userToDelete.profilPicture != null) {
-                    ImageRequest imageRequest =new ImageRequest();
-                    imageRequest.setImageName(userToDelete.getProfilPicture());
-                    imageService.deleteImage(imageRequest);
-                }
-                commentaireRepository.deleteAll(comUser);
-                utilisateurRepository.delete(userToDelete);
-                return Response.ok("L'utilisateur est supprimer").build();
-            } else {
-                return Response.status(Response.Status.NOT_FOUND)
-                        .entity("Les informations ne correspondent pas")
-                        .build();
+    public Response suppUser(String authId) {
+        Utilisateur utilisateurToDelete = utilisateurRepository.findByAuthId(authId);
+        if (utilisateurToDelete != null) {
+            List<Commentaire> comUser = commentaireRepository.findByUWUid(utilisateurToDelete.getUWUid());
+            if (utilisateurToDelete.profilPicture != null) {
+                ImageRequest imageRequest =new ImageRequest();
+                imageRequest.setImageName(utilisateurToDelete.getProfilPicture());
+                imageService.deleteImage(imageRequest);
             }
+            commentaireRepository.deleteAll(comUser);
+            utilisateurRepository.delete(utilisateurToDelete);
+
+            return Response.ok("L'utilisateur est supprimer").build();
         } else {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Id " + utilisateurDeleteDTO.getUwuid() + " n'existe pas ou a deja était supprimer")
+                    .entity("Les informations ne correspondent pas")
                     .build();
         }
     }
