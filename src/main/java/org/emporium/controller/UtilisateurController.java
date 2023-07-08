@@ -82,7 +82,7 @@ public class UtilisateurController {
         return utilisateurService.addUser(utilisateur);
     }
 
-    @Path("/delete/{uwuid}/authId/{authId}")
+    @Path("/delete")
     @DELETE
     @RolesAllowed({ "User", "Admin" })
     @Produces(MediaType.APPLICATION_JSON)
