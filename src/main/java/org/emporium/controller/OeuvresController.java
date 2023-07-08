@@ -128,7 +128,7 @@ public class OeuvresController {
 
     @Path("/delete/{idOeuvre}")
     @DELETE
-    @RolesAllowed("Admin")
+    @RolesAllowed({ "User", "Admin" })
     @Produces(MediaType.APPLICATION_JSON)
     public Response DeleteOeuvre(@PathParam("idOeuvre") String idOeuvre) throws Exception {
         return oeuvresService.suppOeuvre(idOeuvre);
