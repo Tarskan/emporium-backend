@@ -1,5 +1,6 @@
 package org.emporium.controller;
 
+import io.quarkus.security.Authenticated;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.emporium.model.UtilisateurCreateDTO;
 import org.emporium.model.UtilisateurModifyDTO;
@@ -74,17 +75,17 @@ public class UtilisateurController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @RolesAllowed({ "User", "Admin" })
+    @Authenticated
     public Response AddUtilisateur(@MultipartForm UtilisateurCreateDTO utilisateur) throws IOException {
         return utilisateurService.addUser(utilisateur);
     }
 
-    @Path("/delete/{uwuid}")
+    @Path("/delete/{uwuid}/secret/{authId}")
     @DELETE
-    @RolesAllowed("Admin")
+    @RolesAllowed({ "User", "Admin" })
     @Produces(MediaType.APPLICATION_JSON)
-    public Response DeleteUser(@PathParam("uwuid") String uwuid) {
-        return utilisateurService.suppUser(uwuid);
+    public Response DeleteUser(@PathParam("uwuid") String uwuid, @PathParam("authId") String authId) {
+        return utilisateurService.suppUser(uwuid, authId);
     }
 }
 

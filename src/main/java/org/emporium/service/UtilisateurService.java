@@ -182,18 +182,24 @@ public class UtilisateurService {
         }
     }
 
-    public Response suppUser(String uwuid) {
+    public Response suppUser(String uwuid, String authId) {
         if (utilisateurRepository.existsById(uwuid)) {
             Utilisateur userToDelete = utilisateurRepository.findByUWUid(uwuid);
-            List<Commentaire> comUser = commentaireRepository.findByUWUid(uwuid);
-            if (userToDelete.profilPicture != null) {
-                ImageRequest imageRequest =new ImageRequest();
-                imageRequest.setImageName(userToDelete.getProfilPicture());
-                imageService.deleteImage(imageRequest);
+            if (Objects.equals(userToDelete.getAuthId(), authId)) {
+                List<Commentaire> comUser = commentaireRepository.findByUWUid(uwuid);
+                if (userToDelete.profilPicture != null) {
+                    ImageRequest imageRequest =new ImageRequest();
+                    imageRequest.setImageName(userToDelete.getProfilPicture());
+                    imageService.deleteImage(imageRequest);
+                }
+                commentaireRepository.deleteAll(comUser);
+                utilisateurRepository.delete(userToDelete);
+                return Response.ok("L'utilisateur est supprimer").build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Les informations ne correspondent pas")
+                        .build();
             }
-            commentaireRepository.deleteAll(comUser);
-            utilisateurRepository.delete(userToDelete);
-            return Response.ok("L'utilisateur est supprimer").build();
         } else {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity("Id " + uwuid + " n'existe pas ou a deja était supprimer")

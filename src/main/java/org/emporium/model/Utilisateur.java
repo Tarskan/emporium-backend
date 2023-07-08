@@ -1,6 +1,7 @@
 package org.emporium.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +37,7 @@ public class Utilisateur {
     public String profilPicture;
     @Column(name = "profilPicturePath", length = 1000)
     public String profilPicturePath;
+    @JsonIgnore
     @Column(name = "authId", unique = true)
     public String authId;
 
