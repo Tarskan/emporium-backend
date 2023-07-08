@@ -80,12 +80,12 @@ public class UtilisateurController {
         return utilisateurService.addUser(utilisateur);
     }
 
-    @Path("/delete/{uwuid}/secret/{authId}")
+    @Path("/delete/{uwuid}")
     @DELETE
     @RolesAllowed({ "User", "Admin" })
     @Produces(MediaType.APPLICATION_JSON)
-    public Response DeleteUser(@PathParam("uwuid") String uwuid, @PathParam("authId") String authId) {
-        return utilisateurService.suppUser(uwuid, authId);
+    public Response DeleteUser(@PathParam("uwuid") String uwuid) {
+        return utilisateurService.suppUser(uwuid);
     }
 }
 
