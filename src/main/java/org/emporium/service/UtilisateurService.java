@@ -182,11 +182,11 @@ public class UtilisateurService {
         }
     }
 
-    public Response suppUser(String uwuid, String authId) {
-        if (utilisateurRepository.existsById(uwuid)) {
-            Utilisateur userToDelete = utilisateurRepository.findByUWUid(uwuid);
-            if (Objects.equals(userToDelete.getAuthId(), authId)) {
-                List<Commentaire> comUser = commentaireRepository.findByUWUid(uwuid);
+    public Response suppUser(UtilisateurDeleteDTO utilisateurDeleteDTO) {
+        if (utilisateurRepository.existsById(utilisateurDeleteDTO.getUwuid())) {
+            Utilisateur userToDelete = utilisateurRepository.findByUWUid(utilisateurDeleteDTO.getUwuid());
+            if (Objects.equals(userToDelete.getAuthId(), utilisateurDeleteDTO.getAuthId())) {
+                List<Commentaire> comUser = commentaireRepository.findByUWUid(utilisateurDeleteDTO.getUwuid());
                 if (userToDelete.profilPicture != null) {
                     ImageRequest imageRequest =new ImageRequest();
                     imageRequest.setImageName(userToDelete.getProfilPicture());
@@ -202,7 +202,7 @@ public class UtilisateurService {
             }
         } else {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("Id " + uwuid + " n'existe pas ou a deja était supprimer")
+                    .entity("Id " + utilisateurDeleteDTO.getUwuid() + " n'existe pas ou a deja était supprimer")
                     .build();
         }
     }
