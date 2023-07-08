@@ -1,11 +1,14 @@
 package org.emporium.controller;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.emporium.model.OeuvresCreateDTO;
 import org.emporium.model.OeuvresModifyDTO;
 import org.emporium.service.OeuvresService;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.springframework.stereotype.Controller;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -17,7 +20,11 @@ public class OeuvresController {
     @Inject
     OeuvresService oeuvresService;
 
+    @Inject
+    JsonWebToken jwt;
+
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllOeuvre() {
         return oeuvresService.getAllOeuvres();
@@ -25,6 +32,7 @@ public class OeuvresController {
 
     @Path("/{idOeuvre}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getById(@PathParam("idOeuvre") String idOeuvre) {
         return oeuvresService.getByIdOeuvre(idOeuvre);
@@ -32,6 +40,7 @@ public class OeuvresController {
 
     @Path("/lastModified")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getByLastAdded() {
         return oeuvresService.getLastModified();
@@ -39,6 +48,7 @@ public class OeuvresController {
 
     @Path("/firstPack")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getFirstPack() {
         return oeuvresService.getFirstPack();
@@ -46,6 +56,7 @@ public class OeuvresController {
 
     @Path("/search/{oeuvreName}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getByTitreAutoComplete(@PathParam("oeuvreName") String oeuvreName) {
         return oeuvresService.getByTitreAutocomplete(oeuvreName);
@@ -53,6 +64,7 @@ public class OeuvresController {
 
     @Path("/genre/{idGenre}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getByGenre(@PathParam("idGenre") String idGenre) {
         return oeuvresService.getByIdGenre(idGenre);
@@ -60,6 +72,7 @@ public class OeuvresController {
 
     @Path("/editeur/{idEditeur}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getByEditor(@PathParam("idEditeur") String idEditeur) {
         return oeuvresService.getByIdEditeur(idEditeur);
@@ -67,6 +80,7 @@ public class OeuvresController {
 
     @Path("/auteur/{idAuteur}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getByAuthor(@PathParam("idAuteur") String idAuteur) {
         return oeuvresService.getByIdAuteur(idAuteur);
@@ -74,6 +88,7 @@ public class OeuvresController {
 
     @Path("/type/{idType}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getByIdType(@PathParam("idType") String idType) {
         return oeuvresService.getByIdType(idType);
@@ -81,6 +96,7 @@ public class OeuvresController {
 
     @Path("/support/{idSupport}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getByIdSupport(@PathParam("idSupport") String idSupport) {
         return oeuvresService.getByIdSupport(idSupport);
@@ -88,12 +104,14 @@ public class OeuvresController {
 
     @Path("/{idOeuvre}/auteur/{idAuteur}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRelatedTo(@PathParam("idOeuvre") String idOeuvre, @PathParam("idAuteur") String idAuteur) {
         return oeuvresService.getRelatedTo(idAuteur, idOeuvre);
     }
 
     @PUT
+    @RolesAllowed({ "User", "Admin" })
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response PutOeuvre(@MultipartForm OeuvresModifyDTO oeuvres) throws Exception {
@@ -101,6 +119,7 @@ public class OeuvresController {
     }
 
     @POST
+    @RolesAllowed({ "User", "Admin" })
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response AddOeuvre(@MultipartForm OeuvresCreateDTO oeuvres) throws Exception {
@@ -109,6 +128,7 @@ public class OeuvresController {
 
     @Path("/delete/{idOeuvre}")
     @DELETE
+    @RolesAllowed("Admin")
     @Produces(MediaType.APPLICATION_JSON)
     public Response DeleteOeuvre(@PathParam("idOeuvre") String idOeuvre) throws Exception {
         return oeuvresService.suppOeuvre(idOeuvre);

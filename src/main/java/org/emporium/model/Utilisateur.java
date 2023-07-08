@@ -36,6 +36,8 @@ public class Utilisateur {
     public String profilPicture;
     @Column(name = "profilPicturePath", length = 1000)
     public String profilPicturePath;
+    @Column(name = "authId", unique = true)
+    public String authId;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "collection", joinColumns = {@JoinColumn(name = "UWUid")}, inverseJoinColumns = {@JoinColumn(name = "idOeuvre")})

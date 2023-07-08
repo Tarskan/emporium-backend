@@ -1,11 +1,14 @@
 package org.emporium.controller;
 
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.emporium.model.UtilisateurCreateDTO;
 import org.emporium.model.UtilisateurModifyDTO;
 import org.emporium.service.UtilisateurService;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.springframework.stereotype.Controller;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -18,7 +21,11 @@ public class UtilisateurController {
     @Inject
     UtilisateurService utilisateurService;
 
+    @Inject
+    JsonWebToken jwt;
+
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUtilisateur() {
         return utilisateurService.getAllUser();
@@ -26,6 +33,7 @@ public class UtilisateurController {
 
     @Path("/{adresseMail}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response GetByEmail(@PathParam("adresseMail") String adresseMail) {
             return utilisateurService.GetUserByEmail(adresseMail);
@@ -33,6 +41,7 @@ public class UtilisateurController {
 
     @Path("/identification/{uwuid}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response GetByUwuid(@PathParam("uwuid") String uwuid) {
         return utilisateurService.GetUserByUwuid(uwuid);
@@ -40,6 +49,7 @@ public class UtilisateurController {
     
     @Path("/search/{pseudo}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response RechercheUtilisateurByPseudo(@PathParam("pseudo") String pseudo) {
         return utilisateurService.GetUserByPseudo(pseudo);
@@ -47,6 +57,7 @@ public class UtilisateurController {
 
     @Path("/searchLike/{pseudo}")
     @GET
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response RechercheParPseudo(@PathParam("pseudo") String pseudo) {
         return utilisateurService.SearchByPseudo(pseudo);
@@ -55,6 +66,7 @@ public class UtilisateurController {
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @RolesAllowed({ "User", "Admin" })
     public Response PutUtilisateur(@MultipartForm UtilisateurModifyDTO utilisateur) throws IOException {
         return utilisateurService.modifyUser(utilisateur);
     }
@@ -62,12 +74,14 @@ public class UtilisateurController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @RolesAllowed({ "User", "Admin" })
     public Response AddUtilisateur(@MultipartForm UtilisateurCreateDTO utilisateur) throws IOException {
         return utilisateurService.addUser(utilisateur);
     }
 
     @Path("/delete/{uwuid}")
     @DELETE
+    @RolesAllowed("Admin")
     @Produces(MediaType.APPLICATION_JSON)
     public Response DeleteUser(@PathParam("uwuid") String uwuid) {
         return utilisateurService.suppUser(uwuid);

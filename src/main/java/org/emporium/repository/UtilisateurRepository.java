@@ -24,6 +24,9 @@ public interface UtilisateurRepository extends CrudRepository<Utilisateur, Strin
     @Query("from Utilisateur where pseudo = ?1")
     Utilisateur findByPseudo(String pseudo);
 
+    @Query("from Utilisateur where authId = ?1")
+    Utilisateur findByAuthId(String authId);
+
     @Query("from Utilisateur where lower(pseudo) like concat('%', lower(?1), '%')")
     List<Utilisateur> findByPseudoLike(String pseudo);
 
