@@ -37,7 +37,6 @@ public class Utilisateur {
     public String profilPicture;
     @Column(name = "profilPicturePath", length = 1000)
     public String profilPicturePath;
-    @JsonIgnore
     @Column(name = "authId", unique = true)
     public String authId;
 
