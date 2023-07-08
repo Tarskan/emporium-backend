@@ -22,4 +22,6 @@ public class UtilisateurFullDTO {
     public Date creationDate;
     public Date modificationDate;
     public Integer nbCom;
+    public Integer nbFav;
+    public Integer nbOeuvre;
 }

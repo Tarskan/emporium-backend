@@ -1,6 +1,7 @@
 package org.emporium.service;
 
 import org.emporium.model.*;
+import org.emporium.repository.CollectionRepository;
 import org.emporium.repository.CommentaireRepository;
 import org.emporium.repository.UtilisateurRepository;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -24,11 +26,32 @@ public class UtilisateurService {
     CommentaireRepository commentaireRepository;
 
     @Inject
+    CollectionRepository collectionRepository;
+
+    @Inject
     ImageService imageService;
 
 
     public Response getAllUser() {
-        return Response.ok(utilisateurRepository.findAllSorted()).build();
+        List<Utilisateur> utilisateurList = utilisateurRepository.findAllSorted();
+        List<UtilisateurFullDTO> utilisateurFullDTOList = new ArrayList<UtilisateurFullDTO>();
+        for (int i = 0; i < utilisateurList.size(); i++) {
+            UtilisateurFullDTO utilisateurFull = UtilisateurFullDTO.builder()
+                    .profilPicture(utilisateurList.get(i).getProfilPicture())
+                    .profilPicturePath(utilisateurList.get(i).getProfilPicturePath())
+                    .email(utilisateurList.get(i).getEmail())
+                    .pseudo(utilisateurList.get(i).getPseudo())
+                    .UWUid(utilisateurList.get(i).getUWUid())
+                    .description(utilisateurList.get(i).getDescription())
+                    .modificationDate(utilisateurList.get(i).getModificationDate())
+                    .creationDate(utilisateurList.get(i).getCreationDate())
+                    .nbCom(commentaireRepository.findByUWUid(utilisateurList.get(i).getUWUid()).size())
+                    .nbFav(collectionRepository.findByFavorisUser(utilisateurList.get(i).getUWUid(), true).size())
+                    .nbOeuvre(collectionRepository.findByUWUid(utilisateurList.get(i).getUWUid()).size())
+                    .build();
+            utilisateurFullDTOList.add(utilisateurFull);
+        }
+        return Response.ok(utilisateurFullDTOList).build();
     }
 
     public Response GetUserByEmail(String email) {
@@ -54,6 +77,8 @@ public class UtilisateurService {
                     .modificationDate(utilisateur.getModificationDate())
                     .creationDate(utilisateur.getCreationDate())
                     .nbCom(commentaireRepository.findByUWUid(uwuid).size())
+                    .nbFav(collectionRepository.findByFavorisUser(uwuid, true).size())
+                    .nbOeuvre(collectionRepository.findByUWUid(uwuid).size())
                     .build();
 
             return Response.ok(utilisateurFull).build();
