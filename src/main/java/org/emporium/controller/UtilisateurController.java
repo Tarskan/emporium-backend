@@ -86,7 +86,7 @@ public class UtilisateurController {
     @DELETE
     @RolesAllowed({ "User", "Admin" })
     @Produces(MediaType.APPLICATION_JSON)
-    public Response DeleteUser(@RequestBody UtilisateurDeleteDTO utilisateurDeleteDTO) {
+    public Response DeleteUser(@MultipartForm UtilisateurDeleteDTO utilisateurDeleteDTO) {
         return utilisateurService.suppUser(utilisateurDeleteDTO);
     }
 }
