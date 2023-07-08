@@ -137,7 +137,7 @@ public class UtilisateurService {
     }
 
     public Response modifyUser(UtilisateurModifyDTO utilisateur) throws IOException {
-        if (Objects.equals(utilisateurRepository.findByEmail(utilisateur.getEmail()).getUWUid(), utilisateur.getUWUid()) && Objects.equals(utilisateurRepository.findByUWUid(utilisateur.getUWUid()).getAuthId(), utilisateur.getAuthId())) {
+        if (Objects.equals(utilisateurRepository.findByEmail(utilisateur.getEmail()).getUWUid(), utilisateur.getUWUid()) && (Objects.equals(utilisateurRepository.findByUWUid(utilisateur.getUWUid()).getAuthId(), utilisateur.getAuthId()) || utilisateurRepository.findByUWUid(utilisateur.getUWUid()).getAuthId() == null)) {
             Date myDate = new Date();
 
             Utilisateur utilisateurOld = utilisateurRepository.findByUWUid(utilisateur.getUWUid());
@@ -154,7 +154,7 @@ public class UtilisateurService {
                 image.setImagePath(utilisateurOld.getProfilPicturePath());
                 image.setImageName(utilisateurOld.getProfilPicture());
             }
-            Utilisateur utilisateurModify =  Utilisateur.builder()
+            Utilisateur utilisateurModify = Utilisateur.builder()
                     .UWUid(utilisateurOld.getUWUid())
                     .email(utilisateur.getEmail())
                     .pseudo(utilisateur.getPseudo())
@@ -165,7 +165,7 @@ public class UtilisateurService {
                     .profilPicturePath(image.getImagePath())
                     .listOeuvres(utilisateurOld.getListOeuvres())
                     .listCommentaire(utilisateurOld.getListCommentaire())
-                    .authId(utilisateurOld.getAuthId())
+                    .authId(utilisateurOld.getAuthId() != null ? utilisateurOld.getAuthId() : utilisateur.getAuthId())
                     .build();
             try {
                 return Response.ok(utilisateurRepository.save(utilisateurModify)).build();
