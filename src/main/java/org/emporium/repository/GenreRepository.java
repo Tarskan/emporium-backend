@@ -9,7 +9,7 @@ import java.util.List;
 public interface GenreRepository extends CrudRepository<Genre, String> {
     List<Genre> findAll();
 
-    @Query("from Genre where lower(name) like concat(%, lower(?1), '%')")
+    @Query("from Genre where lower(name) like concat('%', lower(?1), '%')")
     List<Genre> findGenreAutocomplete(String name);
 
     @Query("from Genre where lower(name) = ?1")
