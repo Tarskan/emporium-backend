@@ -1,19 +1,25 @@
 package org.emporium.service;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.emporium.model.*;
 import org.emporium.repository.CollectionRepository;
 import org.emporium.repository.CommentaireRepository;
 import org.emporium.repository.UtilisateurRepository;
+import org.jose4j.json.internal.json_simple.JSONObject;
+import org.jose4j.json.internal.json_simple.parser.JSONParser;
+import org.jose4j.json.internal.json_simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+import java.util.*;
 
 @Singleton
 @Service
@@ -31,6 +37,14 @@ public class UtilisateurService {
     @Inject
     ImageService imageService;
 
+    @ConfigProperty(name = "CLIENT_ID_AUTH")
+    public String clientIdAuth;
+
+    @ConfigProperty(name = "CLIENT_SECRET_AUTH")
+    public String clientSecretAuth;
+
+    @ConfigProperty(name = "GRANT_TYPE_AUTH")
+    public String grantTypeAuth;
 
     public Response getAllUser() {
         List<Utilisateur> utilisateurList = utilisateurRepository.findAllSorted();
@@ -182,7 +196,7 @@ public class UtilisateurService {
         }
     }
 
-    public Response suppUser(String authId) {
+    public Response suppUser(String authId) throws ParseException, IOException, InterruptedException {
         Utilisateur utilisateurToDelete = utilisateurRepository.findByAuthId(authId);
         if (utilisateurToDelete != null) {
             List<Commentaire> comUser = commentaireRepository.findByUWUid(utilisateurToDelete.getUWUid());
@@ -194,7 +208,53 @@ public class UtilisateurService {
             commentaireRepository.deleteAll(comUser);
             utilisateurRepository.delete(utilisateurToDelete);
 
-            return Response.ok("L'utilisateur est supprimer").build();
+            HttpClient httpClient = HttpClient.newBuilder()
+                    .version(HttpClient.Version.HTTP_2)
+                    .connectTimeout(Duration.ofSeconds(10))
+                    .build();
+
+            String json= "{\"client_id\":\"" + clientIdAuth + "\",\"client_secret\":\"" + clientSecretAuth + "\",\"audience\":\"https://emporiumauth.eu.auth0.com/api/v2/\",\"grant_type\":\"" + grantTypeAuth + "\"}";
+
+
+            HttpRequest postRequest = HttpRequest.newBuilder()
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(json))
+                    .uri(URI.create("https://emporiumauth.eu.auth0.com/oauth/token"))
+                    .build();
+
+            HttpResponse<String> responsePost = httpClient.send(postRequest, HttpResponse.BodyHandlers.ofString());
+
+            if (responsePost.statusCode() == 200) {
+                JSONParser parser = new JSONParser();
+                JSONObject jsonTrad = (JSONObject) parser.parse(responsePost.body());
+
+                authId = authId.replace("|", "%7C");
+
+                String testuri= "https://emporiumauth.eu.auth0.com/api/v2/users/google-oauth2%7C114267803750570324455";
+
+                String bearer = "Bearer " + jsonTrad.get("access_token");
+                String uriDelete = "https://emporiumauth.eu.auth0.com/api/v2/users/" + authId;
+
+                HttpRequest deleteRequest = HttpRequest.newBuilder()
+                        .header("Authorization", bearer)
+                        .DELETE()
+                        .uri(URI.create(uriDelete))
+                        .build();
+
+                HttpResponse<String> responseDelete = httpClient.send(deleteRequest, HttpResponse.BodyHandlers.ofString());
+
+                if(responseDelete.statusCode() == 204) {
+                    return Response.ok("L'utilisateur est supprimer").build();
+                } else {
+                    return Response.status(Response.Status.NOT_FOUND)
+                            .entity("Un problème est survenu lors de la suppresion")
+                            .build();
+                }
+            } else {
+                return Response.status(Response.Status.EXPECTATION_FAILED)
+                        .entity("Un problème est survenu sur les tokens")
+                        .build();
+            }
         } else {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity("Les informations ne correspondent pas")

@@ -13,6 +13,11 @@ jobs:
           DATABASE_URL: postgresql://localhost:5432/circle_test
           DATABASE_USER: postgres
           DATABASE_PWD: postgrespw
+          CLIENT_ID_AUTH: $CLIENT_ID_AUTH
+          CLIENT_SECRET_AUTH: $CLIENT_SECRET_AUTH
+          GRANT_TYPE_AUTH: $GRANT_TYPE_AUTH
+          GCP_KEY: $GCP_KEY
+          GOOGLE_BUCKET_NAME: $GOOGLE_BUCKET_NAME
       - image: circleci/postgres:9.6.5
         environment:
           POSTGRES_DB: circle_test

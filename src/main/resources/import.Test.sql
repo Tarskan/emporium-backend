@@ -1,5 +1,5 @@
-INSERT INTO Utilisateur(UWUid, pseudo, creationDate, modificationDate, email) VALUES ('1', 'Tarskan', '2023-05-01', '2023-05-02', 'test1@gmail.com');
-INSERT INTO Utilisateur(UWUid, pseudo, creationDate, modificationDate, email) VALUES ('2', 'Yumeko','2023-05-01', '2023-05-01', 'test4@gmail.com');
+INSERT INTO Utilisateur(UWUid, pseudo, creationDate, modificationDate, email, authId) VALUES ('1', 'Tarskan', '2023-05-01', '2023-05-02', 'test1@gmail.com', 'google-oauth2|114267803750570324455');
+INSERT INTO Utilisateur(UWUid, pseudo, creationDate, modificationDate, email, authId) VALUES ('2', 'Yumeko','2023-05-01', '2023-05-01', 'test4@gmail.com', 'google-oauth|7C116002318220764450063');
 INSERT INTO Utilisateur(UWUid, pseudo, creationDate, modificationDate, email) VALUES ('3', 'Riri', '2023-05-03', '2023-05-04', 'test3@gmail.com');
 INSERT INTO Utilisateur(UWUid, pseudo, creationDate, modificationDate, email) VALUES ('4', 'Fifi', '2023-05-03', '2023-05-03', 'test2@gmail.com');
 INSERT INTO Utilisateur(UWUid, pseudo, creationDate, modificationDate, email) VALUES ('5', 'Loulou', '2023-05-02', '2023-05-02', 'test6@gmail.com');

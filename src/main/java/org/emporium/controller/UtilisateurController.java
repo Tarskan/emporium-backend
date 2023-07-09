@@ -6,6 +6,7 @@ import org.emporium.model.UtilisateurCreateDTO;
 import org.emporium.model.UtilisateurModifyDTO;
 import org.emporium.service.UtilisateurService;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+import org.jose4j.json.internal.json_simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.security.PermitAll;
@@ -84,7 +85,7 @@ public class UtilisateurController {
     @DELETE
     @RolesAllowed({ "User", "Admin" })
     @Produces(MediaType.APPLICATION_JSON)
-    public Response DeleteUser(@PathParam("authId") String authId) {
+    public Response DeleteUser(@PathParam("authId") String authId) throws IOException, ParseException, InterruptedException {
         return utilisateurService.suppUser(authId);
     }
 }
