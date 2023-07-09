@@ -34,6 +34,14 @@ public class CollectionControllerTest {
                 .statusCode(200);
     }
 
+    @Test
+    public void testGetInCollectionUserEndPoint() {
+        given()
+                .when().get("/collection/utilisateur/1/oeuvres/1")
+                .then()
+                .statusCode(200);
+    }
+
     /*@Test
     public void testGetCollectionByFavoriteEndPoint() {
         CollectionCreateDTO collectionCreateDTO = CollectionCreateDTO
@@ -50,14 +58,6 @@ public class CollectionControllerTest {
                 .then()
                 .statusCode(200);
     }*/
-
-    @Test
-    public void testGetCollectionByIdUserEndPoint() {
-        given()
-                .when().get("/collection/utilisateur/3")
-                .then()
-                .statusCode(200);
-    }
 
     /*@Test
     public void testSuppOeuvresEndPoint() {

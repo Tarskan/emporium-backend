@@ -74,6 +74,14 @@ public class OeuvresControllerTest {
                 .statusCode(200);
     }
 
+    @Test
+    public void testGetRelatedToEndPoint() {
+        given()
+                .when().get("/oeuvres/1/auteur/1")
+                .then()
+                .statusCode(200);
+    }
+
     /*@Test
     public void testModifyOeuvresEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();

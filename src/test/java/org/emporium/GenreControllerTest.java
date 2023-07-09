@@ -23,7 +23,7 @@ public class GenreControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetGenreSearchByName() {
         given()
                 .when().get("/genre/search/Death metal")
@@ -31,7 +31,7 @@ public class GenreControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testModifyGenreEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");

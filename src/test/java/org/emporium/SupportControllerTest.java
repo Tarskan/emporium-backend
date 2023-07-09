@@ -24,7 +24,7 @@ public class SupportControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetSupportSearchByName() {
         given()
                 .when().get("/support/search/CD")
@@ -32,7 +32,7 @@ public class SupportControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testModifyGenreEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");

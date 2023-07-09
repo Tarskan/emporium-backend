@@ -23,7 +23,7 @@ public class EditeurControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetEditeurSearchByName() {
         given()
                 .when().get("/editeur/search/Tourbillon")
@@ -31,7 +31,7 @@ public class EditeurControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testModifyOeuvresEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");

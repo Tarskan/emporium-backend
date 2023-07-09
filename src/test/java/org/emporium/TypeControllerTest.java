@@ -23,7 +23,7 @@ public class TypeControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
+    @Test
     public void testGetTypeSearchByName() {
         given()
                 .when().get("/type/search/Musique")
@@ -31,7 +31,7 @@ public class TypeControllerTest {
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testModifyGenreEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");

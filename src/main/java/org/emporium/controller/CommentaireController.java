@@ -41,7 +41,7 @@ public class CommentaireController {
     @GET
     @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getByIdCommentaire() throws Exception {
+    public Response getLastCommentaire() throws Exception {
         return commentaireService.getLastCommentaire();
     }
 

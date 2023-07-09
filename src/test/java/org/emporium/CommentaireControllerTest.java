@@ -25,9 +25,25 @@ public class CommentaireControllerTest {
     }
 
     @Test
+    public void testGetLastCommentaireEndPoint() {
+        given()
+                .when().get("/commentaire/last")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
     public void testGetCommentaireByUwuidEndPoint() {
         given()
                 .when().get("/commentaire/utilisateur/3")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
+    public void testGetByCommentaireByIdOeuvresEndPoint() {
+        given()
+                .when().get("/commentaire/oeuvres/1")
                 .then()
                 .statusCode(200);
     }

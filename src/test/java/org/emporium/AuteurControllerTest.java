@@ -23,15 +23,15 @@ public class AuteurControllerTest {
                 .statusCode(200);
     }
 
-    /*@Test
-    public void testGetAuteurSearchByTitre() {
+    @Test
+    public void testGetAuteurSearchByTitreEndPoint() {
         given()
-                .when().get("/auteur/search/Ramstein")
+                .when().get("/auteur/search/ram")
                 .then()
                 .statusCode(200);
     }
 
-    @Test
+    /*@Test
     public void testModifyOeuvresEndPoint() {
         OeuvresModifyDTO oeuvresModifyDTO = new OeuvresModifyDTO();
         oeuvresModifyDTO.setIdOeuvre("1");
